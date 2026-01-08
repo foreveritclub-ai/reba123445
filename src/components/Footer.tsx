@@ -12,16 +12,16 @@ const Footer = () => {
           {/* Brand */}
           <div className="lg:col-span-1">
             <a href="/" className="text-2xl font-bold tracking-tight inline-block mb-4">
-              <span className="text-foreground">Reba</span>
-              <span className="text-primary"> RW</span>
+              <span className="text-foreground">Egreed</span>
+              <span className="text-primary"> Technology</span>
             </a>
             <p className="text-muted-foreground text-sm mb-6 leading-relaxed">
               Empowering businesses through innovative software and digital solutions. Based in Rwanda, serving clients worldwide with customized, scalable technology solutions.
             </p>
             <div className="space-y-3 text-sm">
-              <a href="mailto:hello@rebarw.com" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
+              <a href="mailto:egreedtechnology@gmail.com" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
                 <Mail className="w-4 h-4" />
-                hello@rebarw.com
+                egreedtechnology@gmail.com
               </a>
               <a href="tel:+250795822290" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
                 <Phone className="w-4 h-4" />
@@ -89,7 +89,7 @@ const Footer = () => {
         <div className="max-w-7xl mx-auto px-6 py-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-sm text-muted-foreground">
-              © 2024 Reba RW. All rights reserved.
+              © 2024 Egreed Technology. All rights reserved.
             </p>
             <div className="flex items-center gap-6 text-sm">
               <a href="#" className="text-muted-foreground hover:text-primary transition-colors">

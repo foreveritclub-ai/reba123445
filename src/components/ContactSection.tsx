@@ -16,7 +16,7 @@ const contactSchema = z.object({
 type ContactFormData = z.infer<typeof contactSchema>;
 
 const contactInfo = [
-  { icon: Mail, label: "Email", value: "hello@rebarw.com", subValue: "support@rebarw.com" },
+  { icon: Mail, label: "Email", value: "egreedtechnology@gmail.com", subValue: "support@egreedtech.com" },
   { icon: Phone, label: "Phone", value: "+250 795 822 290", subValue: "+250 794 433 166" },
   { icon: MapPin, label: "Office", value: "KN 4 Ave, Gasabo", subValue: "Kigali, Rwanda" },
 ];
@@ -116,7 +116,7 @@ const ContactSection = () => {
             </div>
 
             <div className="bg-gradient-card border-gradient rounded-2xl p-6">
-              <h4 className="font-semibold mb-4">Why Choose Reba RW?</h4>
+              <h4 className="font-semibold mb-4">Why Choose Egreed Technology?</h4>
               <ul className="space-y-3">
                 {[
                   "Local expertise with global standards",

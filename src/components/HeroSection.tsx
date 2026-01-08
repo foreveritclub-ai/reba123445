@@ -68,7 +68,7 @@ const HeroSection = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
         >
-          Reba RW delivers tailored software and digital solutions that transform how businesses operate. From strategic planning to software architecture, we help startups and enterprises thrive in the digital age.
+          Egreed Technology delivers tailored software and digital solutions that transform how businesses operate. From strategic planning to software architecture, we help startups and enterprises thrive in the digital age.
         </motion.p>
 
         <motion.div

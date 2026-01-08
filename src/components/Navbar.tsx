@@ -18,8 +18,8 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <FloatingElement magnetStrength={0.3}>
           <a href="/" className="text-2xl font-bold tracking-tight">
-            <span className="text-foreground">Reba</span>
-            <span className="text-primary"> RW</span>
+            <span className="text-foreground">Egreed</span>
+            <span className="text-primary"> Technology</span>
           </a>
         </FloatingElement>
 
