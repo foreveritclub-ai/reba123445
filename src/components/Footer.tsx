@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Mail, Phone, MapPin } from "lucide-react";
 
-const quickLinks = ["Home", "About Us", "Services", "Testimonials", "Contact"];
+const quickLinks = ["Home", "About Us", "Services", "Courses", "LLM", "Testimonials", "Contact"];
 const serviceLinks = ["Strategic Planning", "Website Management", "Software Architecture", "Digital Engagement", "Custom Solutions"];
 
 const Footer = () => {
