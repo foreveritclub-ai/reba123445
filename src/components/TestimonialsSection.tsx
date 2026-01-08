@@ -5,7 +5,7 @@ import { Star, Quote } from "lucide-react";
 
 const testimonials = [
   {
-    quote: "Reba RW transformed our startup with their strategic planning and custom software solutions. Their understanding of the local market combined with international standards made all the difference.",
+    quote: "Egreed Technology transformed our startup with their strategic planning and custom software solutions. Their understanding of the local market combined with international standards made all the difference.",
     name: "Sarah Johnson",
     role: "CEO, TechStart Rwanda",
     avatar: "SJ",
@@ -48,7 +48,7 @@ const TestimonialsSection = () => {
             What Our <span className="text-primary">Clients Say</span>
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Don't just take our word for it. Here's what our clients have to say about working with Reba RW.
+            Don't just take our word for it. Here's what our clients have to say about working with Egreed Technology.
           </p>
         </motion.div>
 

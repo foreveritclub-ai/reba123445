@@ -40,7 +40,7 @@ const AboutSection = () => {
           transition={{ duration: 0.8 }}
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            About <span className="text-primary">Reba RW</span>
+            About <span className="text-primary">Egreed Technology</span>
           </h2>
           <p className="text-muted-foreground text-lg max-w-3xl mx-auto">
             Born in Rwanda, built for the world. We're a passionate team of digital innovators dedicated to transforming businesses through technology.
@@ -55,7 +55,7 @@ const AboutSection = () => {
           >
             <h3 className="text-2xl font-bold mb-4 text-accent">Our Story</h3>
             <p className="text-muted-foreground mb-6 leading-relaxed">
-              Founded in the heart of Rwanda, Reba RW emerged from a vision to bridge the gap between ambitious business goals and cutting-edge technology solutions. We understand that every business is unique, which is why we specialize in creating tailored, scalable solutions that grow with our clients.
+              Founded in the heart of Rwanda, Egreed Technology emerged from a vision to bridge the gap between ambitious business goals and cutting-edge technology solutions. We understand that every business is unique, which is why we specialize in creating tailored, scalable solutions that grow with our clients.
             </p>
             <p className="text-muted-foreground leading-relaxed">
               From startups taking their first digital steps to large enterprises optimizing their operations, we've helped businesses across various industries achieve their digital transformation goals. Our Rwanda-based roots give us a unique perspective on emerging markets while our global outlook ensures world-class solutions.
