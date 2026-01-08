@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import FloatingElement from "./FloatingElement";
 
-const navItems = ["About", "Services", "Testimonials", "Contact"];
+const navItems = ["About", "Services", "Courses", "LLM", "Testimonials", "Contact"];
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
