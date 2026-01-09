@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
-import { BookOpen, Clock, Award, LogOut, User } from "lucide-react";
+import { BookOpen, Clock, Award, LogOut, User, Settings, Play } from "lucide-react";
 import { toast } from "sonner";
 
 interface Enrollment {
@@ -108,17 +108,29 @@ const Dashboard = () => {
           </Link>
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center">
-                <User className="w-5 h-5 text-primary" />
+              <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center overflow-hidden">
+                {profile?.avatar_url ? (
+                  <img src={profile.avatar_url} alt="Avatar" className="w-full h-full object-cover" />
+                ) : (
+                  <User className="w-5 h-5 text-primary" />
+                )}
               </div>
               <div className="hidden sm:block">
                 <div className="font-medium text-sm">{profile?.full_name || "Student"}</div>
                 <div className="text-xs text-muted-foreground">{profile?.email}</div>
               </div>
             </div>
+            <Link
+              to="/settings"
+              className="p-2 text-muted-foreground hover:text-foreground transition-colors"
+              title="Profile Settings"
+            >
+              <Settings className="w-5 h-5" />
+            </Link>
             <button
               onClick={handleSignOut}
               className="p-2 text-muted-foreground hover:text-foreground transition-colors"
+              title="Sign Out"
             >
               <LogOut className="w-5 h-5" />
             </button>
@@ -195,9 +207,8 @@ const Dashboard = () => {
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {enrollments.map((enrollment) => (
-                <Link
+                <div
                   key={enrollment.id}
-                  to={`/courses/${enrollment.course?.slug}`}
                   className="bg-card border border-border rounded-xl p-6 hover:border-primary/30 transition-colors group"
                 >
                   <div className="flex items-center gap-2 mb-4">
@@ -215,7 +226,7 @@ const Dashboard = () => {
                   <p className="text-sm text-muted-foreground mb-4">{enrollment.course?.instructor}</p>
                   
                   {/* Progress bar */}
-                  <div className="mt-auto">
+                  <div className="mb-4">
                     <div className="flex justify-between text-xs mb-2">
                       <span className="text-muted-foreground">Progress</span>
                       <span className="text-primary font-medium">{enrollment.progress}%</span>
@@ -227,7 +238,16 @@ const Dashboard = () => {
                       />
                     </div>
                   </div>
-                </Link>
+
+                  {/* Action button */}
+                  <Link
+                    to={`/learn/${enrollment.course?.slug}`}
+                    className="w-full inline-flex items-center justify-center gap-2 px-4 py-2 bg-primary text-primary-foreground text-sm font-medium rounded-lg hover:glow-primary transition-all"
+                  >
+                    <Play className="w-4 h-4" />
+                    {enrollment.progress > 0 ? "Continue Learning" : "Start Course"}
+                  </Link>
+                </div>
               ))}
             </div>
           )}

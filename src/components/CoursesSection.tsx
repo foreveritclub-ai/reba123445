@@ -234,9 +234,9 @@ const CoursesSection = () => {
                   {/* Price and CTA */}
                   <div className="flex items-center justify-between">
                     <div className="flex items-baseline gap-2">
-                      <span className="text-2xl font-bold text-primary">${course.price}</span>
+                      <span className="text-xl font-bold text-primary">{course.price.toLocaleString()} FRW</span>
                       {course.original_price && (
-                        <span className="text-sm text-muted-foreground line-through">${course.original_price}</span>
+                        <span className="text-xs text-muted-foreground line-through">{course.original_price.toLocaleString()} FRW</span>
                       )}
                     </div>
                     <Link
