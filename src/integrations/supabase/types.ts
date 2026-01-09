@@ -14,7 +14,179 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      contact_submissions: {
+        Row: {
+          company: string | null
+          created_at: string
+          email: string
+          id: string
+          message: string
+          name: string
+          service: string | null
+        }
+        Insert: {
+          company?: string | null
+          created_at?: string
+          email: string
+          id?: string
+          message: string
+          name: string
+          service?: string | null
+        }
+        Update: {
+          company?: string | null
+          created_at?: string
+          email?: string
+          id?: string
+          message?: string
+          name?: string
+          service?: string | null
+        }
+        Relationships: []
+      }
+      courses: {
+        Row: {
+          created_at: string
+          curriculum: Json | null
+          description: string
+          duration_hours: number | null
+          features: string[] | null
+          has_certificate: boolean | null
+          id: string
+          instructor: string
+          instructor_avatar: string | null
+          instructor_bio: string | null
+          is_trending: boolean | null
+          level: string
+          long_description: string | null
+          original_price: number | null
+          price: number
+          rating: number | null
+          reviews_count: number | null
+          slug: string
+          students_count: number | null
+          tags: string[] | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          curriculum?: Json | null
+          description: string
+          duration_hours?: number | null
+          features?: string[] | null
+          has_certificate?: boolean | null
+          id?: string
+          instructor: string
+          instructor_avatar?: string | null
+          instructor_bio?: string | null
+          is_trending?: boolean | null
+          level: string
+          long_description?: string | null
+          original_price?: number | null
+          price: number
+          rating?: number | null
+          reviews_count?: number | null
+          slug: string
+          students_count?: number | null
+          tags?: string[] | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          curriculum?: Json | null
+          description?: string
+          duration_hours?: number | null
+          features?: string[] | null
+          has_certificate?: boolean | null
+          id?: string
+          instructor?: string
+          instructor_avatar?: string | null
+          instructor_bio?: string | null
+          is_trending?: boolean | null
+          level?: string
+          long_description?: string | null
+          original_price?: number | null
+          price?: number
+          rating?: number | null
+          reviews_count?: number | null
+          slug?: string
+          students_count?: number | null
+          tags?: string[] | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      enrollments: {
+        Row: {
+          completed_at: string | null
+          course_id: string
+          enrolled_at: string
+          id: string
+          progress: number | null
+          user_id: string
+        }
+        Insert: {
+          completed_at?: string | null
+          course_id: string
+          enrolled_at?: string
+          id?: string
+          progress?: number | null
+          user_id: string
+        }
+        Update: {
+          completed_at?: string | null
+          course_id?: string
+          enrolled_at?: string
+          id?: string
+          progress?: number | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "enrollments_course_id_fkey"
+            columns: ["course_id"]
+            isOneToOne: false
+            referencedRelation: "courses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          bio: string | null
+          created_at: string
+          email: string | null
+          full_name: string | null
+          id: string
+          phone: string | null
+          updated_at: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id: string
+          phone?: string | null
+          updated_at?: string
+        }
+        Update: {
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id?: string
+          phone?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
