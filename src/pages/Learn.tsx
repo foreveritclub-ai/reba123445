@@ -7,7 +7,6 @@ import {
   ArrowLeft,
   CheckCircle2,
   Circle,
-  Play,
   Lock,
   Clock,
   AlertTriangle,
@@ -15,15 +14,26 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { Progress } from "@/components/ui/progress";
+import VideoPlayer from "@/components/VideoPlayer";
+import CertificateGenerator from "@/components/CertificateGenerator";
+
+interface LessonData {
+  title: string;
+  video_url?: string;
+}
 
 interface CourseModule {
   module: string;
-  lessons: string[];
+  lessons: (string | LessonData)[];
 }
 
 interface LessonProgress {
   module_index: number;
   lesson_index: number;
+}
+
+interface Profile {
+  full_name: string | null;
 }
 
 interface Course {
@@ -47,6 +57,7 @@ const Learn = () => {
   const [isUpdating, setIsUpdating] = useState(false);
   const [tabFocused, setTabFocused] = useState(true);
   const [lessonStartTime, setLessonStartTime] = useState<number>(Date.now());
+  const [studentName, setStudentName] = useState("");
 
   // Anti-cheat: Track tab visibility
   useEffect(() => {
@@ -73,7 +84,6 @@ const Learn = () => {
     };
 
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Prevent common shortcuts for copying/inspecting
       if (
         (e.ctrlKey && e.key === "c") ||
         (e.ctrlKey && e.key === "u") ||
@@ -107,6 +117,15 @@ const Learn = () => {
 
   const fetchCourseAndProgress = async () => {
     try {
+      // Fetch profile for student name
+      const { data: profileData } = await supabase
+        .from("profiles")
+        .select("full_name")
+        .eq("id", user!.id)
+        .maybeSingle();
+
+      setStudentName(profileData?.full_name || "Student");
+
       // Fetch course
       const { data: courseData, error: courseError } = await supabase
         .from("courses")
@@ -157,6 +176,14 @@ const Learn = () => {
     }
   };
 
+  const getLessonTitle = (lesson: string | LessonData): string => {
+    return typeof lesson === "string" ? lesson : lesson.title;
+  };
+
+  const getLessonVideoUrl = (lesson: string | LessonData): string => {
+    return typeof lesson === "string" ? "" : lesson.video_url || "";
+  };
+
   const isLessonCompleted = useCallback(
     (moduleIndex: number, lessonIndex: number) => {
       return lessonProgress.some(
@@ -176,10 +203,13 @@ const Learn = () => {
     return Math.round((lessonProgress.length / totalLessons) * 100);
   }, [course, lessonProgress]);
 
+  const isCourseCompleted = useCallback(() => {
+    return calculateProgress() === 100;
+  }, [calculateProgress]);
+
   const handleLessonComplete = async () => {
     if (!course || !user || isUpdating) return;
 
-    // Anti-cheat: Minimum time requirement (30 seconds)
     const timeSpent = (Date.now() - lessonStartTime) / 1000;
     if (timeSpent < 30) {
       toast.error(`Please spend at least ${Math.ceil(30 - timeSpent)} more seconds on this lesson`);
@@ -204,21 +234,35 @@ const Learn = () => {
 
       if (error) throw error;
 
-      setLessonProgress((prev) => [
-        ...prev,
+      const newLessonProgress = [
+        ...lessonProgress,
         { module_index: activeModule, lesson_index: activeLesson },
-      ]);
+      ];
+      setLessonProgress(newLessonProgress);
 
-      // Update enrollment progress
-      const newProgress = calculateProgress() + 1;
+      // Calculate new progress
+      const totalLessons = course.curriculum.reduce(
+        (acc, mod) => acc + mod.lessons.length,
+        0
+      );
+      const newProgress = Math.round((newLessonProgress.length / totalLessons) * 100);
+
       await supabase
         .from("enrollments")
-        .update({ progress: Math.min(newProgress, 100) })
+        .update({ 
+          progress: newProgress,
+          completed_at: newProgress === 100 ? new Date().toISOString() : null
+        })
         .eq("user_id", user.id)
         .eq("course_id", course.id);
 
       toast.success("Lesson completed!");
-      moveToNextLesson();
+      
+      if (newProgress === 100) {
+        toast.success("🎉 Congratulations! You've completed this course!");
+      } else {
+        moveToNextLesson();
+      }
     } catch (error) {
       console.error("Error completing lesson:", error);
       toast.error("Failed to save progress");
@@ -236,14 +280,11 @@ const Learn = () => {
     } else if (activeModule < course.curriculum.length - 1) {
       setActiveModule(activeModule + 1);
       setActiveLesson(0);
-    } else {
-      toast.success("🎉 Congratulations! You've completed this course!");
     }
     setLessonStartTime(Date.now());
   };
 
   const selectLesson = (moduleIndex: number, lessonIndex: number) => {
-    // Anti-cheat: Can only access lessons in order or already completed
     const canAccess =
       isLessonCompleted(moduleIndex, lessonIndex) ||
       (moduleIndex === 0 && lessonIndex === 0) ||
@@ -274,8 +315,11 @@ const Learn = () => {
 
   if (!course) return null;
 
-  const currentLesson = course.curriculum[activeModule]?.lessons[activeLesson];
+  const currentLessonData = course.curriculum[activeModule]?.lessons[activeLesson];
+  const currentLessonTitle = getLessonTitle(currentLessonData);
+  const currentVideoUrl = getLessonVideoUrl(currentLessonData);
   const progress = calculateProgress();
+  const courseCompleted = isCourseCompleted();
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
@@ -329,6 +373,7 @@ const Learn = () => {
                     {module.module}
                   </div>
                   {module.lessons.map((lesson, lessonIndex) => {
+                    const lessonTitle = getLessonTitle(lesson);
                     const completed = isLessonCompleted(moduleIndex, lessonIndex);
                     const isActive =
                       activeModule === moduleIndex && activeLesson === lessonIndex;
@@ -362,7 +407,7 @@ const Learn = () => {
                         ) : (
                           <Lock className="w-4 h-4 flex-shrink-0" />
                         )}
-                        <span className="truncate">{lesson}</span>
+                        <span className="truncate">{lessonTitle}</span>
                       </button>
                     );
                   })}
@@ -381,32 +426,42 @@ const Learn = () => {
             transition={{ duration: 0.3 }}
             className="max-w-3xl mx-auto"
           >
+            {/* Certificate section if course completed */}
+            {courseCompleted && (
+              <div className="mb-8">
+                <CertificateGenerator
+                  courseId={course.id}
+                  courseTitle={course.title}
+                  studentName={studentName}
+                  userId={user!.id}
+                />
+              </div>
+            )}
+
             <div className="mb-6">
               <span className="text-sm text-muted-foreground">
                 Module {activeModule + 1}, Lesson {activeLesson + 1}
               </span>
-              <h2 className="text-2xl font-bold mt-1">{currentLesson}</h2>
+              <h2 className="text-2xl font-bold mt-1">{currentLessonTitle}</h2>
             </div>
 
-            {/* Lesson Content Placeholder */}
+            {/* Lesson Content */}
             <div className="bg-card border border-border rounded-2xl p-8 mb-8">
-              <div className="aspect-video bg-secondary/50 rounded-xl flex items-center justify-center mb-6">
-                <div className="text-center">
-                  <Play className="w-16 h-16 text-primary mx-auto mb-4" />
-                  <p className="text-muted-foreground">Video content for this lesson</p>
-                </div>
+              {/* Video Player */}
+              <div className="mb-6">
+                <VideoPlayer videoUrl={currentVideoUrl} title={currentLessonTitle} />
               </div>
 
               <div className="prose prose-invert max-w-none">
                 <h3>Lesson Overview</h3>
                 <p className="text-muted-foreground">
-                  This lesson covers {currentLesson}. Follow along with the video and complete
+                  This lesson covers {currentLessonTitle}. Follow along with the video and complete
                   the exercises to reinforce your understanding.
                 </p>
 
                 <h4>Key Takeaways</h4>
                 <ul className="text-muted-foreground">
-                  <li>Understanding core concepts of {currentLesson}</li>
+                  <li>Understanding core concepts of {currentLessonTitle}</li>
                   <li>Practical applications and real-world examples</li>
                   <li>Best practices and common patterns</li>
                   <li>Hands-on exercises to solidify your knowledge</li>
@@ -427,19 +482,21 @@ const Learn = () => {
             </div>
 
             {/* Completion Button */}
-            <div className="flex justify-end">
-              <button
-                onClick={handleLessonComplete}
-                disabled={isUpdating}
-                className="px-8 py-4 bg-primary text-primary-foreground font-semibold rounded-xl hover:glow-primary transition-all disabled:opacity-50"
-              >
-                {isUpdating
-                  ? "Saving..."
-                  : isLessonCompleted(activeModule, activeLesson)
-                  ? "Continue to Next Lesson"
-                  : "Mark as Complete & Continue"}
-              </button>
-            </div>
+            {!courseCompleted && (
+              <div className="flex justify-end">
+                <button
+                  onClick={handleLessonComplete}
+                  disabled={isUpdating}
+                  className="px-8 py-4 bg-primary text-primary-foreground font-semibold rounded-xl hover:glow-primary transition-all disabled:opacity-50"
+                >
+                  {isUpdating
+                    ? "Saving..."
+                    : isLessonCompleted(activeModule, activeLesson)
+                    ? "Continue to Next Lesson"
+                    : "Mark as Complete & Continue"}
+                </button>
+              </div>
+            )}
           </motion.div>
         </main>
       </div>
