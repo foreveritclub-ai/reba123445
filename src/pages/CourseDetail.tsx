@@ -348,9 +348,9 @@ const CourseDetail = () => {
           <div className="lg:col-span-1">
             <div className="sticky top-24 bg-card border border-border rounded-2xl p-6">
               <div className="flex items-baseline gap-3 mb-6">
-                <span className="text-3xl font-bold text-primary">${course.price}</span>
+                <span className="text-2xl font-bold text-primary">{course.price.toLocaleString()} FRW</span>
                 {course.original_price && (
-                  <span className="text-lg text-muted-foreground line-through">${course.original_price}</span>
+                  <span className="text-sm text-muted-foreground line-through">{course.original_price.toLocaleString()} FRW</span>
                 )}
               </div>
 
@@ -371,10 +371,10 @@ const CourseDetail = () => {
 
               {isEnrolled ? (
                 <Link
-                  to="/dashboard"
+                  to={`/learn/${course.slug}`}
                   className="block w-full py-4 bg-accent text-accent-foreground font-semibold rounded-xl text-center hover:opacity-90 transition-opacity"
                 >
-                  Go to Dashboard
+                  Start Learning
                 </Link>
               ) : (
                 <button
