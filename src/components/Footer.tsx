@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Mail, Phone, MapPin } from "lucide-react";
+import egreedLogo from "@/assets/egreed-logo.png";
 
 const quickLinks = ["Home", "About Us", "Services", "Courses", "LLM", "Testimonials", "Contact"];
 const serviceLinks = ["Strategic Planning", "Website Management", "Software Architecture", "Digital Engagement", "Custom Solutions"];
@@ -11,9 +12,8 @@ const Footer = () => {
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Brand */}
           <div className="lg:col-span-1">
-            <a href="/" className="text-2xl font-bold tracking-tight inline-block mb-4">
-              <span className="text-foreground">Egreed</span>
-              <span className="text-primary"> Technology</span>
+            <a href="/" className="inline-block mb-4">
+              <img src={egreedLogo} alt="Egreed Technology" className="h-12 w-auto" />
             </a>
             <p className="text-muted-foreground text-sm mb-6 leading-relaxed">
               Empowering businesses through innovative software and digital solutions. Based in Rwanda, serving clients worldwide with customized, scalable technology solutions.

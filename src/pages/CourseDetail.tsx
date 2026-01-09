@@ -12,9 +12,12 @@ import {
   CheckCircle2, 
   ChevronDown,
   ChevronUp,
-  Play
+  Play,
+  Smartphone
 } from "lucide-react";
 import { toast } from "sonner";
+import MobilePayment from "@/components/MobilePayment";
+import egreedLogo from "@/assets/egreed-logo.png";
 
 interface CourseModule {
   module: string;
@@ -52,6 +55,7 @@ const CourseDetail = () => {
   const [enrolling, setEnrolling] = useState(false);
   const [isEnrolled, setIsEnrolled] = useState(false);
   const [expandedModules, setExpandedModules] = useState<number[]>([0]);
+  const [showPayment, setShowPayment] = useState(false);
 
   useEffect(() => {
     fetchCourse();
@@ -119,6 +123,13 @@ const CourseDetail = () => {
 
     if (!course) return;
 
+    // Show payment modal for paid courses
+    if (course.price > 0) {
+      setShowPayment(true);
+      return;
+    }
+
+    // Free enrollment
     setEnrolling(true);
     try {
       const { error } = await supabase.from("enrollments").insert({
@@ -139,6 +150,11 @@ const CourseDetail = () => {
     } finally {
       setEnrolling(false);
     }
+  };
+
+  const handlePaymentSuccess = () => {
+    setShowPayment(false);
+    setIsEnrolled(true);
   };
 
   const toggleModule = (index: number) => {
@@ -393,6 +409,22 @@ const CourseDetail = () => {
           </div>
         </div>
       </section>
+
+      {/* Mobile Payment Modal */}
+      {showPayment && course && user && (
+        <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4">
+          <div className="w-full max-w-md">
+            <MobilePayment
+              courseId={course.id}
+              courseTitle={course.title}
+              amount={course.price}
+              userId={user.id}
+              onSuccess={handlePaymentSuccess}
+              onCancel={() => setShowPayment(false)}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

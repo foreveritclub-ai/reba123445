@@ -4,6 +4,7 @@ import { Menu, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import FloatingElement from "./FloatingElement";
+import egreedLogo from "@/assets/egreed-logo.png";
 
 const navItems = ["About", "Services", "Courses", "LLM", "Testimonials", "Contact"];
 
@@ -20,9 +21,8 @@ const Navbar = () => {
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <FloatingElement magnetStrength={0.3}>
-          <a href="/" className="text-2xl font-bold tracking-tight">
-            <span className="text-foreground">Egreed</span>
-            <span className="text-primary"> Technology</span>
+          <a href="/" className="flex items-center gap-2">
+            <img src={egreedLogo} alt="Egreed Technology" className="h-10 w-auto" />
           </a>
         </FloatingElement>
 
