@@ -1,12 +1,15 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
+import { Link } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 import FloatingElement from "./FloatingElement";
 
 const navItems = ["About", "Services", "Courses", "LLM", "Testimonials", "Contact"];
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { user } = useAuth();
 
   return (
     <motion.nav
@@ -42,12 +45,21 @@ const Navbar = () => {
 
         <div className="flex items-center gap-4">
           <FloatingElement magnetStrength={0.3}>
-            <a
-              href="#contact"
-              className="hidden md:inline-flex px-5 py-2.5 bg-primary text-primary-foreground text-sm font-medium rounded-lg hover:glow-primary transition-all duration-300"
-            >
-              Let's Talk
-            </a>
+            {user ? (
+              <Link
+                to="/dashboard"
+                className="hidden md:inline-flex px-5 py-2.5 bg-primary text-primary-foreground text-sm font-medium rounded-lg hover:glow-primary transition-all duration-300"
+              >
+                Dashboard
+              </Link>
+            ) : (
+              <Link
+                to="/signin"
+                className="hidden md:inline-flex px-5 py-2.5 bg-primary text-primary-foreground text-sm font-medium rounded-lg hover:glow-primary transition-all duration-300"
+              >
+                Sign In
+              </Link>
+            )}
           </FloatingElement>
 
           {/* Mobile toggle */}

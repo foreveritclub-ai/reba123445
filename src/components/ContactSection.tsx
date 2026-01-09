@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import { Mail, Phone, MapPin, Send } from "lucide-react";
 import { z } from "zod";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 const contactSchema = z.object({
   name: z.string().trim().min(1, "Name is required").max(100, "Name must be less than 100 characters"),
@@ -67,11 +68,26 @@ const ContactSection = () => {
       return;
     }
 
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    toast.success("Message sent successfully! We'll get back to you soon.");
-    setFormData({ name: "", email: "", company: "", service: "", message: "" });
-    setIsSubmitting(false);
+    // Submit to database
+    try {
+      const { error } = await supabase.from("contact_submissions").insert({
+        name: result.data.name,
+        email: result.data.email,
+        company: result.data.company || null,
+        service: result.data.service || null,
+        message: result.data.message,
+      });
+
+      if (error) throw error;
+
+      toast.success("Message sent successfully! We'll get back to you soon.");
+      setFormData({ name: "", email: "", company: "", service: "", message: "" });
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      toast.error("Failed to send message. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
