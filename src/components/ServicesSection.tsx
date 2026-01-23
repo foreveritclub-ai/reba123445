@@ -1,54 +1,148 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
-import { Compass, Globe, Code2, Zap, ArrowRight } from "lucide-react";
+import { 
+  Cloud, 
+  Shield, 
+  Server, 
+  Compass, 
+  Globe, 
+  Code2, 
+  Smartphone, 
+  Settings,
+  ArrowRight 
+} from "lucide-react";
 
-const services = [
+const itConsultingServices = [
   {
-    icon: Compass,
-    title: "Strategic Planning",
-    description: "Transform your vision into actionable digital strategies that drive growth and innovation.",
+    icon: Cloud,
+    title: "Cloud Migration & Management",
+    description: "Seamlessly migrate your infrastructure to the cloud and optimize your cloud operations for maximum efficiency.",
     features: [
-      "Digital transformation roadmaps",
-      "Technology stack recommendations",
-      "Business process optimization",
-      "Competitive analysis & market research",
+      "AWS, Azure & Google Cloud migration",
+      "Cloud architecture design",
+      "Cost optimization & monitoring",
+      "Hybrid cloud solutions",
     ],
   },
   {
-    icon: Globe,
-    title: "Website Management",
-    description: "Complete website solutions from design to deployment, ensuring optimal performance and user experience.",
+    icon: Shield,
+    title: "Cybersecurity Solutions",
+    description: "Protect your business with comprehensive security assessments, implementation, and ongoing monitoring.",
     features: [
-      "Custom website development",
-      "E-commerce solutions",
-      "Performance optimization",
-      "SEO & analytics integration",
+      "Security audits & vulnerability assessment",
+      "Firewall & network security",
+      "Data encryption & compliance",
+      "Incident response planning",
+    ],
+  },
+  {
+    icon: Server,
+    title: "Infrastructure Management",
+    description: "Design, deploy, and manage robust IT infrastructure that scales with your business needs.",
+    features: [
+      "Network design & optimization",
+      "Server management & virtualization",
+      "Backup & disaster recovery",
+      "24/7 IT support & monitoring",
+    ],
+  },
+  {
+    icon: Compass,
+    title: "IT Strategy & Planning",
+    description: "Align your technology investments with business goals through strategic IT consulting and roadmap development.",
+    features: [
+      "Technology roadmap development",
+      "Digital transformation strategy",
+      "IT budget planning & optimization",
+      "Vendor management & procurement",
+    ],
+  },
+];
+
+const developmentServices = [
+  {
+    icon: Globe,
+    title: "Web Development",
+    description: "Build stunning, responsive websites and web applications that drive engagement and conversions.",
+    features: [
+      "Custom website design & development",
+      "E-commerce platforms",
+      "Content management systems",
+      "Progressive web apps (PWA)",
+    ],
+  },
+  {
+    icon: Smartphone,
+    title: "Mobile App Development",
+    description: "Create powerful mobile applications for iOS and Android that deliver exceptional user experiences.",
+    features: [
+      "Native iOS & Android apps",
+      "Cross-platform development",
+      "App maintenance & updates",
+      "App Store optimization",
     ],
   },
   {
     icon: Code2,
-    title: "Software Architecture",
-    description: "Build robust, scalable software solutions tailored to your specific business requirements.",
+    title: "Custom Software Development",
+    description: "Build tailored software solutions that automate processes and solve unique business challenges.",
     features: [
-      "Custom software development",
-      "API design & integration",
-      "Database architecture",
-      "Cloud infrastructure setup",
+      "Enterprise software solutions",
+      "API development & integration",
+      "Database design & management",
+      "Legacy system modernization",
     ],
   },
   {
-    icon: Zap,
-    title: "Digital Engagement",
-    description: "Enhance your digital presence and customer engagement through innovative solutions.",
+    icon: Settings,
+    title: "Website & App Management",
+    description: "Comprehensive ongoing management and maintenance to keep your digital assets performing optimally.",
     features: [
-      "Social media integration",
-      "Customer portal development",
-      "Mobile app solutions",
-      "Digital marketing automation",
+      "Performance monitoring & optimization",
+      "Security updates & patches",
+      "Content updates & SEO management",
+      "Analytics & reporting",
     ],
   },
 ];
+
+const ServiceCard = ({ service, index, isInView }: { service: typeof itConsultingServices[0], index: number, isInView: boolean }) => (
+  <motion.div
+    className="group bg-gradient-card border-gradient rounded-2xl p-8 hover:glow-primary transition-all duration-500"
+    initial={{ opacity: 0, y: 40 }}
+    animate={isInView ? { opacity: 1, y: 0 } : {}}
+    transition={{ duration: 0.6, delay: index * 0.1 }}
+  >
+    <div className="flex items-start gap-5 mb-6">
+      <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
+        <service.icon className="w-7 h-7 text-primary" />
+      </div>
+      <div>
+        <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors">
+          {service.title}
+        </h3>
+        <p className="text-muted-foreground text-sm">
+          {service.description}
+        </p>
+      </div>
+    </div>
+
+    <ul className="space-y-3 mb-6">
+      {service.features.map((feature) => (
+        <li key={feature} className="flex items-center gap-3 text-sm text-muted-foreground">
+          <div className="w-1.5 h-1.5 bg-primary rounded-full" />
+          {feature}
+        </li>
+      ))}
+    </ul>
+
+    <button className="inline-flex items-center gap-2 text-primary font-medium text-sm group-hover:gap-3 transition-all">
+      Get Started
+      <ArrowRight className="w-4 h-4" />
+    </button>
+  </motion.div>
+);
 
 const ServicesSection = () => {
   const ref = useRef(null);
@@ -67,49 +161,43 @@ const ServicesSection = () => {
             Our <span className="text-primary">Services</span>
           </h2>
           <p className="text-muted-foreground text-lg max-w-3xl mx-auto">
-            Comprehensive digital solutions designed to propel your business forward. From strategic planning to implementation, we've got you covered.
+            Comprehensive IT consulting and development services designed to propel your business forward. From strategic planning to implementation, we've got you covered.
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-8">
-          {services.map((service, index) => (
-            <motion.div
-              key={service.title}
-              className="group bg-gradient-card border-gradient rounded-2xl p-8 hover:glow-primary transition-all duration-500"
-              initial={{ opacity: 0, y: 40 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: index * 0.15 }}
-            >
-              <div className="flex items-start gap-5 mb-6">
-                <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
-                  <service.icon className="w-7 h-7 text-primary" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors">
-                    {service.title}
-                  </h3>
-                  <p className="text-muted-foreground text-sm">
-                    {service.description}
-                  </p>
-                </div>
-              </div>
+        {/* IT Consulting Services */}
+        <motion.div
+          className="mb-16"
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.5 }}
+        >
+          <h3 className="text-2xl md:text-3xl font-bold text-center mb-8">
+            <span className="text-accent">IT Consulting</span> Services
+          </h3>
+          <div className="grid md:grid-cols-2 gap-8">
+            {itConsultingServices.map((service, index) => (
+              <ServiceCard key={service.title} service={service} index={index} isInView={isInView} />
+            ))}
+          </div>
+        </motion.div>
 
-              <ul className="space-y-3 mb-6">
-                {service.features.map((feature) => (
-                  <li key={feature} className="flex items-center gap-3 text-sm text-muted-foreground">
-                    <div className="w-1.5 h-1.5 bg-primary rounded-full" />
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-
-              <button className="inline-flex items-center gap-2 text-primary font-medium text-sm group-hover:gap-3 transition-all">
-                Get Started
-                <ArrowRight className="w-4 h-4" />
-              </button>
-            </motion.div>
-          ))}
-        </div>
+        {/* Development & Management Services */}
+        <motion.div
+          className="mb-16"
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.5, delay: 0.4 }}
+        >
+          <h3 className="text-2xl md:text-3xl font-bold text-center mb-8">
+            <span className="text-accent">Development & Management</span> Services
+          </h3>
+          <div className="grid md:grid-cols-2 gap-8">
+            {developmentServices.map((service, index) => (
+              <ServiceCard key={service.title} service={service} index={index + 4} isInView={isInView} />
+            ))}
+          </div>
+        </motion.div>
 
         {/* Process steps */}
         <motion.div
@@ -119,10 +207,10 @@ const ServicesSection = () => {
           transition={{ duration: 0.8, delay: 0.6 }}
         >
           {[
-            { step: "01", title: "Discovery", desc: "We understand your goals and requirements" },
-            { step: "02", title: "Strategy", desc: "We create a tailored digital strategy" },
-            { step: "03", title: "Development", desc: "We build and implement your solution" },
-            { step: "04", title: "Support", desc: "We provide ongoing maintenance and support" },
+            { step: "01", title: "Consultation", desc: "We analyze your needs and challenges" },
+            { step: "02", title: "Strategy", desc: "We design a tailored IT solution" },
+            { step: "03", title: "Implementation", desc: "We build and deploy your solution" },
+            { step: "04", title: "Support", desc: "We provide ongoing management and support" },
           ].map((item, index) => (
             <div key={item.step} className="relative text-center p-6">
               <div className="text-5xl font-bold text-primary/20 mb-3">{item.step}</div>
