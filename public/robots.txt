@@ -22,7 +22,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://egreed.technology/sitemap.xml
+Sitemap: https://egreedtech.orgy/sitemap.xml
 
 # Host
-Host: https://egreed.technology
+Host: https://egreedtech.org
