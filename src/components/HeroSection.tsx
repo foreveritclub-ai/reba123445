@@ -68,7 +68,7 @@ const HeroSection = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
         >
-          Egreed Technology delivers tailored software and digital solutions that transform how businesses operate. From strategic planning to software architecture, we help startups and enterprises thrive in the digital age.
+          Egreed Technology is Rwanda's premier IT Consulting company. We deliver strategic technology solutions, system integration, and digital transformation services that help businesses optimize operations and achieve their goals.
         </motion.p>
 
         <motion.div

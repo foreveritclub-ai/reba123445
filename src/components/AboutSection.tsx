@@ -43,7 +43,7 @@ const AboutSection = () => {
             About <span className="text-primary">Egreed Technology</span>
           </h2>
           <p className="text-muted-foreground text-lg max-w-3xl mx-auto">
-            Born in Rwanda, built for the world. We're a passionate team of digital innovators dedicated to transforming businesses through technology.
+            Your trusted IT Consulting partner in Rwanda. We help businesses leverage technology to achieve strategic goals, optimize operations, and drive digital transformation.
           </p>
         </motion.div>
 
@@ -55,10 +55,10 @@ const AboutSection = () => {
           >
             <h3 className="text-2xl font-bold mb-4 text-accent">Our Story</h3>
             <p className="text-muted-foreground mb-6 leading-relaxed">
-              Founded in the heart of Rwanda, Egreed Technology emerged from a vision to bridge the gap between ambitious business goals and cutting-edge technology solutions. We understand that every business is unique, which is why we specialize in creating tailored, scalable solutions that grow with our clients.
+              Founded in Rwanda, Egreed Technology is a leading IT Consulting company dedicated to helping organizations navigate the complex technology landscape. We provide strategic IT guidance, system integration, and digital transformation services tailored to your business needs.
             </p>
             <p className="text-muted-foreground leading-relaxed">
-              From startups taking their first digital steps to large enterprises optimizing their operations, we've helped businesses across various industries achieve their digital transformation goals. Our Rwanda-based roots give us a unique perspective on emerging markets while our global outlook ensures world-class solutions.
+              Our team of experienced IT consultants works closely with clients across various industries—from startups to established enterprises—delivering comprehensive technology solutions that drive efficiency, reduce costs, and accelerate growth.
             </p>
           </motion.div>
 
