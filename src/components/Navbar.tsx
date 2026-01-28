@@ -6,7 +6,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import FloatingElement from "./FloatingElement";
 import egreedLogo from "@/assets/egreed-logo.png";
 
-const navItems = ["About", "Services", "Courses", "LLM", "Testimonials", "Contact"];
+const navItems = ["About", "Services", "Case-Studies", "Courses", "LLM", "Testimonials", "Contact"];
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -26,7 +26,6 @@ const Navbar = () => {
           </a>
         </FloatingElement>
 
-        {/* Desktop nav */}
         <div className="hidden md:flex items-center gap-8">
           {navItems.map((item, index) => (
             <FloatingElement key={item} magnetStrength={0.4}>
@@ -41,6 +40,14 @@ const Navbar = () => {
               </motion.a>
             </FloatingElement>
           ))}
+          <FloatingElement magnetStrength={0.4}>
+            <Link
+              to="/blog"
+              className="text-muted-foreground hover:text-foreground transition-colors duration-300 text-sm font-medium"
+            >
+              Blog
+            </Link>
+          </FloatingElement>
         </div>
 
         <div className="flex items-center gap-4">
@@ -90,6 +97,13 @@ const Navbar = () => {
                 {item}
               </a>
             ))}
+            <Link
+              to="/blog"
+              className="text-foreground py-2 font-medium"
+              onClick={() => setMobileOpen(false)}
+            >
+              Blog
+            </Link>
             <a
               href="#contact"
               className="mt-2 px-5 py-3 bg-primary text-primary-foreground text-center font-medium rounded-lg"
