@@ -11,9 +11,9 @@ import { Calendar, Clock, User, Search, ArrowRight } from "lucide-react";
 const blogPosts = [
   {
     id: 1,
-    slug: "cloud-migration-guide-rwandan-businesses",
-    title: "Complete Cloud Migration Guide for Rwandan SMEs in 2024",
-    excerpt: "Learn how small and medium enterprises in Rwanda can successfully migrate to cloud infrastructure, reduce costs, and improve scalability with our step-by-step guide.",
+    slug: "cloud-migration-guide-rwandan-smes",
+    title: "Cloud Migration Guide for Rwandan SMEs: A Step-by-Step Approach",
+    excerpt: "Learn how small and medium enterprises in Rwanda can successfully migrate to the cloud and reduce IT costs by up to 40%.",
     content: `Cloud migration has become essential for Rwandan businesses looking to compete in the digital economy. With Rwanda's Vision 2050 emphasizing digital transformation, SMEs must adapt to remain competitive.
 
 Key benefits of cloud migration include reduced infrastructure costs, improved scalability, and enhanced data security. Companies like MTN Rwanda and Bank of Kigali have already seen significant improvements after migrating to cloud platforms.
@@ -28,9 +28,9 @@ Our recommended approach involves three phases: assessment, migration, and optim
   },
   {
     id: 2,
-    slug: "cybersecurity-threats-rwanda-2024",
-    title: "Top 10 Cybersecurity Threats Facing Rwandan Businesses in 2024",
-    excerpt: "Discover the most critical cybersecurity threats targeting businesses in Rwanda and learn practical strategies to protect your organization from cyber attacks.",
+    slug: "cybersecurity-threats-east-africa-2024",
+    title: "Top 10 Cybersecurity Threats Facing East African Businesses in 2024",
+    excerpt: "Protect your business from the most common cyber threats targeting organizations in Rwanda and East Africa.",
     content: `As Rwanda's digital economy grows, so do cybersecurity threats. In 2024, businesses face increasingly sophisticated attacks that can compromise sensitive data and disrupt operations.
 
 The most common threats include phishing attacks targeting employees, ransomware targeting SMEs, and supply chain attacks. The National Cyber Security Authority (NCSA) has reported a 40% increase in cyber incidents in the past year.
@@ -45,9 +45,9 @@ To protect your business, implement multi-factor authentication, conduct regular
   },
   {
     id: 3,
-    slug: "it-infrastructure-best-practices-kigali",
-    title: "IT Infrastructure Best Practices for Growing Businesses in Kigali",
-    excerpt: "Essential IT infrastructure strategies for Kigali-based businesses looking to scale operations efficiently while maintaining security and reliability.",
+    slug: "digital-transformation-kigali-businesses",
+    title: "Digital Transformation Success Stories: How Kigali Businesses Are Leading Innovation",
+    excerpt: "Discover how local businesses in Kigali are leveraging technology to transform their operations and drive growth.",
     content: `Building robust IT infrastructure is crucial for businesses in Kigali's competitive market. With the city's rapid technological advancement, companies must adopt best practices to stay ahead.
 
 Key infrastructure components include reliable networking, secure data storage, and scalable computing resources. Many Kigali businesses are now adopting hybrid solutions that combine on-premise and cloud infrastructure.
@@ -202,58 +202,60 @@ const Blog = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: index * 0.1 }}
                 >
-                  <Card className="h-full flex flex-col overflow-hidden hover:shadow-lg transition-shadow group">
-                    <div className="relative overflow-hidden">
-                      <img
-                        src={post.image}
-                        alt={post.title}
-                        className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                      <Badge className="absolute top-3 left-3">
-                        {post.category}
-                      </Badge>
-                    </div>
-                    <CardHeader className="pb-2">
-                      <div className="flex items-center gap-4 text-sm text-muted-foreground mb-2">
-                        <span className="flex items-center gap-1">
-                          <Calendar className="w-4 h-4" />
-                          {new Date(post.date).toLocaleDateString('en-US', { 
-                            month: 'short', 
-                            day: 'numeric', 
-                            year: 'numeric' 
-                          })}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <Clock className="w-4 h-4" />
-                          {post.readTime}
-                        </span>
+                  <Link to={`/blog/${post.slug}`}>
+                    <Card className="h-full flex flex-col overflow-hidden hover:shadow-lg transition-shadow group cursor-pointer">
+                      <div className="relative overflow-hidden">
+                        <img
+                          src={post.image}
+                          alt={post.title}
+                          className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                        <Badge className="absolute top-3 left-3">
+                          {post.category}
+                        </Badge>
                       </div>
-                      <h2 className="text-xl font-bold leading-tight group-hover:text-primary transition-colors">
-                        {post.title}
-                      </h2>
-                    </CardHeader>
-                    <CardContent className="flex-grow flex flex-col">
-                      <p className="text-muted-foreground text-sm mb-4 flex-grow">
-                        {post.excerpt}
-                      </p>
-                      <div className="flex flex-wrap gap-2 mb-4">
-                        {post.tags.slice(0, 3).map((tag) => (
-                          <Badge key={tag} variant="outline" className="text-xs">
-                            {tag}
-                          </Badge>
-                        ))}
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <span className="flex items-center gap-2 text-sm text-muted-foreground">
-                          <User className="w-4 h-4" />
-                          {post.author}
-                        </span>
-                        <span className="text-primary font-medium text-sm flex items-center gap-1 group-hover:gap-2 transition-all">
-                          Read More <ArrowRight className="w-4 h-4" />
-                        </span>
-                      </div>
-                    </CardContent>
-                  </Card>
+                      <CardHeader className="pb-2">
+                        <div className="flex items-center gap-4 text-sm text-muted-foreground mb-2">
+                          <span className="flex items-center gap-1">
+                            <Calendar className="w-4 h-4" />
+                            {new Date(post.date).toLocaleDateString('en-US', { 
+                              month: 'short', 
+                              day: 'numeric', 
+                              year: 'numeric' 
+                            })}
+                          </span>
+                          <span className="flex items-center gap-1">
+                            <Clock className="w-4 h-4" />
+                            {post.readTime}
+                          </span>
+                        </div>
+                        <h2 className="text-xl font-bold leading-tight group-hover:text-primary transition-colors">
+                          {post.title}
+                        </h2>
+                      </CardHeader>
+                      <CardContent className="flex-grow flex flex-col">
+                        <p className="text-muted-foreground text-sm mb-4 flex-grow">
+                          {post.excerpt}
+                        </p>
+                        <div className="flex flex-wrap gap-2 mb-4">
+                          {post.tags.slice(0, 3).map((tag) => (
+                            <Badge key={tag} variant="outline" className="text-xs">
+                              {tag}
+                            </Badge>
+                          ))}
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <span className="flex items-center gap-2 text-sm text-muted-foreground">
+                            <User className="w-4 h-4" />
+                            {post.author}
+                          </span>
+                          <span className="text-primary font-medium text-sm flex items-center gap-1 group-hover:gap-2 transition-all">
+                            Read More <ArrowRight className="w-4 h-4" />
+                          </span>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </Link>
                 </motion.div>
               ))}
             </div>

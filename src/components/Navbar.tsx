@@ -6,7 +6,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import FloatingElement from "./FloatingElement";
 import egreedLogo from "@/assets/egreed-logo.png";
 
-const navItems = ["About", "Services", "Case-Studies", "Courses", "LLM", "Testimonials", "Contact"];
+const navItems = ["About", "Services", "Partners", "Products", "Courses", "Testimonials", "Contact"];
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);

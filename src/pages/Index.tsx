@@ -3,7 +3,10 @@ import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
 import ServicesSection from "@/components/ServicesSection";
+import PartnersSection from "@/components/PartnersSection";
 import CaseStudiesSection from "@/components/CaseStudiesSection";
+import CompletedProjectsSection from "@/components/CompletedProjectsSection";
+import ProductsSection from "@/components/ProductsSection";
 import CoursesSection from "@/components/CoursesSection";
 import LLMSection from "@/components/LLMSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
@@ -18,7 +21,10 @@ const Index = () => {
       <HeroSection />
       <AboutSection />
       <ServicesSection />
+      <PartnersSection />
       <CaseStudiesSection />
+      <CompletedProjectsSection />
+      <ProductsSection />
       <CoursesSection />
       <LLMSection />
       <TestimonialsSection />
@@ -26,7 +32,6 @@ const Index = () => {
       <Footer />
     </div>
   );
-  
 };
 
 export default Index;
