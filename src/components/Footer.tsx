@@ -92,10 +92,10 @@ const Footer = () => {
               © 2024 Egreed Technology. All rights reserved.
             </p>
             <div className="flex items-center gap-6 text-sm">
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+              <a href="/privacy-policy" className="text-muted-foreground hover:text-primary transition-colors">
                 Privacy Policy
               </a>
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+              <a href="/terms-of-service" className="text-muted-foreground hover:text-primary transition-colors">
                 Terms of Service
               </a>
               <span className="flex items-center gap-2 text-muted-foreground">
