@@ -11,11 +11,14 @@ import {
   Clock,
   AlertTriangle,
   BookOpen,
+  HelpCircle,
 } from "lucide-react";
 import { toast } from "sonner";
 import { Progress } from "@/components/ui/progress";
+import { Button } from "@/components/ui/button";
 import VideoPlayer from "@/components/VideoPlayer";
 import CertificateGenerator from "@/components/CertificateGenerator";
+import LearningTour from "@/components/LearningTour";
 
 interface LessonData {
   title: string;
@@ -58,6 +61,24 @@ const Learn = () => {
   const [tabFocused, setTabFocused] = useState(true);
   const [lessonStartTime, setLessonStartTime] = useState<number>(Date.now());
   const [studentName, setStudentName] = useState("");
+  const [showTour, setShowTour] = useState(false);
+
+  // Check if user has seen the tour before
+  useEffect(() => {
+    const hasSeenTour = localStorage.getItem("egreed-learning-tour-completed");
+    if (!hasSeenTour) {
+      setShowTour(true);
+    }
+  }, []);
+
+  const handleTourComplete = () => {
+    localStorage.setItem("egreed-learning-tour-completed", "true");
+    setShowTour(false);
+  };
+
+  const handleShowTour = () => {
+    setShowTour(true);
+  };
 
   // Anti-cheat: Track tab visibility
   useEffect(() => {
@@ -322,7 +343,11 @@ const Learn = () => {
   const courseCompleted = isCourseCompleted();
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <>
+      {/* Learning Tour Popup */}
+      {showTour && <LearningTour onComplete={handleTourComplete} />}
+
+      <div className="min-h-screen bg-background flex flex-col">
       {/* Header */}
       <header className="border-b border-border bg-card/95 backdrop-blur-sm sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
@@ -339,7 +364,17 @@ const Learn = () => {
               {course.title}
             </h1>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
+            {/* Help Button */}
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={handleShowTour}
+              className="hidden sm:flex items-center gap-2 text-muted-foreground hover:text-foreground"
+            >
+              <HelpCircle className="w-4 h-4" />
+              <span>Guide</span>
+            </Button>
             <div className="hidden sm:flex items-center gap-2 text-sm text-muted-foreground">
               <BookOpen className="w-4 h-4" />
               <span>{progress}% Complete</span>
@@ -501,6 +536,7 @@ const Learn = () => {
         </main>
       </div>
     </div>
+    </>
   );
 };
 
