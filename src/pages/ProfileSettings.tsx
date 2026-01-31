@@ -3,7 +3,8 @@ import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
-import { ArrowLeft, User, Camera, Save, Loader2 } from "lucide-react";
+import { ArrowLeft, User, Camera, Save, Loader2, RotateCcw } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -240,6 +241,26 @@ const ProfileSettings = () => {
                   </p>
                 </div>
               </div>
+            </div>
+
+            {/* Learning Tour Settings */}
+            <div className="bg-card border border-border rounded-2xl p-6">
+              <h2 className="text-lg font-semibold mb-4">Learning Guide</h2>
+              <p className="text-muted-foreground mb-4">
+                Reset the learning tour to view the step-by-step guide again when you visit a course.
+              </p>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => {
+                  localStorage.removeItem("egreed-learning-tour-completed");
+                  toast.success("Learning tour reset! Visit any course to see the guide again.");
+                }}
+                className="inline-flex items-center gap-2"
+              >
+                <RotateCcw className="w-4 h-4" />
+                Reset Learning Tour
+              </Button>
             </div>
 
             {/* Submit Button */}
