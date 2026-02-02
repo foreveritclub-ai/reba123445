@@ -10,7 +10,14 @@ import {
   Code2, 
   Smartphone, 
   Settings,
-  ArrowRight 
+  ArrowRight,
+  GraduationCap,
+  BrainCircuit,
+  Database,
+  Zap,
+  Users,
+  Award,
+  BookOpen
 } from "lucide-react";
 
 const itConsultingServices = [
@@ -107,6 +114,60 @@ const developmentServices = [
   },
 ];
 
+const trainingServices = [
+  {
+    icon: GraduationCap,
+    title: "Professional IT Training",
+    titleRw: "Amahugurwa y'Ikoranabuhanga",
+    description: "Comprehensive training programs designed to upskill your team with the latest technologies and best practices.",
+    features: [
+      "Cloud certifications (AWS, Azure, GCP)",
+      "Cybersecurity training & awareness",
+      "Programming bootcamps",
+      "IT project management",
+    ],
+  },
+  {
+    icon: Users,
+    title: "Corporate Workshops",
+    titleRw: "Amasomo y'Ibigo",
+    description: "Customized training workshops tailored to your organization's specific technology needs and goals.",
+    features: [
+      "On-site & remote training options",
+      "Hands-on practical sessions",
+      "Industry-recognized certificates",
+      "Ongoing mentorship support",
+    ],
+  },
+];
+
+const aiDataServices = [
+  {
+    icon: BrainCircuit,
+    title: "AI & Machine Learning",
+    titleRw: "Ubwenge Bwihindura",
+    description: "Leverage artificial intelligence to automate processes, gain insights, and drive innovation in your business.",
+    features: [
+      "AI strategy & consulting",
+      "Machine learning model development",
+      "Natural language processing (NLP)",
+      "Computer vision solutions",
+    ],
+  },
+  {
+    icon: Database,
+    title: "Data Analytics & BI",
+    titleRw: "Isesengura ry'Amakuru",
+    description: "Transform raw data into actionable insights with our comprehensive data analytics and business intelligence services.",
+    features: [
+      "Data warehouse design",
+      "Business intelligence dashboards",
+      "Predictive analytics",
+      "Data visualization & reporting",
+    ],
+  },
+];
+
 const ServiceCard = ({ service, index, isInView }: { service: typeof itConsultingServices[0], index: number, isInView: boolean }) => (
   <motion.div
     className="group bg-gradient-card border-gradient rounded-2xl p-8 hover:glow-primary transition-all duration-500"
@@ -195,6 +256,46 @@ const ServicesSection = () => {
           <div className="grid md:grid-cols-2 gap-8">
             {developmentServices.map((service, index) => (
               <ServiceCard key={service.title} service={service} index={index + 4} isInView={isInView} />
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Training & Education Services */}
+        <motion.div
+          className="mb-16"
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.5, delay: 0.6 }}
+        >
+          <h3 className="text-2xl md:text-3xl font-bold text-center mb-4">
+            <span className="text-accent">Training & Education</span> Services
+          </h3>
+          <p className="text-center text-muted-foreground mb-8 max-w-2xl mx-auto">
+            <span className="text-sm">🇷🇼 Amahugurwa y'Ikoranabuhanga mu Rwanda</span>
+          </p>
+          <div className="grid md:grid-cols-2 gap-8">
+            {trainingServices.map((service, index) => (
+              <ServiceCard key={service.title} service={service} index={index + 8} isInView={isInView} />
+            ))}
+          </div>
+        </motion.div>
+
+        {/* AI & Data Services */}
+        <motion.div
+          className="mb-16"
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.5, delay: 0.8 }}
+        >
+          <h3 className="text-2xl md:text-3xl font-bold text-center mb-4">
+            <span className="text-accent">AI & Data</span> Services
+          </h3>
+          <p className="text-center text-muted-foreground mb-8 max-w-2xl mx-auto">
+            <span className="text-sm">🇷🇼 Ubwenge Bwihindura n'Isesengura ry'Amakuru</span>
+          </p>
+          <div className="grid md:grid-cols-2 gap-8">
+            {aiDataServices.map((service, index) => (
+              <ServiceCard key={service.title} service={service} index={index + 10} isInView={isInView} />
             ))}
           </div>
         </motion.div>

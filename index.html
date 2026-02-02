@@ -407,7 +407,7 @@
       "@type": "Service",
       "serviceType": "IT Consulting",
       "name": "IT Consulting Services in Kigali, Rwanda",
-      "description": "Professional IT consulting services including cloud solutions, cybersecurity, website development , app develpment and management, infrastructure management, and digital transformation for businesses in Rwanda.",
+      "description": "Professional IT consulting services including cloud solutions, cybersecurity, website development, app development and management, infrastructure management, and digital transformation for businesses in Rwanda.",
       "provider": {
         "@type": "Organization",
         "name": "Egreed Technology",
@@ -424,11 +424,102 @@
           {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Cloud Migration"}},
           {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Cybersecurity"}},
           {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Web Development"}},
-          {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Mobile App Development"}}
+          {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Mobile App Development"}},
+          {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "AI & Machine Learning"}},
+          {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Data Analytics & BI"}},
+          {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Professional IT Training"}}
         ]
       }
     }
     </script>
+
+    <!-- Structured Data - EducationalOrganization for Training Services -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "EducationalOrganization",
+      "name": "Egreed Technology Training Academy",
+      "alternateName": "EgreedLearn",
+      "url": "https://egreedtech.org/learn",
+      "description": "Professional IT training and certification programs in Kigali, Rwanda. Cloud computing, cybersecurity, programming, and data science courses with industry-recognized certificates.",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Kigali",
+        "addressCountry": "RW"
+      },
+      "hasCredential": [
+        {"@type": "EducationalOccupationalCredential", "name": "AWS Cloud Certification Training"},
+        {"@type": "EducationalOccupationalCredential", "name": "Cybersecurity Professional Certificate"},
+        {"@type": "EducationalOccupationalCredential", "name": "Full-Stack Web Development Certificate"},
+        {"@type": "EducationalOccupationalCredential", "name": "Data Science & AI Certificate"}
+      ],
+      "parentOrganization": {
+        "@type": "Organization",
+        "name": "Egreed Technology",
+        "url": "https://egreedtech.org"
+      }
+    }
+    </script>
+
+    <!-- Structured Data - Course offerings -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "name": "IT Training Courses in Rwanda",
+      "description": "Professional technology courses and certifications offered by Egreed Technology in Kigali, Rwanda",
+      "itemListElement": [
+        {
+          "@type": "Course",
+          "position": 1,
+          "name": "Cloud Computing & AWS Certification",
+          "description": "Master AWS, Azure, and Google Cloud Platform with hands-on training and certification preparation",
+          "provider": {"@type": "Organization", "name": "Egreed Technology"},
+          "educationalLevel": "Professional",
+          "inLanguage": ["en", "rw"]
+        },
+        {
+          "@type": "Course",
+          "position": 2,
+          "name": "Cybersecurity Fundamentals",
+          "description": "Learn ethical hacking, network security, and threat prevention for the Rwandan market",
+          "provider": {"@type": "Organization", "name": "Egreed Technology"},
+          "educationalLevel": "Professional",
+          "inLanguage": ["en", "rw"]
+        },
+        {
+          "@type": "Course",
+          "position": 3,
+          "name": "Full-Stack Web Development",
+          "description": "Complete web development training from HTML/CSS to React, Node.js, and databases",
+          "provider": {"@type": "Organization", "name": "Egreed Technology"},
+          "educationalLevel": "Beginner to Advanced",
+          "inLanguage": ["en", "rw"]
+        },
+        {
+          "@type": "Course",
+          "position": 4,
+          "name": "AI & Machine Learning",
+          "description": "Introduction to artificial intelligence, Python programming, and machine learning models",
+          "provider": {"@type": "Organization", "name": "Egreed Technology"},
+          "educationalLevel": "Intermediate",
+          "inLanguage": ["en", "rw"]
+        }
+      ]
+    }
+    </script>
+
+    <!-- Additional SEO Keywords Meta -->
+    <meta name="news_keywords" content="IT training Rwanda, tech courses Kigali, AWS certification Rwanda, cybersecurity training Kigali, web development courses Rwanda, AI machine learning Rwanda, data analytics Kigali, professional IT certification Rwanda, Egreed Technology courses, amahugurwa ikoranabuhanga, ubwenge bwihindura">
+    
+    <!-- Dublin Core Metadata for Academic/Professional Content -->
+    <meta name="DC.title" content="Egreed Technology - IT Consulting, Training & Digital Solutions Rwanda">
+    <meta name="DC.creator" content="Egreed Technology">
+    <meta name="DC.subject" content="IT Consulting; Cloud Computing; Cybersecurity; Web Development; Mobile Apps; AI; Machine Learning; Professional Training; Rwanda; Kigali">
+    <meta name="DC.description" content="Rwanda's leading IT consulting and training company offering cloud migration, cybersecurity, software development, AI solutions, and professional tech certification courses in Kigali.">
+    <meta name="DC.publisher" content="Egreed Technology">
+    <meta name="DC.language" content="en">
+    <meta name="DC.coverage" content="Rwanda, East Africa">
   </head>
   <body>
     <div id="root"></div>
