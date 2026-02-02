@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
-import { ArrowLeft, User, Camera, Save, Loader2, RotateCcw } from "lucide-react";
+import { ArrowLeft, User, Camera, Save, Loader2, RotateCcw, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
@@ -23,6 +23,7 @@ const ProfileSettings = () => {
   const { user, loading: authLoading } = useAuth();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [profile, setProfile] = useState<Profile>({
     full_name: "",
     email: "",
@@ -39,8 +40,27 @@ const ProfileSettings = () => {
 
     if (user) {
       fetchProfile();
+      checkAdminRole();
     }
   }, [user, authLoading, navigate]);
+
+  const checkAdminRole = async () => {
+    if (!user) return;
+    try {
+      const { data, error } = await supabase
+        .from("user_roles")
+        .select("role")
+        .eq("user_id", user.id)
+        .eq("role", "admin")
+        .maybeSingle();
+
+      if (!error && data) {
+        setIsAdmin(true);
+      }
+    } catch (error) {
+      console.error("Error checking admin role:", error);
+    }
+  };
 
   const fetchProfile = async () => {
     try {
@@ -262,6 +282,30 @@ const ProfileSettings = () => {
                 Reset Learning Tour
               </Button>
             </div>
+
+            {/* Admin Dashboard Link - Only visible to admins */}
+            {isAdmin && (
+              <div className="bg-gradient-to-r from-primary/10 to-primary/5 border border-primary/20 rounded-2xl p-6">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center">
+                    <Shield className="w-5 h-5 text-primary" />
+                  </div>
+                  <div>
+                    <h2 className="text-lg font-semibold">Admin Access</h2>
+                    <p className="text-sm text-muted-foreground">You have administrator privileges</p>
+                  </div>
+                </div>
+                <p className="text-muted-foreground mb-4">
+                  Manage courses, blog posts, testimonials, partners, products, and view contact messages.
+                </p>
+                <Link to="/admin">
+                  <Button className="inline-flex items-center gap-2">
+                    <Shield className="w-4 h-4" />
+                    Go to Admin Dashboard
+                  </Button>
+                </Link>
+              </div>
+            )}
 
             {/* Submit Button */}
             <div className="flex justify-end">
