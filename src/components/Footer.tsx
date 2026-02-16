@@ -1,9 +1,24 @@
 import { motion } from "framer-motion";
 import { Mail, Phone, MapPin } from "lucide-react";
+import { Link } from "react-router-dom";
 import egreedLogo from "@/assets/egreed-logo.png";
 
-const quickLinks = ["Home", "About Us", "Services", "Courses", "LLM", "Testimonials", "Contact"];
-const serviceLinks = ["Strategic Planning", "Website Management", "Software Architecture", "Digital Engagement", "Custom Solutions"];
+const quickLinks = [
+  { label: "Home", href: "/" },
+  { label: "About Us", href: "/#about" },
+  { label: "Services", href: "/#services" },
+  { label: "Courses", href: "/#courses" },
+  { label: "Case Studies", href: "/case-studies" },
+  { label: "Blog", href: "/blog" },
+  { label: "Contact", href: "/#contact" },
+];
+const serviceLinks = [
+  { label: "Cloud Migration", to: "/services/cloud-migration" },
+  { label: "AI & Machine Learning", to: "/services/ai-machine-learning" },
+  { label: "Data Analytics", to: "/services/data-analytics" },
+  { label: "Web Development", to: "/services/web-development" },
+  { label: "Cybersecurity", to: "/services/cybersecurity" },
+];
 
 const Footer = () => {
   return (
@@ -39,12 +54,12 @@ const Footer = () => {
             <h4 className="font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-3">
               {quickLinks.map((link) => (
-                <li key={link}>
+                <li key={link.label}>
                   <a
-                    href={`#${link.toLowerCase().replace(" ", "-")}`}
+                    href={link.href}
                     className="text-sm text-muted-foreground hover:text-primary transition-colors"
                   >
-                    {link}
+                    {link.label}
                   </a>
                 </li>
               ))}
@@ -56,13 +71,13 @@ const Footer = () => {
             <h4 className="font-semibold mb-4">Our Services</h4>
             <ul className="space-y-3">
               {serviceLinks.map((link) => (
-                <li key={link}>
-                  <a
-                    href="#services"
+                <li key={link.label}>
+                  <Link
+                    to={link.to}
                     className="text-sm text-muted-foreground hover:text-primary transition-colors"
                   >
-                    {link}
-                  </a>
+                    {link.label}
+                  </Link>
                 </li>
               ))}
             </ul>

@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
+import { Link } from "react-router-dom";
 import { 
   Cloud, 
   Shield, 
@@ -22,6 +23,7 @@ import {
 
 const itConsultingServices = [
   {
+    slug: "cloud-migration",
     icon: Cloud,
     title: "Cloud Migration & Management",
     description: "Seamlessly migrate your infrastructure to the cloud and optimize your cloud operations for maximum efficiency.",
@@ -33,6 +35,7 @@ const itConsultingServices = [
     ],
   },
   {
+    slug: "cybersecurity",
     icon: Shield,
     title: "Cybersecurity Solutions",
     description: "Protect your business with comprehensive security assessments, implementation, and ongoing monitoring.",
@@ -44,6 +47,7 @@ const itConsultingServices = [
     ],
   },
   {
+    slug: "infrastructure-management",
     icon: Server,
     title: "Infrastructure Management",
     description: "Design, deploy, and manage robust IT infrastructure that scales with your business needs.",
@@ -55,6 +59,7 @@ const itConsultingServices = [
     ],
   },
   {
+    slug: "it-strategy",
     icon: Compass,
     title: "IT Strategy & Planning",
     description: "Align your technology investments with business goals through strategic IT consulting and roadmap development.",
@@ -69,6 +74,7 @@ const itConsultingServices = [
 
 const developmentServices = [
   {
+    slug: "web-development",
     icon: Globe,
     title: "Web Development",
     description: "Build stunning, responsive websites and web applications that drive engagement and conversions.",
@@ -80,6 +86,7 @@ const developmentServices = [
     ],
   },
   {
+    slug: "mobile-development",
     icon: Smartphone,
     title: "Mobile App Development",
     description: "Create powerful mobile applications for iOS and Android that deliver exceptional user experiences.",
@@ -91,6 +98,7 @@ const developmentServices = [
     ],
   },
   {
+    slug: "custom-software",
     icon: Code2,
     title: "Custom Software Development",
     description: "Build tailored software solutions that automate processes and solve unique business challenges.",
@@ -102,6 +110,7 @@ const developmentServices = [
     ],
   },
   {
+    slug: "website-management",
     icon: Settings,
     title: "Website & App Management",
     description: "Comprehensive ongoing management and maintenance to keep your digital assets performing optimally.",
@@ -116,6 +125,7 @@ const developmentServices = [
 
 const trainingServices = [
   {
+    slug: "professional-it-training",
     icon: GraduationCap,
     title: "Professional IT Training",
     titleRw: "Amahugurwa y'Ikoranabuhanga",
@@ -128,6 +138,7 @@ const trainingServices = [
     ],
   },
   {
+    slug: "corporate-workshops",
     icon: Users,
     title: "Corporate Workshops",
     titleRw: "Amasomo y'Ibigo",
@@ -143,6 +154,7 @@ const trainingServices = [
 
 const aiDataServices = [
   {
+    slug: "ai-machine-learning",
     icon: BrainCircuit,
     title: "AI & Machine Learning",
     titleRw: "Ubwenge Bwihindura",
@@ -155,6 +167,7 @@ const aiDataServices = [
     ],
   },
   {
+    slug: "data-analytics",
     icon: Database,
     title: "Data Analytics & BI",
     titleRw: "Isesengura ry'Amakuru",
@@ -169,40 +182,42 @@ const aiDataServices = [
 ];
 
 const ServiceCard = ({ service, index, isInView }: { service: typeof itConsultingServices[0], index: number, isInView: boolean }) => (
-  <motion.div
-    className="group bg-gradient-card border-gradient rounded-2xl p-8 hover:glow-primary transition-all duration-500"
-    initial={{ opacity: 0, y: 40 }}
-    animate={isInView ? { opacity: 1, y: 0 } : {}}
-    transition={{ duration: 0.6, delay: index * 0.1 }}
-  >
-    <div className="flex items-start gap-5 mb-6">
-      <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
-        <service.icon className="w-7 h-7 text-primary" />
+  <Link to={`/services/${service.slug}`}>
+    <motion.div
+      className="group bg-gradient-card border-gradient rounded-2xl p-8 hover:glow-primary transition-all duration-500 h-full"
+      initial={{ opacity: 0, y: 40 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.6, delay: index * 0.1 }}
+    >
+      <div className="flex items-start gap-5 mb-6">
+        <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
+          <service.icon className="w-7 h-7 text-primary" />
+        </div>
+        <div>
+          <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors">
+            {service.title}
+          </h3>
+          <p className="text-muted-foreground text-sm">
+            {service.description}
+          </p>
+        </div>
       </div>
-      <div>
-        <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors">
-          {service.title}
-        </h3>
-        <p className="text-muted-foreground text-sm">
-          {service.description}
-        </p>
-      </div>
-    </div>
 
-    <ul className="space-y-3 mb-6">
-      {service.features.map((feature) => (
-        <li key={feature} className="flex items-center gap-3 text-sm text-muted-foreground">
-          <div className="w-1.5 h-1.5 bg-primary rounded-full" />
-          {feature}
-        </li>
-      ))}
-    </ul>
+      <ul className="space-y-3 mb-6">
+        {service.features.map((feature) => (
+          <li key={feature} className="flex items-center gap-3 text-sm text-muted-foreground">
+            <div className="w-1.5 h-1.5 bg-primary rounded-full" />
+            {feature}
+          </li>
+        ))}
+      </ul>
 
-    <button className="inline-flex items-center gap-2 text-primary font-medium text-sm group-hover:gap-3 transition-all">
-      Get Started
-      <ArrowRight className="w-4 h-4" />
-    </button>
-  </motion.div>
+      <span className="inline-flex items-center gap-2 text-primary font-medium text-sm group-hover:gap-3 transition-all">
+        Learn More
+        <ArrowRight className="w-4 h-4" />
+      </span>
+    </motion.div>
+  </Link>
 );
 
 const ServicesSection = () => {
