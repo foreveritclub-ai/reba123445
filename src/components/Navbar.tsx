@@ -7,6 +7,10 @@ import FloatingElement from "./FloatingElement";
 import egreedLogo from "@/assets/egreed-logo.png";
 
 const navItems = ["About", "Services", "Partners", "Products", "Courses", "Testimonials", "Contact"];
+const pageLinks = [
+  { label: "Blog", to: "/blog" },
+  { label: "Case Studies", to: "/case-studies" },
+];
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -40,14 +44,16 @@ const Navbar = () => {
               </motion.a>
             </FloatingElement>
           ))}
-          <FloatingElement magnetStrength={0.4}>
-            <Link
-              to="/blog"
-              className="text-muted-foreground hover:text-foreground transition-colors duration-300 text-sm font-medium"
-            >
-              Blog
-            </Link>
-          </FloatingElement>
+          {pageLinks.map(link => (
+            <FloatingElement key={link.label} magnetStrength={0.4}>
+              <Link
+                to={link.to}
+                className="text-muted-foreground hover:text-foreground transition-colors duration-300 text-sm font-medium"
+              >
+                {link.label}
+              </Link>
+            </FloatingElement>
+          ))}
         </div>
 
         <div className="flex items-center gap-4">
@@ -97,13 +103,16 @@ const Navbar = () => {
                 {item}
               </a>
             ))}
-            <Link
-              to="/blog"
-              className="text-foreground py-2 font-medium"
-              onClick={() => setMobileOpen(false)}
-            >
-              Blog
-            </Link>
+            {pageLinks.map(link => (
+              <Link
+                key={link.label}
+                to={link.to}
+                className="text-foreground py-2 font-medium"
+                onClick={() => setMobileOpen(false)}
+              >
+                {link.label}
+              </Link>
+            ))}
             <a
               href="#contact"
               className="mt-2 px-5 py-3 bg-primary text-primary-foreground text-center font-medium rounded-lg"

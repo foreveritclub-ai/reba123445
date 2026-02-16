@@ -59,6 +59,63 @@ export type Database = {
         }
         Relationships: []
       }
+      case_studies: {
+        Row: {
+          category: string
+          challenge: string
+          client_name: string | null
+          created_at: string
+          display_order: number | null
+          id: string
+          image_url: string | null
+          industry: string | null
+          is_published: boolean | null
+          metrics: Json | null
+          results: string
+          slug: string
+          solution: string
+          tags: string[] | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          category?: string
+          challenge: string
+          client_name?: string | null
+          created_at?: string
+          display_order?: number | null
+          id?: string
+          image_url?: string | null
+          industry?: string | null
+          is_published?: boolean | null
+          metrics?: Json | null
+          results: string
+          slug: string
+          solution: string
+          tags?: string[] | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          category?: string
+          challenge?: string
+          client_name?: string | null
+          created_at?: string
+          display_order?: number | null
+          id?: string
+          image_url?: string | null
+          industry?: string | null
+          is_published?: boolean | null
+          metrics?: Json | null
+          results?: string
+          slug?: string
+          solution?: string
+          tags?: string[] | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       certificates: {
         Row: {
           certificate_number: string
@@ -457,6 +514,48 @@ export type Database = {
           id?: string
           phone?: string | null
           updated_at?: string
+        }
+        Relationships: []
+      }
+      service_inquiries: {
+        Row: {
+          company: string | null
+          created_at: string
+          email: string
+          id: string
+          message: string | null
+          name: string
+          phone: string | null
+          service_name: string
+          service_slug: string
+          status: string
+          user_id: string | null
+        }
+        Insert: {
+          company?: string | null
+          created_at?: string
+          email: string
+          id?: string
+          message?: string | null
+          name: string
+          phone?: string | null
+          service_name: string
+          service_slug: string
+          status?: string
+          user_id?: string | null
+        }
+        Update: {
+          company?: string | null
+          created_at?: string
+          email?: string
+          id?: string
+          message?: string | null
+          name?: string
+          phone?: string | null
+          service_name?: string
+          service_slug?: string
+          status?: string
+          user_id?: string | null
         }
         Relationships: []
       }
