@@ -1,58 +1,26 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Percent, ArrowRight } from "lucide-react";
+import { X, Sparkles, Gift, ArrowRight, Clock } from "lucide-react";
+import { Link } from "react-router-dom";
 
-interface PopupAdProps {
-  position: "bottom-right" | "top-right" | "top-left";
-  delay: number;
-  title: string;
-  description: string;
-  code: string;
-}
-
-const PopupAd = ({ position, delay, title, description, code }: PopupAdProps) => {
+const DiscountPopup = () => {
   const [visible, setVisible] = useState(false);
   const [dismissed, setDismissed] = useState(false);
 
   useEffect(() => {
-    const key = `popup_dismissed_${position}`;
-    const wasDismissed = sessionStorage.getItem(key);
+    const wasDismissed = sessionStorage.getItem("discount_popup_dismissed");
     if (wasDismissed) {
       setDismissed(true);
       return;
     }
-    const timer = setTimeout(() => setVisible(true), delay);
+    const timer = setTimeout(() => setVisible(true), 4000);
     return () => clearTimeout(timer);
-  }, [delay, position]);
+  }, []);
 
   const handleDismiss = () => {
     setVisible(false);
     setDismissed(true);
-    sessionStorage.setItem(`popup_dismissed_${position}`, "true");
-  };
-
-  const positionClasses: Record<string, string> = {
-    "bottom-right": "bottom-4 right-4",
-    "top-right": "top-20 right-4",
-    "top-left": "top-20 left-4",
-  };
-
-  const originMap: Record<string, { initial: { opacity: number; x?: number; y?: number; scale: number }; animate: { opacity: number; x?: number; y?: number; scale: number }; exit: { opacity: number; x?: number; y?: number; scale: number } }> = {
-    "bottom-right": {
-      initial: { opacity: 0, y: 40, scale: 0.9 },
-      animate: { opacity: 1, y: 0, scale: 1 },
-      exit: { opacity: 0, y: 40, scale: 0.9 },
-    },
-    "top-right": {
-      initial: { opacity: 0, x: 40, scale: 0.9 },
-      animate: { opacity: 1, x: 0, scale: 1 },
-      exit: { opacity: 0, x: 40, scale: 0.9 },
-    },
-    "top-left": {
-      initial: { opacity: 0, x: -40, scale: 0.9 },
-      animate: { opacity: 1, x: 0, scale: 1 },
-      exit: { opacity: 0, x: -40, scale: 0.9 },
-    },
+    sessionStorage.setItem("discount_popup_dismissed", "true");
   };
 
   if (dismissed) return null;
@@ -60,80 +28,110 @@ const PopupAd = ({ position, delay, title, description, code }: PopupAdProps) =>
   return (
     <AnimatePresence>
       {visible && (
-        <motion.div
-          className={`fixed ${positionClasses[position]} z-50 w-72 sm:w-80`}
-          {...originMap[position]}
-          transition={{ type: "spring", damping: 20, stiffness: 300 }}
-        >
-          <div className="relative bg-card border border-primary/30 rounded-2xl p-5 shadow-2xl shadow-primary/10 overflow-hidden">
-            {/* Glow accent */}
-            <div className="absolute -top-10 -right-10 w-24 h-24 bg-primary/20 rounded-full blur-2xl" />
+        <>
+          {/* Backdrop */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm"
+            onClick={handleDismiss}
+          />
 
-            <button
-              onClick={handleDismiss}
-              className="absolute top-2 right-2 p-1 rounded-full hover:bg-muted transition-colors text-muted-foreground hover:text-foreground"
-              aria-label="Close"
-            >
-              <X className="w-4 h-4" />
-            </button>
+          {/* Popup */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8, y: 30 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.8, y: 30 }}
+            transition={{ type: "spring", damping: 22, stiffness: 300 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none"
+          >
+            <div className="relative w-full max-w-md pointer-events-auto rounded-3xl overflow-hidden shadow-2xl">
+              {/* Top accent bar */}
+              <div className="h-1.5 bg-gradient-to-r from-primary via-orange-400 to-primary" />
 
-            <div className="flex items-center gap-2 mb-2">
-              <div className="p-1.5 rounded-lg bg-primary/10">
-                <Percent className="w-4 h-4 text-primary" />
+              <div className="bg-card p-0">
+                {/* Close button */}
+                <button
+                  onClick={handleDismiss}
+                  className="absolute top-4 right-4 z-10 p-1.5 rounded-full bg-muted/80 hover:bg-muted transition-colors text-muted-foreground hover:text-foreground"
+                  aria-label="Close"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+
+                {/* Hero section */}
+                <div className="relative px-8 pt-10 pb-6 text-center overflow-hidden">
+                  {/* Glow effects */}
+                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-primary/15 rounded-full blur-3xl" />
+                  <div className="absolute -bottom-16 -left-16 w-40 h-40 bg-orange-500/10 rounded-full blur-3xl" />
+                  <div className="absolute -bottom-16 -right-16 w-40 h-40 bg-primary/10 rounded-full blur-3xl" />
+
+                  <motion.div
+                    animate={{ rotate: [0, 5, -5, 0] }}
+                    transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
+                    className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-orange-500 mb-5 shadow-lg shadow-primary/30"
+                  >
+                    <Gift className="w-8 h-8 text-primary-foreground" />
+                  </motion.div>
+
+                  <div className="flex items-center justify-center gap-1.5 mb-3">
+                    <Sparkles className="w-4 h-4 text-primary" />
+                    <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">
+                      Exclusive Offer
+                    </span>
+                    <Sparkles className="w-4 h-4 text-primary" />
+                  </div>
+
+                  <h2 className="text-4xl sm:text-5xl font-black mb-1 tracking-tight">
+                    <span className="bg-gradient-to-r from-primary via-orange-400 to-primary bg-clip-text text-transparent">
+                      20% OFF
+                    </span>
+                  </h2>
+                  <p className="text-lg font-semibold mb-2">All Services & Courses</p>
+                  <p className="text-sm text-muted-foreground max-w-xs mx-auto">
+                    Transform your business with our premium IT solutions at an unbeatable price.
+                  </p>
+                </div>
+
+                {/* Code section */}
+                <div className="mx-8 mb-5">
+                  <div className="relative flex items-center justify-center gap-3 px-5 py-3.5 rounded-xl bg-muted/50 border-2 border-dashed border-primary/40">
+                    <span className="text-sm text-muted-foreground font-medium">Promo Code:</span>
+                    <span className="font-mono text-xl font-black text-primary tracking-widest">EGREED20</span>
+                  </div>
+                </div>
+
+                {/* Timer urgency */}
+                <div className="flex items-center justify-center gap-2 mb-5 text-muted-foreground">
+                  <Clock className="w-4 h-4 text-orange-400" />
+                  <span className="text-xs font-medium">Limited time — Don't miss out!</span>
+                </div>
+
+                {/* CTA */}
+                <div className="px-8 pb-8">
+                  <Link
+                    to="/claim-offer"
+                    onClick={handleDismiss}
+                    className="flex items-center justify-center gap-2 w-full py-4 rounded-xl bg-gradient-to-r from-primary to-orange-500 text-primary-foreground font-bold text-base hover:shadow-lg hover:shadow-primary/30 transition-all hover:scale-[1.02] active:scale-[0.98]"
+                  >
+                    Claim Your 20% Discount
+                    <ArrowRight className="w-5 h-5" />
+                  </Link>
+                  <button
+                    onClick={handleDismiss}
+                    className="w-full mt-3 text-xs text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    No thanks, I'll pay full price
+                  </button>
+                </div>
               </div>
-              <span className="text-xs font-bold uppercase tracking-wider text-primary">
-                Limited Offer
-              </span>
             </div>
-
-            <h4 className="text-lg font-bold mb-1">{title}</h4>
-            <p className="text-sm text-muted-foreground mb-3">{description}</p>
-
-            <div className="flex items-center gap-2 mb-3 px-3 py-2 bg-muted/50 rounded-lg border border-dashed border-primary/30">
-              <span className="text-xs text-muted-foreground">Use code:</span>
-              <span className="font-mono font-bold text-primary text-sm">{code}</span>
-            </div>
-
-            <a
-              href="#contact"
-              onClick={handleDismiss}
-              className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:underline"
-            >
-              Claim Now <ArrowRight className="w-3.5 h-3.5" />
-            </a>
-          </div>
-        </motion.div>
+          </motion.div>
+        </>
       )}
     </AnimatePresence>
   );
 };
 
-const DiscountPopups = () => {
-  return (
-    <>
-      <PopupAd
-        position="bottom-right"
-        delay={3000}
-        title="20% Off All Services!"
-        description="Get 20% discount on any IT consulting or development service."
-        code="EGREED20"
-      />
-      <PopupAd
-        position="top-right"
-        delay={8000}
-        title="20% Off Training!"
-        description="Enroll in any course today and save 20% on your tuition."
-        code="LEARN20"
-      />
-      <PopupAd
-        position="top-left"
-        delay={15000}
-        title="20% Off Web Dev!"
-        description="Launch your professional website with 20% off our packages."
-        code="WEB20"
-      />
-    </>
-  );
-};
-
-export default DiscountPopups;
+export default DiscountPopup;
