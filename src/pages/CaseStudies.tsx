@@ -92,8 +92,15 @@ const CaseStudies = () => {
                 >
                   <Link
                     to={`/case-studies/${study.slug}`}
-                    className="block bg-card border border-border/50 rounded-2xl p-6 md:p-8 hover:border-primary/50 transition-colors group"
+                    className="block bg-card border border-border/50 rounded-2xl overflow-hidden hover:border-primary/50 transition-colors group"
                   >
+                    <div className="grid md:grid-cols-3 gap-0">
+                      {study.image_url && (
+                        <div className="h-48 md:h-auto overflow-hidden">
+                          <img src={study.image_url} alt={study.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                        </div>
+                      )}
+                      <div className={`p-6 md:p-8 ${study.image_url ? 'md:col-span-2' : 'md:col-span-3'}`}>
                     <div className="flex flex-wrap items-center gap-2 mb-3">
                       <span className="text-xs font-medium text-primary bg-primary/10 px-3 py-1 rounded-full">{study.category}</span>
                       {study.industry && <span className="text-xs text-muted-foreground">{study.industry}</span>}
@@ -113,6 +120,8 @@ const CaseStudies = () => {
                     <span className="inline-flex items-center gap-2 text-sm text-primary font-medium group-hover:gap-3 transition-all">
                       Read Full Case Study <ArrowRight className="w-4 h-4" />
                     </span>
+                      </div>
+                    </div>
                   </Link>
                 </motion.div>
               ))}

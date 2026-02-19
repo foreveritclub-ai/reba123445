@@ -1,19 +1,35 @@
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { ExternalLink, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { supabase } from "@/integrations/supabase/client";
 
-const projects = [
-  {
-    name: "Muhazi Dental Clinic",
-    client: "Muhazi Dental Clinic",
-    description: "A modern, responsive website for a leading dental clinic in Rwanda featuring online appointment booking, service showcase, and patient information portal.",
-    url: "https://muhazidentalclinic.org",
-    services: ["Web Development", "UI/UX Design", "SEO Optimization", "Hosting & Maintenance"],
-    image: "https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=600&h=400&fit=crop"
-  }
-];
+interface Project {
+  id: string;
+  name: string;
+  description: string | null;
+  url: string;
+  image_url: string | null;
+  client_name: string | null;
+}
 
 const CompletedProjectsSection = () => {
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      const { data } = await supabase
+        .from("completed_projects")
+        .select("id, name, description, url, image_url, client_name")
+        .eq("is_active", true)
+        .order("display_order");
+      setProjects(data || []);
+      setLoading(false);
+    };
+    fetchProjects();
+  }, []);
+
   return (
     <section id="completed-projects" className="py-20 bg-background">
       <div className="container mx-auto px-4">
@@ -36,77 +52,52 @@ const CompletedProjectsSection = () => {
           </p>
         </motion.div>
 
-        <div className="max-w-4xl mx-auto">
-          {projects.map((project, index) => (
-            <motion.div
-              key={project.name}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.2 }}
-              viewport={{ once: true }}
-              className="bg-card border border-border rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300"
-            >
-              <div className="grid md:grid-cols-2 gap-0">
-                {/* Image */}
-                <div className="relative h-64 md:h-auto overflow-hidden">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+          {loading ? (
+            Array.from({ length: 3 }).map((_, i) => (
+              <div key={i} className="bg-card border border-border rounded-2xl h-80 animate-pulse" />
+            ))
+          ) : (
+            projects.map((project, index) => (
+              <motion.div
+                key={project.id}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                className="bg-card border border-border rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300 group flex flex-col"
+              >
+                <div className="relative h-48 overflow-hidden">
                   <img
-                    src={project.image}
+                    src={project.image_url || "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop"}
                     alt={project.name}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent md:hidden" />
-                  <div className="absolute bottom-4 left-4 md:hidden">
-                    <span className="px-3 py-1 bg-primary text-primary-foreground text-xs font-medium rounded-full">
-                      Live Project
+                  <div className="absolute top-3 right-3">
+                    <span className="px-3 py-1 bg-green-500/90 text-white text-xs font-medium rounded-full">
+                      ✓ Live
                     </span>
                   </div>
                 </div>
 
-                {/* Content */}
-                <div className="p-6 md:p-8 flex flex-col">
-                  <div className="hidden md:block mb-4">
-                    <span className="px-3 py-1 bg-green-500/10 text-green-600 text-xs font-medium rounded-full">
-                      ✓ Live & Active
-                    </span>
-                  </div>
-                  
-                  <h3 className="text-2xl font-bold mb-2">{project.name}</h3>
-                  <p className="text-sm text-muted-foreground mb-4">
-                    Client: {project.client}
-                  </p>
-                  <p className="text-muted-foreground mb-6 flex-1">
+                <div className="p-5 flex flex-col flex-1">
+                  <h3 className="text-lg font-bold mb-1">{project.name}</h3>
+                  {project.client_name && (
+                    <p className="text-xs text-muted-foreground mb-2">Client: {project.client_name}</p>
+                  )}
+                  <p className="text-sm text-muted-foreground mb-4 line-clamp-3 flex-1">
                     {project.description}
                   </p>
-
-                  {/* Services Provided */}
-                  <div className="mb-6">
-                    <h4 className="text-sm font-semibold mb-2 text-muted-foreground uppercase tracking-wide">
-                      Services Provided
-                    </h4>
-                    <div className="flex flex-wrap gap-2">
-                      {project.services.map((service) => (
-                        <span
-                          key={service}
-                          className="flex items-center gap-1 px-3 py-1 bg-muted text-xs rounded-full"
-                        >
-                          <CheckCircle className="w-3 h-3 text-primary" />
-                          {service}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* CTA */}
                   <a href={project.url} target="_blank" rel="noopener noreferrer">
-                    <Button className="w-full sm:w-auto">
+                    <Button size="sm" className="w-full">
                       View Live Site
                       <ExternalLink className="w-4 h-4 ml-2" />
                     </Button>
                   </a>
                 </div>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            ))
+          )}
         </div>
       </div>
     </section>
