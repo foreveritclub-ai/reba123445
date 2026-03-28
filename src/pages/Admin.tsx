@@ -231,6 +231,10 @@ const Admin = () => {
           <TabsContent value="case-studies">
             <AdminCaseStudies />
           </TabsContent>
+
+          <TabsContent value="discount">
+            <AdminDiscountConfig />
+          </TabsContent>
         </Tabs>
       </main>
     </div>
