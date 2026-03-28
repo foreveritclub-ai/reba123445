@@ -22,7 +22,8 @@ import {
   Package,
   FolderGit2,
   Home,
-  FlaskConical
+  FlaskConical,
+  Gift
 } from "lucide-react";
 import AdminDashboard from "@/components/admin/AdminDashboard";
 import AdminMessages from "@/components/admin/AdminMessages";
@@ -33,6 +34,7 @@ import AdminPartners from "@/components/admin/AdminPartners";
 import AdminProducts from "@/components/admin/AdminProducts";
 import AdminProjects from "@/components/admin/AdminProjects";
 import AdminCaseStudies from "@/components/admin/AdminCaseStudies";
+import AdminDiscountConfig from "@/components/admin/AdminDiscountConfig";
 
 const Admin = () => {
   const { user, signOut } = useAuth();
@@ -189,6 +191,10 @@ const Admin = () => {
               <FlaskConical className="w-4 h-4" />
               <span className="hidden sm:inline">Case Studies</span>
             </TabsTrigger>
+            <TabsTrigger value="discount" className="flex items-center gap-2 py-2 px-3">
+              <Gift className="w-4 h-4" />
+              <span className="hidden sm:inline">Discount</span>
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="dashboard">
@@ -225,6 +231,10 @@ const Admin = () => {
 
           <TabsContent value="case-studies">
             <AdminCaseStudies />
+          </TabsContent>
+
+          <TabsContent value="discount">
+            <AdminDiscountConfig />
           </TabsContent>
         </Tabs>
       </main>

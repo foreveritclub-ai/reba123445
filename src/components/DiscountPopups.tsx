@@ -2,18 +2,18 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Sparkles, Gift, ArrowRight, Clock } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 
-const OFFER_DURATION_HOURS = 24;
+const useCountdown = (expiryHours: number) => {
+  const [expiry] = useState(() => {
+    const stored = localStorage.getItem("discount_offer_expiry");
+    if (stored) return new Date(stored);
+    const exp = new Date(Date.now() + expiryHours * 60 * 60 * 1000);
+    localStorage.setItem("discount_offer_expiry", exp.toISOString());
+    return exp;
+  });
 
-const getOfferExpiry = () => {
-  const stored = localStorage.getItem("discount_offer_expiry");
-  if (stored) return new Date(stored);
-  const expiry = new Date(Date.now() + OFFER_DURATION_HOURS * 60 * 60 * 1000);
-  localStorage.setItem("discount_offer_expiry", expiry.toISOString());
-  return expiry;
-};
-
-const useCountdown = (expiry: Date) => {
   const [timeLeft, setTimeLeft] = useState(() => Math.max(0, expiry.getTime() - Date.now()));
 
   useEffect(() => {
@@ -47,23 +47,37 @@ const CountdownBlock = ({ value, label }: { value: number; label: string }) => (
 const DiscountPopup = () => {
   const [visible, setVisible] = useState(false);
   const [dismissed, setDismissed] = useState(false);
-  const [expiry] = useState(() => getOfferExpiry());
-  const countdown = useCountdown(expiry);
+
+  const { data: config } = useQuery({
+    queryKey: ["discount-config"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("discount_config")
+        .select("*")
+        .limit(1)
+        .maybeSingle();
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  const countdown = useCountdown(config?.expiry_hours ?? 24);
 
   useEffect(() => {
+    if (!config || !config.is_active) return;
+
     const dismissedAt = localStorage.getItem("discount_popup_dismissed_at");
     if (dismissedAt) {
-      const dismissedDate = new Date(dismissedAt);
-      const hoursSince = (Date.now() - dismissedDate.getTime()) / (1000 * 60 * 60);
+      const hoursSince = (Date.now() - new Date(dismissedAt).getTime()) / (1000 * 60 * 60);
       if (hoursSince < 24) {
         setDismissed(true);
         return;
       }
       localStorage.removeItem("discount_popup_dismissed_at");
     }
-    const timer = setTimeout(() => setVisible(true), 4000);
+    const timer = setTimeout(() => setVisible(true), (config.delay_seconds ?? 4) * 1000);
     return () => clearTimeout(timer);
-  }, []);
+  }, [config]);
 
   const handleDismiss = () => {
     setVisible(false);
@@ -71,7 +85,7 @@ const DiscountPopup = () => {
     localStorage.setItem("discount_popup_dismissed_at", new Date().toISOString());
   };
 
-  if (dismissed || countdown.expired) return null;
+  if (!config || !config.is_active || dismissed || countdown.expired) return null;
 
   return (
     <AnimatePresence>
@@ -127,12 +141,12 @@ const DiscountPopup = () => {
 
                   <h2 className="text-4xl sm:text-5xl font-black mb-1 tracking-tight">
                     <span className="bg-gradient-to-r from-primary via-orange-400 to-primary bg-clip-text text-transparent">
-                      20% OFF
+                      {config.title}
                     </span>
                   </h2>
-                  <p className="text-lg font-semibold mb-1">All Services & Courses</p>
+                  <p className="text-lg font-semibold mb-1">{config.subtitle}</p>
                   <p className="text-sm text-muted-foreground max-w-xs mx-auto">
-                    Transform your business with our premium IT solutions at an unbeatable price.
+                    {config.description}
                   </p>
                 </div>
 
@@ -157,7 +171,7 @@ const DiscountPopup = () => {
                 <div className="mx-8 mb-5">
                   <div className="relative flex items-center justify-center gap-3 px-5 py-3 rounded-xl bg-muted/50 border-2 border-dashed border-primary/40">
                     <span className="text-sm text-muted-foreground font-medium">Promo Code:</span>
-                    <span className="font-mono text-xl font-black text-primary tracking-widest">EGREED20</span>
+                    <span className="font-mono text-xl font-black text-primary tracking-widest">{config.promo_code}</span>
                   </div>
                 </div>
 
@@ -168,7 +182,7 @@ const DiscountPopup = () => {
                     onClick={handleDismiss}
                     className="flex items-center justify-center gap-2 w-full py-4 rounded-xl bg-gradient-to-r from-primary to-orange-500 text-primary-foreground font-bold text-base hover:shadow-lg hover:shadow-primary/30 transition-all hover:scale-[1.02] active:scale-[0.98]"
                   >
-                    Claim Your 20% Discount
+                    {config.cta_text}
                     <ArrowRight className="w-5 h-5" />
                   </Link>
                   <button
