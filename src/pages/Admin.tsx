@@ -22,7 +22,8 @@ import {
   Package,
   FolderGit2,
   Home,
-  FlaskConical
+  FlaskConical,
+  Gift
 } from "lucide-react";
 import AdminDashboard from "@/components/admin/AdminDashboard";
 import AdminMessages from "@/components/admin/AdminMessages";
