@@ -190,6 +190,10 @@ const Admin = () => {
               <FlaskConical className="w-4 h-4" />
               <span className="hidden sm:inline">Case Studies</span>
             </TabsTrigger>
+            <TabsTrigger value="discount" className="flex items-center gap-2 py-2 px-3">
+              <Gift className="w-4 h-4" />
+              <span className="hidden sm:inline">Discount</span>
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="dashboard">
