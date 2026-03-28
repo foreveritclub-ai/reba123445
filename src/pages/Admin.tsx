@@ -33,6 +33,7 @@ import AdminPartners from "@/components/admin/AdminPartners";
 import AdminProducts from "@/components/admin/AdminProducts";
 import AdminProjects from "@/components/admin/AdminProjects";
 import AdminCaseStudies from "@/components/admin/AdminCaseStudies";
+import AdminDiscountConfig from "@/components/admin/AdminDiscountConfig";
 
 const Admin = () => {
   const { user, signOut } = useAuth();
