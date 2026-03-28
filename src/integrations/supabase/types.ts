@@ -295,6 +295,48 @@ export type Database = {
         }
         Relationships: []
       }
+      discount_config: {
+        Row: {
+          cta_text: string
+          delay_seconds: number
+          description: string
+          discount_percentage: number
+          expiry_hours: number
+          id: string
+          is_active: boolean
+          promo_code: string
+          subtitle: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          cta_text?: string
+          delay_seconds?: number
+          description?: string
+          discount_percentage?: number
+          expiry_hours?: number
+          id?: string
+          is_active?: boolean
+          promo_code?: string
+          subtitle?: string
+          title?: string
+          updated_at?: string
+        }
+        Update: {
+          cta_text?: string
+          delay_seconds?: number
+          description?: string
+          discount_percentage?: number
+          expiry_hours?: number
+          id?: string
+          is_active?: boolean
+          promo_code?: string
+          subtitle?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       enrollments: {
         Row: {
           completed_at: string | null
