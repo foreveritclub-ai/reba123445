@@ -1,15 +1,19 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { 
   Bot, Sprout, ShieldCheck, Smartphone, Globe, Cloud, 
   ArrowRight, ExternalLink, Rocket, Sparkles, Check,
-  ChevronRight
+  ChevronRight, Mail, Loader2, Users
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Helmet } from "react-helmet-async";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 import keroHero from "@/assets/kero-hero.png";
 import keroAgriculture from "@/assets/kero-agriculture.png";
 import keroAiIllustration from "@/assets/kero-ai-illustration.jpg";
@@ -31,6 +35,40 @@ const stats = [
 ];
 
 const KeroIwaweAssist = () => {
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isJoined, setIsJoined] = useState(false);
+
+  const handleWaitlistSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email.trim()) return;
+    
+    setIsSubmitting(true);
+    try {
+      const { error } = await supabase
+        .from("waitlist_signups")
+        .insert({ email: email.trim(), name: name.trim() || null });
+      
+      if (error) {
+        if (error.code === "23505") {
+          toast.info("You're already on the waitlist! We'll notify you soon.");
+        } else {
+          throw error;
+        }
+      } else {
+        toast.success("Welcome to the waitlist! We'll notify you when KERO IWAWE ASSIST launches.");
+      }
+      setIsJoined(true);
+      setEmail("");
+      setName("");
+    } catch {
+      toast.error("Something went wrong. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <>
       <Helmet>
@@ -251,12 +289,82 @@ const KeroIwaweAssist = () => {
                         Visit egreedtech.org <ExternalLink className="w-4 h-4" />
                       </Button>
                     </a>
-                    <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10 gap-2">
-                      Request Early Access <ChevronRight className="w-4 h-4" />
-                    </Button>
+                    <a href="#waitlist">
+                      <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10 gap-2">
+                        Request Early Access <ChevronRight className="w-4 h-4" />
+                      </Button>
+                    </a>
                   </div>
                 </div>
               </div>
+            </motion.div>
+          </div>
+        </section>
+        {/* Join the Waitlist Section */}
+        <section className="py-20" id="waitlist">
+          <div className="container mx-auto px-4">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="max-w-2xl mx-auto text-center"
+            >
+              <div className="w-16 h-16 rounded-2xl bg-green-500/10 flex items-center justify-center mx-auto mb-6">
+                <Users className="w-8 h-8 text-green-600 dark:text-green-400" />
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                Join the Waitlist
+              </h2>
+              <p className="text-muted-foreground mb-8">
+                Be the first to experience KERO IWAWE ASSIST. Sign up for early access and get notified when we launch.
+              </p>
+
+              {isJoined ? (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="p-8 rounded-2xl bg-green-500/10 border border-green-500/30"
+                >
+                  <Check className="w-12 h-12 text-green-500 mx-auto mb-4" />
+                  <h3 className="text-xl font-bold mb-2">You're on the list! 🎉</h3>
+                  <p className="text-muted-foreground">We'll notify you as soon as KERO IWAWE ASSIST is ready.</p>
+                </motion.div>
+              ) : (
+                <form onSubmit={handleWaitlistSubmit} className="space-y-4">
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <Input
+                      type="text"
+                      placeholder="Your name (optional)"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      className="flex-1"
+                    />
+                    <Input
+                      type="email"
+                      placeholder="your@email.com"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                      className="flex-1"
+                    />
+                  </div>
+                  <Button 
+                    type="submit" 
+                    size="lg" 
+                    className="w-full sm:w-auto bg-gradient-to-r from-green-600 to-primary hover:from-green-700 hover:to-primary/90 text-white gap-2"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? (
+                      <><Loader2 className="w-4 h-4 animate-spin" /> Joining...</>
+                    ) : (
+                      <><Mail className="w-4 h-4" /> Join the Waitlist</>
+                    )}
+                  </Button>
+                  <p className="text-xs text-muted-foreground">
+                    No spam, ever. We'll only email you about the launch.
+                  </p>
+                </form>
+              )}
             </motion.div>
           </div>
         </section>
