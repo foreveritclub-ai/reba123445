@@ -35,6 +35,40 @@ const stats = [
 ];
 
 const KeroIwaweAssist = () => {
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isJoined, setIsJoined] = useState(false);
+
+  const handleWaitlistSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email.trim()) return;
+    
+    setIsSubmitting(true);
+    try {
+      const { error } = await supabase
+        .from("waitlist_signups")
+        .insert({ email: email.trim(), name: name.trim() || null });
+      
+      if (error) {
+        if (error.code === "23505") {
+          toast.info("You're already on the waitlist! We'll notify you soon.");
+        } else {
+          throw error;
+        }
+      } else {
+        toast.success("Welcome to the waitlist! We'll notify you when KERO IWAWE ASSIST launches.");
+      }
+      setIsJoined(true);
+      setEmail("");
+      setName("");
+    } catch {
+      toast.error("Something went wrong. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <>
       <Helmet>
