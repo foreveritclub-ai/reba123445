@@ -1,8 +1,20 @@
 import { motion } from "framer-motion";
-import { ExternalLink, GraduationCap, Activity, ArrowRight } from "lucide-react";
+import { ExternalLink, GraduationCap, Activity, ArrowRight, Bot } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Link } from "react-router-dom";
 
 const products = [
+  {
+    name: "KERO IWAWE ASSIST",
+    description: "An intelligent AI assistant designed to support agriculture, security, and everyday tasks using AI-powered technology built for Rwanda.",
+    url: "/products/kero-iwawe-assist",
+    icon: Bot,
+    features: ["Smart AI Assistant", "Agriculture Support", "Security Monitoring", "Local Language Support"],
+    gradient: "from-green-600 to-emerald-600",
+    isInternal: true,
+    badge: "Coming Soon"
+  },
   {
     name: "Egreed Learning",
     description: "Our comprehensive e-learning platform offering professional IT courses, certifications, and skill development programs for individuals and organizations.",
@@ -44,7 +56,7 @@ const ProductsSection = () => {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {products.map((product, index) => (
             <motion.div
               key={product.name}
@@ -56,7 +68,12 @@ const ProductsSection = () => {
             >
               <div className="bg-card border border-border rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300 h-full flex flex-col">
                 {/* Header */}
-                <div className={`bg-gradient-to-r ${product.gradient} p-8 text-white`}>
+                <div className={`bg-gradient-to-r ${product.gradient} p-8 text-white relative`}>
+                  {'badge' in product && product.badge && (
+                    <Badge className="absolute top-4 right-4 bg-white/20 text-white border-white/30">
+                      {product.badge}
+                    </Badge>
+                  )}
                   <div className="flex items-center gap-4 mb-4">
                     <div className="w-14 h-14 bg-white/20 rounded-xl flex items-center justify-center">
                       <product.icon className="w-7 h-7" />
@@ -83,12 +100,21 @@ const ProductsSection = () => {
 
                 {/* CTA */}
                 <div className="p-6 pt-0">
-                  <a href={product.url} target="_blank" rel="noopener noreferrer">
-                    <Button className="w-full group/btn">
-                      Visit {product.name}
-                      <ExternalLink className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
-                    </Button>
-                  </a>
+                  {'isInternal' in product && product.isInternal ? (
+                    <Link to={product.url}>
+                      <Button className="w-full group/btn">
+                        Explore {product.name}
+                        <ArrowRight className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
+                      </Button>
+                    </Link>
+                  ) : (
+                    <a href={product.url} target="_blank" rel="noopener noreferrer">
+                      <Button className="w-full group/btn">
+                        Visit {product.name}
+                        <ExternalLink className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
+                      </Button>
+                    </a>
+                  )}
                 </div>
               </div>
             </motion.div>
