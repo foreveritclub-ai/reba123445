@@ -1,8 +1,20 @@
 import { motion } from "framer-motion";
-import { ExternalLink, GraduationCap, Activity, ArrowRight } from "lucide-react";
+import { ExternalLink, GraduationCap, Activity, ArrowRight, Bot } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Link } from "react-router-dom";
 
 const products = [
+  {
+    name: "KERO IWAWE ASSIST",
+    description: "An intelligent AI assistant designed to support agriculture, security, and everyday tasks using AI-powered technology built for Rwanda.",
+    url: "/products/kero-iwawe-assist",
+    icon: Bot,
+    features: ["Smart AI Assistant", "Agriculture Support", "Security Monitoring", "Local Language Support"],
+    gradient: "from-green-600 to-emerald-600",
+    isInternal: true,
+    badge: "Coming Soon"
+  },
   {
     name: "Egreed Learning",
     description: "Our comprehensive e-learning platform offering professional IT courses, certifications, and skill development programs for individuals and organizations.",
