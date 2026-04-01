@@ -289,9 +289,11 @@ const KeroIwaweAssist = () => {
                         Visit egreedtech.org <ExternalLink className="w-4 h-4" />
                       </Button>
                     </a>
-                    <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10 gap-2">
-                      Request Early Access <ChevronRight className="w-4 h-4" />
-                    </Button>
+                    <a href="#waitlist">
+                      <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10 gap-2">
+                        Request Early Access <ChevronRight className="w-4 h-4" />
+                      </Button>
+                    </a>
                   </div>
                 </div>
               </div>
