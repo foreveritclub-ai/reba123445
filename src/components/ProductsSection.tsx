@@ -56,7 +56,7 @@ const ProductsSection = () => {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {products.map((product, index) => (
             <motion.div
               key={product.name}
@@ -68,7 +68,12 @@ const ProductsSection = () => {
             >
               <div className="bg-card border border-border rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300 h-full flex flex-col">
                 {/* Header */}
-                <div className={`bg-gradient-to-r ${product.gradient} p-8 text-white`}>
+                <div className={`bg-gradient-to-r ${product.gradient} p-8 text-white relative`}>
+                  {'badge' in product && product.badge && (
+                    <Badge className="absolute top-4 right-4 bg-white/20 text-white border-white/30">
+                      {product.badge}
+                    </Badge>
+                  )}
                   <div className="flex items-center gap-4 mb-4">
                     <div className="w-14 h-14 bg-white/20 rounded-xl flex items-center justify-center">
                       <product.icon className="w-7 h-7" />
@@ -95,12 +100,21 @@ const ProductsSection = () => {
 
                 {/* CTA */}
                 <div className="p-6 pt-0">
-                  <a href={product.url} target="_blank" rel="noopener noreferrer">
-                    <Button className="w-full group/btn">
-                      Visit {product.name}
-                      <ExternalLink className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
-                    </Button>
-                  </a>
+                  {'isInternal' in product && product.isInternal ? (
+                    <Link to={product.url}>
+                      <Button className="w-full group/btn">
+                        Explore {product.name}
+                        <ArrowRight className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
+                      </Button>
+                    </Link>
+                  ) : (
+                    <a href={product.url} target="_blank" rel="noopener noreferrer">
+                      <Button className="w-full group/btn">
+                        Visit {product.name}
+                        <ExternalLink className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
+                      </Button>
+                    </a>
+                  )}
                 </div>
               </div>
             </motion.div>
