@@ -22,6 +22,7 @@ import ServiceDetail from "./pages/ServiceDetail";
 import CaseStudies from "./pages/CaseStudies";
 import CaseStudyDetail from "./pages/CaseStudyDetail";
 import ClaimOffer from "./pages/ClaimOffer";
+import KeroIwaweAssist from "./pages/KeroIwaweAssist";
 
 const queryClient = new QueryClient();
 
