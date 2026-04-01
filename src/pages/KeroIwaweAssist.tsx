@@ -1,15 +1,19 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { 
   Bot, Sprout, ShieldCheck, Smartphone, Globe, Cloud, 
   ArrowRight, ExternalLink, Rocket, Sparkles, Check,
-  ChevronRight
+  ChevronRight, Mail, Loader2, Users
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Helmet } from "react-helmet-async";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 import keroHero from "@/assets/kero-hero.png";
 import keroAgriculture from "@/assets/kero-agriculture.png";
 import keroAiIllustration from "@/assets/kero-ai-illustration.jpg";
