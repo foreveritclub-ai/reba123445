@@ -24,7 +24,8 @@ import {
   Home,
   FlaskConical,
   Gift,
-  UserPlus
+  UserPlus,
+  Video
 } from "lucide-react";
 import AdminDashboard from "@/components/admin/AdminDashboard";
 import AdminMessages from "@/components/admin/AdminMessages";
@@ -37,6 +38,7 @@ import AdminProjects from "@/components/admin/AdminProjects";
 import AdminCaseStudies from "@/components/admin/AdminCaseStudies";
 import AdminDiscountConfig from "@/components/admin/AdminDiscountConfig";
 import AdminWaitlist from "@/components/admin/AdminWaitlist";
+import AdminAdGenerator from "@/components/admin/AdminAdGenerator";
 
 const Admin = () => {
   const { user, signOut } = useAuth();
@@ -201,6 +203,10 @@ const Admin = () => {
               <UserPlus className="w-4 h-4" />
               <span className="hidden sm:inline">Waitlist</span>
             </TabsTrigger>
+            <TabsTrigger value="ad-generator" className="flex items-center gap-2 py-2 px-3">
+              <Video className="w-4 h-4" />
+              <span className="hidden sm:inline">Ad Generator</span>
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="dashboard">
@@ -245,6 +251,10 @@ const Admin = () => {
 
           <TabsContent value="waitlist">
             <AdminWaitlist />
+          </TabsContent>
+
+          <TabsContent value="ad-generator">
+            <AdminAdGenerator />
           </TabsContent>
         </Tabs>
       </main>

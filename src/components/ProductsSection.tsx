@@ -18,18 +18,21 @@ const products = [
   {
     name: "Egreed Learning",
     description: "Our comprehensive e-learning platform offering professional IT courses, certifications, and skill development programs for individuals and organizations.",
-    url: "https://learn.egreedtech.org",
+    url: "/products/egreed-learning",
     icon: GraduationCap,
     features: ["Professional IT Courses", "Certification Programs", "Progress Tracking", "Expert Instructors"],
-    gradient: "from-blue-600 to-purple-600"
+    gradient: "from-blue-600 to-purple-600",
+    isInternal: true
   },
   {
     name: "Rebalive RW",
     description: "A cutting-edge health and wellness platform designed to connect Rwandans with healthcare services, wellness resources, and health information.",
-    url: "https://rebalive.egreedtech.org",
+    url: "/products/rebalive-rw",
     icon: Activity,
     features: ["Health Services", "Wellness Resources", "Health Tracking", "Expert Consultations"],
-    gradient: "from-green-600 to-teal-600"
+    gradient: "from-green-600 to-teal-600",
+    isInternal: true,
+    badge: "Coming Soon"
   }
 ];
 

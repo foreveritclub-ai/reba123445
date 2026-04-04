@@ -23,6 +23,8 @@ import CaseStudies from "./pages/CaseStudies";
 import CaseStudyDetail from "./pages/CaseStudyDetail";
 import ClaimOffer from "./pages/ClaimOffer";
 import KeroIwaweAssist from "./pages/KeroIwaweAssist";
+import EgreedLearning from "./pages/EgreedLearning";
+import RebaliveRW from "./pages/RebaliveRW";
 
 const queryClient = new QueryClient();
 
@@ -52,6 +54,8 @@ const App = () => (
             <Route path="/case-studies/:slug" element={<CaseStudyDetail />} />
             <Route path="/claim-offer" element={<ClaimOffer />} />
             <Route path="/products/kero-iwawe-assist" element={<KeroIwaweAssist />} />
+            <Route path="/products/egreed-learning" element={<EgreedLearning />} />
+            <Route path="/products/rebalive-rw" element={<RebaliveRW />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
