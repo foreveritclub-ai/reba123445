@@ -23,7 +23,8 @@ import {
   FolderGit2,
   Home,
   FlaskConical,
-  Gift
+  Gift,
+  UserPlus
 } from "lucide-react";
 import AdminDashboard from "@/components/admin/AdminDashboard";
 import AdminMessages from "@/components/admin/AdminMessages";
@@ -35,6 +36,7 @@ import AdminProducts from "@/components/admin/AdminProducts";
 import AdminProjects from "@/components/admin/AdminProjects";
 import AdminCaseStudies from "@/components/admin/AdminCaseStudies";
 import AdminDiscountConfig from "@/components/admin/AdminDiscountConfig";
+import AdminWaitlist from "@/components/admin/AdminWaitlist";
 
 const Admin = () => {
   const { user, signOut } = useAuth();
