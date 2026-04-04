@@ -23,7 +23,8 @@ import {
   FolderGit2,
   Home,
   FlaskConical,
-  Gift
+  Gift,
+  UserPlus
 } from "lucide-react";
 import AdminDashboard from "@/components/admin/AdminDashboard";
 import AdminMessages from "@/components/admin/AdminMessages";
@@ -35,6 +36,7 @@ import AdminProducts from "@/components/admin/AdminProducts";
 import AdminProjects from "@/components/admin/AdminProjects";
 import AdminCaseStudies from "@/components/admin/AdminCaseStudies";
 import AdminDiscountConfig from "@/components/admin/AdminDiscountConfig";
+import AdminWaitlist from "@/components/admin/AdminWaitlist";
 
 const Admin = () => {
   const { user, signOut } = useAuth();
@@ -195,6 +197,10 @@ const Admin = () => {
               <Gift className="w-4 h-4" />
               <span className="hidden sm:inline">Discount</span>
             </TabsTrigger>
+            <TabsTrigger value="waitlist" className="flex items-center gap-2 py-2 px-3">
+              <UserPlus className="w-4 h-4" />
+              <span className="hidden sm:inline">Waitlist</span>
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="dashboard">
@@ -235,6 +241,10 @@ const Admin = () => {
 
           <TabsContent value="discount">
             <AdminDiscountConfig />
+          </TabsContent>
+
+          <TabsContent value="waitlist">
+            <AdminWaitlist />
           </TabsContent>
         </Tabs>
       </main>
