@@ -23,6 +23,8 @@ import CaseStudies from "./pages/CaseStudies";
 import CaseStudyDetail from "./pages/CaseStudyDetail";
 import ClaimOffer from "./pages/ClaimOffer";
 import KeroIwaweAssist from "./pages/KeroIwaweAssist";
+import EgreedLearning from "./pages/EgreedLearning";
+import RebaliveRW from "./pages/RebaliveRW";
 
 const queryClient = new QueryClient();
 
