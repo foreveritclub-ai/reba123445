@@ -203,6 +203,10 @@ const Admin = () => {
               <UserPlus className="w-4 h-4" />
               <span className="hidden sm:inline">Waitlist</span>
             </TabsTrigger>
+            <TabsTrigger value="ad-generator" className="flex items-center gap-2 py-2 px-3">
+              <Video className="w-4 h-4" />
+              <span className="hidden sm:inline">Ad Generator</span>
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="dashboard">
@@ -247,6 +251,10 @@ const Admin = () => {
 
           <TabsContent value="waitlist">
             <AdminWaitlist />
+          </TabsContent>
+
+          <TabsContent value="ad-generator">
+            <AdminAdGenerator />
           </TabsContent>
         </Tabs>
       </main>
