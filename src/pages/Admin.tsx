@@ -197,6 +197,10 @@ const Admin = () => {
               <Gift className="w-4 h-4" />
               <span className="hidden sm:inline">Discount</span>
             </TabsTrigger>
+            <TabsTrigger value="waitlist" className="flex items-center gap-2 py-2 px-3">
+              <UserPlus className="w-4 h-4" />
+              <span className="hidden sm:inline">Waitlist</span>
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="dashboard">
@@ -237,6 +241,10 @@ const Admin = () => {
 
           <TabsContent value="discount">
             <AdminDiscountConfig />
+          </TabsContent>
+
+          <TabsContent value="waitlist">
+            <AdminWaitlist />
           </TabsContent>
         </Tabs>
       </main>
