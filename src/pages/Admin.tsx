@@ -38,6 +38,7 @@ import AdminProjects from "@/components/admin/AdminProjects";
 import AdminCaseStudies from "@/components/admin/AdminCaseStudies";
 import AdminDiscountConfig from "@/components/admin/AdminDiscountConfig";
 import AdminWaitlist from "@/components/admin/AdminWaitlist";
+import AdminAdGenerator from "@/components/admin/AdminAdGenerator";
 
 const Admin = () => {
   const { user, signOut } = useAuth();
