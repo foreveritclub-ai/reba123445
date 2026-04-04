@@ -24,7 +24,8 @@ import {
   Home,
   FlaskConical,
   Gift,
-  UserPlus
+  UserPlus,
+  Video
 } from "lucide-react";
 import AdminDashboard from "@/components/admin/AdminDashboard";
 import AdminMessages from "@/components/admin/AdminMessages";
