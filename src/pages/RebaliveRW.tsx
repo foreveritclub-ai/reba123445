@@ -1,14 +1,18 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { 
   Activity, HeartPulse, Stethoscope, Shield, Smartphone, Brain,
-  ArrowRight, ExternalLink, Sparkles, Check, Rocket
+  ArrowRight, ExternalLink, Sparkles, Check, Rocket, Mail, Loader2, Users
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Helmet } from "react-helmet-async";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 import rebaliveHero from "@/assets/rebalive-hero.jpg";
 
 const features = [

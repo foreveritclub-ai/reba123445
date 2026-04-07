@@ -1,15 +1,20 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { 
   GraduationCap, BookOpen, Award, Users, BarChart3, Clock,
-  ArrowRight, ExternalLink, Sparkles, Check, ChevronRight, Star
+  ArrowRight, ExternalLink, Sparkles, Check, ChevronRight, Star,
+  Mail, Loader2
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 import egreedLearningHero from "@/assets/egreed-learning-hero.jpg";
 
 const features = [
