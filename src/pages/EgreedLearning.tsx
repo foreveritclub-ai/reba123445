@@ -213,6 +213,43 @@ const EgreedLearning = () => {
             </motion.div>
           </div>
         </section>
+        {/* Waitlist Section */}
+        <section className="py-20 bg-muted/30">
+          <div className="container mx-auto px-4">
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="max-w-2xl mx-auto text-center">
+              <div className="inline-flex items-center gap-2 bg-blue-500/10 rounded-full px-4 py-2 mb-6">
+                <Mail className="w-4 h-4 text-blue-500" />
+                <span className="text-sm font-medium text-blue-600 dark:text-blue-400">Stay Updated</span>
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">Join the Waitlist</h2>
+              <p className="text-muted-foreground mb-8">Be the first to know about new courses, exclusive discounts, and platform updates.</p>
+
+              {isJoined ? (
+                <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="bg-green-500/10 border border-green-500/30 rounded-2xl p-8">
+                  <div className="w-16 h-16 mx-auto bg-green-500/20 rounded-full flex items-center justify-center mb-4">
+                    <Check className="w-8 h-8 text-green-500" />
+                  </div>
+                  <h3 className="text-xl font-bold mb-2">You're on the list! 🎉</h3>
+                  <p className="text-muted-foreground">We'll notify you about new courses and updates.</p>
+                </motion.div>
+              ) : (
+                <form onSubmit={handleWaitlistSubmit} className="space-y-4">
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <Input value={name} onChange={(e) => setName(e.target.value)} placeholder="Your name (optional)" className="flex-1" />
+                    <Input value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Your email address" required className="flex-1" />
+                  </div>
+                  <Button type="submit" disabled={isSubmitting} size="lg" className="w-full sm:w-auto bg-gradient-to-r from-blue-600 to-purple-600 text-white gap-2">
+                    {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Mail className="w-4 h-4" />}
+                    {isSubmitting ? "Joining..." : "Join the Waitlist"}
+                  </Button>
+                  <p className="text-xs text-muted-foreground flex items-center justify-center gap-1">
+                    <Users className="w-3 h-3" /> Join 15,000+ learners already on the platform
+                  </p>
+                </form>
+              )}
+            </motion.div>
+          </div>
+        </section>
       </main>
 
       <Footer />
