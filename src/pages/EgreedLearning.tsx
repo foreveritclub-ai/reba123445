@@ -1,15 +1,20 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { 
   GraduationCap, BookOpen, Award, Users, BarChart3, Clock,
-  ArrowRight, ExternalLink, Sparkles, Check, ChevronRight, Star
+  ArrowRight, ExternalLink, Sparkles, Check, ChevronRight, Star,
+  Mail, Loader2
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 import egreedLearningHero from "@/assets/egreed-learning-hero.jpg";
 
 const features = [
@@ -29,6 +34,33 @@ const stats = [
 ];
 
 const EgreedLearning = () => {
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isJoined, setIsJoined] = useState(false);
+
+  const handleWaitlistSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email.trim()) return;
+    setIsSubmitting(true);
+    try {
+      const { error } = await supabase.from("waitlist_signups").insert({ email: email.trim(), name: name.trim() || null, source: "egreed-learning" });
+      if (error) {
+        if (error.code === "23505") { toast.info("You're already on the waitlist!"); }
+        else { throw error; }
+      } else {
+        toast.success("Welcome to the waitlist! We'll notify you when new courses launch.");
+      }
+      setIsJoined(true);
+      setEmail("");
+      setName("");
+    } catch {
+      toast.error("Something went wrong. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <>
       <Helmet>
@@ -178,6 +210,43 @@ const EgreedLearning = () => {
                   </Button>
                 </Link>
               </div>
+            </motion.div>
+          </div>
+        </section>
+        {/* Waitlist Section */}
+        <section className="py-20 bg-muted/30">
+          <div className="container mx-auto px-4">
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="max-w-2xl mx-auto text-center">
+              <div className="inline-flex items-center gap-2 bg-blue-500/10 rounded-full px-4 py-2 mb-6">
+                <Mail className="w-4 h-4 text-blue-500" />
+                <span className="text-sm font-medium text-blue-600 dark:text-blue-400">Stay Updated</span>
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">Join the Waitlist</h2>
+              <p className="text-muted-foreground mb-8">Be the first to know about new courses, exclusive discounts, and platform updates.</p>
+
+              {isJoined ? (
+                <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="bg-green-500/10 border border-green-500/30 rounded-2xl p-8">
+                  <div className="w-16 h-16 mx-auto bg-green-500/20 rounded-full flex items-center justify-center mb-4">
+                    <Check className="w-8 h-8 text-green-500" />
+                  </div>
+                  <h3 className="text-xl font-bold mb-2">You're on the list! 🎉</h3>
+                  <p className="text-muted-foreground">We'll notify you about new courses and updates.</p>
+                </motion.div>
+              ) : (
+                <form onSubmit={handleWaitlistSubmit} className="space-y-4">
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <Input value={name} onChange={(e) => setName(e.target.value)} placeholder="Your name (optional)" className="flex-1" />
+                    <Input value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Your email address" required className="flex-1" />
+                  </div>
+                  <Button type="submit" disabled={isSubmitting} size="lg" className="w-full sm:w-auto bg-gradient-to-r from-blue-600 to-purple-600 text-white gap-2">
+                    {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Mail className="w-4 h-4" />}
+                    {isSubmitting ? "Joining..." : "Join the Waitlist"}
+                  </Button>
+                  <p className="text-xs text-muted-foreground flex items-center justify-center gap-1">
+                    <Users className="w-3 h-3" /> Join 15,000+ learners already on the platform
+                  </p>
+                </form>
+              )}
             </motion.div>
           </div>
         </section>
