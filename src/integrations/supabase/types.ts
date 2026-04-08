@@ -372,6 +372,69 @@ export type Database = {
           },
         ]
       }
+      internship_applications: {
+        Row: {
+          address: string
+          course_program: string
+          created_at: string
+          current_level: string
+          cv_url: string | null
+          date_of_birth: string
+          education_level: string
+          email: string
+          full_name: string
+          id: string
+          institution: string
+          motivation_statement: string
+          phone: string
+          portfolio_link: string | null
+          preferred_shift: string
+          status: string
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          address: string
+          course_program: string
+          created_at?: string
+          current_level: string
+          cv_url?: string | null
+          date_of_birth: string
+          education_level: string
+          email: string
+          full_name: string
+          id?: string
+          institution: string
+          motivation_statement: string
+          phone: string
+          portfolio_link?: string | null
+          preferred_shift: string
+          status?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          address?: string
+          course_program?: string
+          created_at?: string
+          current_level?: string
+          cv_url?: string | null
+          date_of_birth?: string
+          education_level?: string
+          email?: string
+          full_name?: string
+          id?: string
+          institution?: string
+          motivation_statement?: string
+          phone?: string
+          portfolio_link?: string | null
+          preferred_shift?: string
+          status?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       lesson_progress: {
         Row: {
           completed_at: string
