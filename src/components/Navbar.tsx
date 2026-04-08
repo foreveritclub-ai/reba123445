@@ -10,6 +10,7 @@ const navItems = ["About", "Services", "Partners", "Products", "Courses", "Testi
 const pageLinks = [
   { label: "Blog", to: "/blog" },
   { label: "Case Studies", to: "/case-studies" },
+  { label: "Internship", to: "/internship" },
 ];
 
 const Navbar = () => {
