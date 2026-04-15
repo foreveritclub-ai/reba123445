@@ -14,12 +14,14 @@ import ComingSoonSection from "@/components/ComingSoonSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
+import WhatsAppButton from "@/components/WhatsAppButton";
 
 const Index = () => {
   return (
     <div className="relative min-h-screen bg-background scroll-smooth">
       <CustomCursor />
       <DiscountPopups />
+      <WhatsAppButton />
       <Navbar />
       <HeroSection />
       <AboutSection />
