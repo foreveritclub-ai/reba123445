@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Calendar, Clock, User, Search, ArrowRight, Globe, Languages } from "lucide-react";
 
-const categories = ["All", "Cloud Solutions", "Cybersecurity", "IT Infrastructure", "Digital Transformation", "IT Consulting", "Data Management", "Ikoranabuhanga", "Umutekano"];
+const categories = ["All", "Business & Tech Insights", "Web Development", "Digital Marketing", "Cybersecurity", "Digital Transformation", "Cloud Solutions", "IT Infrastructure", "IT Consulting", "Data Management", "Ikoranabuhanga", "Umutekano"];
 const languages = [
   { id: "all", label: "All Languages", labelRw: "Indimi Zose", icon: Globe },
   { id: "en", label: "English", labelRw: "Icyongereza", icon: Languages },
