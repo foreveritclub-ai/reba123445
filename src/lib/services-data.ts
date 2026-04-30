@@ -1,6 +1,7 @@
 import {
   Cloud, Shield, Server, Compass, Globe, Code2, Smartphone, Settings,
-  GraduationCap, BrainCircuit, Database, Users
+  GraduationCap, BrainCircuit, Database, Users,
+  Bot, Sparkles, Megaphone, Search, Zap
 } from "lucide-react";
 
 export interface ServiceData {
