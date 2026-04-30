@@ -3,13 +3,17 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import { z } from "zod";
+import { toast } from "sonner";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Calendar, Clock, User, Search, ArrowRight, Globe, Languages } from "lucide-react";
+import { Calendar, Clock, User, Search, ArrowRight, Globe, Languages, Sparkles, Loader2 } from "lucide-react";
+
+const emailSchema = z.string().trim().email({ message: "Please enter a valid email" }).max(255);
 
 const categories = ["All", "Business & Tech Insights", "Web Development", "Digital Marketing", "Cybersecurity", "Digital Transformation", "Cloud Solutions", "IT Infrastructure", "IT Consulting", "Data Management", "Ikoranabuhanga", "Umutekano"];
 const languages = [
