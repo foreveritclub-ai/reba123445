@@ -55,6 +55,8 @@ const Blog = () => {
     toast.success("Subscribed! Check your inbox for updates.");
     setNewsletterEmail("");
   };
+
+  const { data: dbPosts, isLoading } = useQuery({
     queryKey: ["blog-posts"],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -69,6 +71,7 @@ const Blog = () => {
   });
 
   const posts = dbPosts || [];
+  const featuredPosts = posts.slice(0, 3);
 
   const filteredPosts = posts.filter((post) => {
     const matchesSearch = post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
