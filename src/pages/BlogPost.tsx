@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import SocialShare from "@/components/SocialShare";
 import { Helmet } from "react-helmet-async";
 
 // Sample blog posts data (fallback if database is empty)
