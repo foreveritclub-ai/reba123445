@@ -1,28 +1,64 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
-import { BookOpen, Plus, Edit, Trash2, Users, Clock } from "lucide-react";
+import { BookOpen, Edit, Users, Clock } from "lucide-react";
+
+const CURRICULUM_TEMPLATE = `[
+  {
+    "module": "Module 1: Introduction",
+    "lessons": [
+      {
+        "title": "Welcome & Setup",
+        "video_url": "https://youtu.be/VIDEO_ID",
+        "image_url": "",
+        "content": "Write the lesson content here. Multi-line is supported.",
+        "resources": [
+          { "label": "Slides PDF", "url": "https://..." }
+        ],
+        "quiz": [
+          {
+            "question": "What is X?",
+            "options": ["A", "B", "C", "D"],
+            "correctIndex": 0,
+            "explanation": "Because..."
+          }
+        ]
+      }
+    ]
+  }
+]`;
+
+const FINAL_EXAM_TEMPLATE = `[
+  {
+    "question": "Sample final question?",
+    "options": ["Option A", "Option B", "Option C", "Option D"],
+    "correctIndex": 1,
+    "explanation": "Optional explanation"
+  }
+]`;
 
 const AdminCourses = () => {
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingCourse, setEditingCourse] = useState<any>(null);
+  const [curriculumText, setCurriculumText] = useState("");
+  const [examText, setExamText] = useState("");
 
   const { data: courses, isLoading } = useQuery({
     queryKey: ["admin-courses"],
@@ -31,25 +67,42 @@ const AdminCourses = () => {
         .from("courses")
         .select("*")
         .order("created_at", { ascending: false });
-
       if (error) throw error;
       return data;
-    }
+    },
   });
 
   const updateCourse = useMutation({
     mutationFn: async (course: any) => {
+      let curriculum: any = course.curriculum;
+      let final_exam: any = course.final_exam;
+
+      try {
+        curriculum = curriculumText.trim() ? JSON.parse(curriculumText) : [];
+      } catch (e) {
+        throw new Error("Curriculum JSON is invalid");
+      }
+      try {
+        final_exam = examText.trim() ? JSON.parse(examText) : [];
+      } catch (e) {
+        throw new Error("Final exam JSON is invalid");
+      }
+
       const { error } = await supabase
         .from("courses")
         .update({
           title: course.title,
           description: course.description,
-          price: course.price,
+          long_description: course.long_description,
+          price: Number(course.price) || 0,
           level: course.level,
-          instructor: course.instructor
+          instructor: course.instructor,
+          syllabus: course.syllabus || null,
+          passing_score: Math.min(100, Math.max(0, Number(course.passing_score) || 70)),
+          curriculum,
+          final_exam,
         })
         .eq("id", course.id);
-
       if (error) throw error;
     },
     onSuccess: () => {
@@ -58,20 +111,26 @@ const AdminCourses = () => {
       setIsDialogOpen(false);
       setEditingCourse(null);
     },
-    onError: (error) => {
-      toast({ title: "Error updating course", description: error.message, variant: "destructive" });
-    }
+    onError: (error: any) => {
+      toast({
+        title: "Error updating course",
+        description: error.message,
+        variant: "destructive",
+      });
+    },
   });
 
   const handleEdit = (course: any) => {
     setEditingCourse({ ...course });
+    setCurriculumText(
+      course.curriculum ? JSON.stringify(course.curriculum, null, 2) : CURRICULUM_TEMPLATE
+    );
+    setExamText(
+      course.final_exam && Array.isArray(course.final_exam) && course.final_exam.length > 0
+        ? JSON.stringify(course.final_exam, null, 2)
+        : FINAL_EXAM_TEMPLATE
+    );
     setIsDialogOpen(true);
-  };
-
-  const handleSave = () => {
-    if (editingCourse) {
-      updateCourse.mutate(editingCourse);
-    }
   };
 
   if (isLoading) {
@@ -102,9 +161,7 @@ const AdminCourses = () => {
           <CardContent className="p-12 text-center">
             <BookOpen className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
             <h3 className="text-lg font-semibold mb-2">No Courses Yet</h3>
-            <p className="text-muted-foreground">
-              Courses will appear here once added.
-            </p>
+            <p className="text-muted-foreground">Courses will appear here once added.</p>
           </CardContent>
         </Card>
       ) : (
@@ -114,12 +171,10 @@ const AdminCourses = () => {
               <CardContent className="p-6">
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                   <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-2">
+                    <div className="flex items-center gap-2 mb-2 flex-wrap">
                       <h3 className="font-semibold text-lg">{course.title}</h3>
                       <Badge>{course.level}</Badge>
-                      {course.is_trending && (
-                        <Badge variant="secondary">Trending</Badge>
-                      )}
+                      {course.is_trending && <Badge variant="secondary">Trending</Badge>}
                     </div>
                     <p className="text-muted-foreground text-sm mb-2 line-clamp-2">
                       {course.description}
@@ -136,6 +191,12 @@ const AdminCourses = () => {
                       <span className="font-semibold text-primary">
                         {course.price.toLocaleString()} RWF
                       </span>
+                      <span>Pass: {course.passing_score ?? 70}%</span>
+                      <span>
+                        Final exam:{" "}
+                        {Array.isArray(course.final_exam) ? course.final_exam.length : 0}{" "}
+                        questions
+                      </span>
                     </div>
                   </div>
                   <Button variant="outline" size="sm" onClick={() => handleEdit(course)}>
@@ -149,66 +210,160 @@ const AdminCourses = () => {
         </div>
       )}
 
-      {/* Edit Dialog */}
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="max-w-lg">
+        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Edit Course</DialogTitle>
           </DialogHeader>
           {editingCourse && (
-            <div className="space-y-4">
-              <div>
-                <Label htmlFor="title">Title</Label>
-                <Input
-                  id="title"
-                  value={editingCourse.title}
-                  onChange={(e) => setEditingCourse({ ...editingCourse, title: e.target.value })}
-                />
-              </div>
-              <div>
-                <Label htmlFor="description">Description</Label>
+            <Tabs defaultValue="basics">
+              <TabsList>
+                <TabsTrigger value="basics">Basics</TabsTrigger>
+                <TabsTrigger value="syllabus">Syllabus</TabsTrigger>
+                <TabsTrigger value="curriculum">Curriculum</TabsTrigger>
+                <TabsTrigger value="exam">Final Exam</TabsTrigger>
+              </TabsList>
+
+              <TabsContent value="basics" className="space-y-4 pt-4">
+                <div>
+                  <Label>Title</Label>
+                  <Input
+                    value={editingCourse.title}
+                    onChange={(e) =>
+                      setEditingCourse({ ...editingCourse, title: e.target.value })
+                    }
+                  />
+                </div>
+                <div>
+                  <Label>Short description</Label>
+                  <Textarea
+                    value={editingCourse.description}
+                    onChange={(e) =>
+                      setEditingCourse({ ...editingCourse, description: e.target.value })
+                    }
+                  />
+                </div>
+                <div>
+                  <Label>Long description</Label>
+                  <Textarea
+                    rows={4}
+                    value={editingCourse.long_description ?? ""}
+                    onChange={(e) =>
+                      setEditingCourse({ ...editingCourse, long_description: e.target.value })
+                    }
+                  />
+                </div>
+                <div className="grid grid-cols-3 gap-4">
+                  <div>
+                    <Label>Price (RWF)</Label>
+                    <Input
+                      type="number"
+                      value={editingCourse.price}
+                      onChange={(e) =>
+                        setEditingCourse({ ...editingCourse, price: Number(e.target.value) })
+                      }
+                    />
+                  </div>
+                  <div>
+                    <Label>Level</Label>
+                    <Input
+                      value={editingCourse.level}
+                      onChange={(e) =>
+                        setEditingCourse({ ...editingCourse, level: e.target.value })
+                      }
+                    />
+                  </div>
+                  <div>
+                    <Label>Passing score (%)</Label>
+                    <Input
+                      type="number"
+                      value={editingCourse.passing_score ?? 70}
+                      onChange={(e) =>
+                        setEditingCourse({
+                          ...editingCourse,
+                          passing_score: Number(e.target.value),
+                        })
+                      }
+                    />
+                  </div>
+                </div>
+                <div>
+                  <Label>Instructor</Label>
+                  <Input
+                    value={editingCourse.instructor}
+                    onChange={(e) =>
+                      setEditingCourse({ ...editingCourse, instructor: e.target.value })
+                    }
+                  />
+                </div>
+              </TabsContent>
+
+              <TabsContent value="syllabus" className="space-y-2 pt-4">
+                <Label>Syllabus (plain text or markdown)</Label>
                 <Textarea
-                  id="description"
-                  value={editingCourse.description}
-                  onChange={(e) => setEditingCourse({ ...editingCourse, description: e.target.value })}
+                  rows={14}
+                  value={editingCourse.syllabus ?? ""}
+                  onChange={(e) =>
+                    setEditingCourse({ ...editingCourse, syllabus: e.target.value })
+                  }
+                  placeholder="Course objectives, weekly breakdown, prerequisites, grading policy..."
                 />
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="price">Price (RWF)</Label>
-                  <Input
-                    id="price"
-                    type="number"
-                    value={editingCourse.price}
-                    onChange={(e) => setEditingCourse({ ...editingCourse, price: Number(e.target.value) })}
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="level">Level</Label>
-                  <Input
-                    id="level"
-                    value={editingCourse.level}
-                    onChange={(e) => setEditingCourse({ ...editingCourse, level: e.target.value })}
-                  />
-                </div>
-              </div>
-              <div>
-                <Label htmlFor="instructor">Instructor</Label>
-                <Input
-                  id="instructor"
-                  value={editingCourse.instructor}
-                  onChange={(e) => setEditingCourse({ ...editingCourse, instructor: e.target.value })}
+              </TabsContent>
+
+              <TabsContent value="curriculum" className="space-y-2 pt-4">
+                <Label>Curriculum (JSON)</Label>
+                <p className="text-xs text-muted-foreground">
+                  Each lesson supports: title, video_url, image_url, content, resources[], quiz[].
+                </p>
+                <Textarea
+                  rows={20}
+                  className="font-mono text-xs"
+                  value={curriculumText}
+                  onChange={(e) => setCurriculumText(e.target.value)}
                 />
-              </div>
-              <div className="flex justify-end gap-2">
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setCurriculumText(CURRICULUM_TEMPLATE)}
+                >
+                  Insert template
+                </Button>
+              </TabsContent>
+
+              <TabsContent value="exam" className="space-y-2 pt-4">
+                <Label>Final exam questions (JSON array)</Label>
+                <p className="text-xs text-muted-foreground">
+                  Fields: question, options[], correctIndex (0-based), explanation (optional).
+                </p>
+                <Textarea
+                  rows={16}
+                  className="font-mono text-xs"
+                  value={examText}
+                  onChange={(e) => setExamText(e.target.value)}
+                />
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setExamText(FINAL_EXAM_TEMPLATE)}
+                >
+                  Insert template
+                </Button>
+              </TabsContent>
+
+              <div className="flex justify-end gap-2 pt-6 border-t border-border mt-4">
                 <Button variant="outline" onClick={() => setIsDialogOpen(false)}>
                   Cancel
                 </Button>
-                <Button onClick={handleSave} disabled={updateCourse.isPending}>
+                <Button
+                  onClick={() => updateCourse.mutate(editingCourse)}
+                  disabled={updateCourse.isPending}
+                >
                   {updateCourse.isPending ? "Saving..." : "Save Changes"}
                 </Button>
               </div>
-            </div>
+            </Tabs>
           )}
         </DialogContent>
       </Dialog>

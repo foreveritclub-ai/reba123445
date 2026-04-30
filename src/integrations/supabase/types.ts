@@ -227,6 +227,7 @@ export type Database = {
           description: string
           duration_hours: number | null
           features: string[] | null
+          final_exam: Json | null
           has_certificate: boolean | null
           id: string
           instructor: string
@@ -236,11 +237,13 @@ export type Database = {
           level: string
           long_description: string | null
           original_price: number | null
+          passing_score: number
           price: number
           rating: number | null
           reviews_count: number | null
           slug: string
           students_count: number | null
+          syllabus: string | null
           tags: string[] | null
           title: string
           updated_at: string
@@ -251,6 +254,7 @@ export type Database = {
           description: string
           duration_hours?: number | null
           features?: string[] | null
+          final_exam?: Json | null
           has_certificate?: boolean | null
           id?: string
           instructor: string
@@ -260,11 +264,13 @@ export type Database = {
           level: string
           long_description?: string | null
           original_price?: number | null
+          passing_score?: number
           price: number
           rating?: number | null
           reviews_count?: number | null
           slug: string
           students_count?: number | null
+          syllabus?: string | null
           tags?: string[] | null
           title: string
           updated_at?: string
@@ -275,6 +281,7 @@ export type Database = {
           description?: string
           duration_hours?: number | null
           features?: string[] | null
+          final_exam?: Json | null
           has_certificate?: boolean | null
           id?: string
           instructor?: string
@@ -284,11 +291,13 @@ export type Database = {
           level?: string
           long_description?: string | null
           original_price?: number | null
+          passing_score?: number
           price?: number
           rating?: number | null
           reviews_count?: number | null
           slug?: string
           students_count?: number | null
+          syllabus?: string | null
           tags?: string[] | null
           title?: string
           updated_at?: string
@@ -643,6 +652,51 @@ export type Database = {
           id?: string
           phone?: string | null
           updated_at?: string
+        }
+        Relationships: []
+      }
+      quiz_attempts: {
+        Row: {
+          answers: Json | null
+          attempt_type: string
+          course_id: string
+          created_at: string
+          id: string
+          lesson_index: number | null
+          module_index: number | null
+          passed: boolean
+          score: number
+          total_questions: number
+          user_id: string
+          violations: number
+        }
+        Insert: {
+          answers?: Json | null
+          attempt_type: string
+          course_id: string
+          created_at?: string
+          id?: string
+          lesson_index?: number | null
+          module_index?: number | null
+          passed?: boolean
+          score: number
+          total_questions: number
+          user_id: string
+          violations?: number
+        }
+        Update: {
+          answers?: Json | null
+          attempt_type?: string
+          course_id?: string
+          created_at?: string
+          id?: string
+          lesson_index?: number | null
+          module_index?: number | null
+          passed?: boolean
+          score?: number
+          total_questions?: number
+          user_id?: string
+          violations?: number
         }
         Relationships: []
       }
