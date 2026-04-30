@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import SocialShare from "@/components/SocialShare";
 import { Helmet } from "react-helmet-async";
 
 // Sample blog posts data (fallback if database is empty)
@@ -330,6 +331,13 @@ const BlogPost = () => {
               </div>
             )}
 
+            {/* Social Share - Top */}
+            <SocialShare
+              url={`https://egreedtech.org/blog/${post.slug}`}
+              title={post.title}
+              excerpt={post.excerpt || undefined}
+            />
+
             {/* Content */}
             <div className="prose prose-lg dark:prose-invert max-w-none">
               {post.content.split('\n').map((paragraph, index) => {
@@ -351,6 +359,13 @@ const BlogPost = () => {
                 return null;
               })}
             </div>
+
+            {/* Social Share - Bottom */}
+            <SocialShare
+              url={`https://egreedtech.org/blog/${post.slug}`}
+              title={post.title}
+              excerpt={post.excerpt || undefined}
+            />
 
             {/* CTA */}
             <div className="mt-12 p-8 bg-primary/5 rounded-2xl text-center">
