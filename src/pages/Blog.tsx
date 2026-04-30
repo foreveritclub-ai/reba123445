@@ -340,16 +340,25 @@ const Blog = () => {
               Subscribe to receive the latest articles on IT consulting, cloud solutions, 
               and cybersecurity trends in Rwanda.
             </p>
-            <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+            <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
               <Input
                 type="email"
                 placeholder="Enter your email"
+                value={newsletterEmail}
+                onChange={(e) => setNewsletterEmail(e.target.value)}
+                required
+                disabled={subscribing}
                 className="flex-grow"
               />
-              <button className="bg-primary text-primary-foreground px-6 py-2 rounded-md font-medium hover:bg-primary/90 transition-colors">
-                Subscribe
+              <button
+                type="submit"
+                disabled={subscribing}
+                className="bg-primary text-primary-foreground px-6 py-2 rounded-md font-medium hover:bg-primary/90 transition-colors disabled:opacity-60 inline-flex items-center justify-center gap-2"
+              >
+                {subscribing && <Loader2 className="w-4 h-4 animate-spin" />}
+                {subscribing ? "Subscribing..." : "Subscribe"}
               </button>
-            </div>
+            </form>
           </motion.div>
         </div>
       </section>
