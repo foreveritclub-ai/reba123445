@@ -153,6 +153,7 @@ export const allServices: ServiceData[] = [
     features: ["Data warehouse design", "Business intelligence dashboards", "Predictive analytics", "Data visualization & reporting"],
     benefits: ["Better decision-making with data insights", "Identify trends and opportunities early", "Optimize operations and reduce costs", "Executive-ready reporting"],
     technologies: ["Power BI", "Tableau", "Python", "SQL", "Apache Spark", "ETL Pipelines"],
+  },
   {
     slug: "ai-chatbot-automation",
     icon: Bot,
