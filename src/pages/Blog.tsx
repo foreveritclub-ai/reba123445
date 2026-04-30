@@ -156,6 +156,56 @@ const Blog = () => {
         </div>
       </section>
 
+      {/* Featured Posts */}
+      {!isLoading && featuredPosts.length > 0 && (
+        <section className="py-12 bg-gradient-to-br from-primary/10 via-background to-accent/5 border-b">
+          <div className="container mx-auto px-4">
+            <div className="flex items-center gap-2 mb-6">
+              <Sparkles className="w-5 h-5 text-primary" />
+              <h2 className="text-2xl md:text-3xl font-bold">Featured Articles</h2>
+              <Badge variant="secondary" className="ml-2">Latest</Badge>
+            </div>
+            <div className="grid md:grid-cols-3 gap-6">
+              {featuredPosts.map((post, idx) => (
+                <motion.div
+                  key={post.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: idx * 0.1 }}
+                >
+                  <Link to={`/blog/${post.slug}`}>
+                    <Card className={`h-full overflow-hidden group cursor-pointer hover:shadow-2xl transition-all border-2 ${idx === 0 ? "border-primary/40" : "border-transparent"}`}>
+                      <div className="relative overflow-hidden h-44">
+                        <img
+                          src={post.image_url || "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800"}
+                          alt={post.title}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                        <div className="absolute top-3 left-3 flex gap-2">
+                          {idx === 0 && (
+                            <Badge className="bg-primary text-primary-foreground shadow-lg">
+                              <Sparkles className="w-3 h-3 mr-1" /> Top Pick
+                            </Badge>
+                          )}
+                          <Badge variant="secondary">{post.category}</Badge>
+                        </div>
+                      </div>
+                      <CardContent className="p-4">
+                        <h3 className="font-bold text-lg leading-tight line-clamp-2 group-hover:text-primary transition-colors mb-2">
+                          {post.title}
+                        </h3>
+                        <p className="text-sm text-muted-foreground line-clamp-2">{post.excerpt}</p>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Category Filter */}
       <section className="py-6 border-b">
         <div className="container mx-auto px-4">
