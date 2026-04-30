@@ -29,8 +29,32 @@ const Blog = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedLanguage, setSelectedLanguage] = useState("all");
+  const [newsletterEmail, setNewsletterEmail] = useState("");
+  const [subscribing, setSubscribing] = useState(false);
 
-  const { data: dbPosts, isLoading } = useQuery({
+  const handleSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const result = emailSchema.safeParse(newsletterEmail);
+    if (!result.success) {
+      toast.error(result.error.issues[0].message);
+      return;
+    }
+    setSubscribing(true);
+    const { error } = await supabase
+      .from("newsletter_subscribers")
+      .insert({ email: result.data, source: "blog" });
+    setSubscribing(false);
+    if (error) {
+      if (error.code === "23505") {
+        toast.success("You're already subscribed — thank you!");
+      } else {
+        toast.error("Subscription failed. Please try again.");
+      }
+      return;
+    }
+    toast.success("Subscribed! Check your inbox for updates.");
+    setNewsletterEmail("");
+  };
     queryKey: ["blog-posts"],
     queryFn: async () => {
       const { data, error } = await supabase
