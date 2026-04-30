@@ -22,7 +22,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://egreedtech.orgy/sitemap.xml
+Sitemap: https://egreedtech.org/sitemap.xml
 
 # Host
 Host: https://egreedtech.org
