@@ -54,11 +54,14 @@ const AboutSection = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             <h3 className="text-2xl font-bold mb-4 text-accent">Our Story</h3>
-            <p className="text-muted-foreground mb-6 leading-relaxed">
-              Founded in Rwanda, Egreed Technology is a leading IT Consulting company dedicated to helping organizations navigate the complex technology landscape. We provide strategic IT guidance, system integration, and digital transformation services tailored to your business needs.
+            <p className="text-muted-foreground mb-4 leading-relaxed">
+              Founded and officially registered in Rwanda on <strong className="text-foreground">May 4, 2026</strong>, Egreed Technology LTD is a leading IT Consulting company dedicated to helping organizations navigate the complex technology landscape with strategic IT guidance and full-stack digital solutions.
+            </p>
+            <p className="text-muted-foreground mb-4 leading-relaxed">
+              Our licensed business activities include School Management Systems, Web &amp; Software Development, Hosting &amp; Cloud Services, Data Processing, IT Consulting &amp; System Design, and Computer Training.
             </p>
             <p className="text-muted-foreground leading-relaxed">
-              Our team of experienced IT consultants works closely with clients across various industries—from startups to established enterprises—delivering comprehensive technology solutions that drive efficiency, reduce costs, and accelerate growth.
+              Our team works closely with clients across various industries—from startups to established enterprises—delivering comprehensive technology solutions that drive efficiency, reduce costs, and accelerate growth.
             </p>
           </motion.div>
 
