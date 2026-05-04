@@ -13,6 +13,7 @@ import LLMSection from "@/components/LLMSection";
 import ComingSoonSection from "@/components/ComingSoonSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import ContactSection from "@/components/ContactSection";
+import RegistrationSection from "@/components/RegistrationSection";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 
@@ -34,6 +35,7 @@ const Index = () => {
       <LLMSection />
       <ComingSoonSection />
       <TestimonialsSection />
+      <RegistrationSection />
       <ContactSection />
       <Footer />
     </div>
