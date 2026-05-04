@@ -39,11 +39,11 @@ const AboutSection = () => {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            About <span className="text-primary">Egreed Technology</span>
-          </h2>
+          <h1 className="text-4xl md:text-5xl font-bold mb-6">
+            About <span className="text-primary">Egreed Technology LTD</span> — EdTech & IT Consulting in Kigali, Rwanda
+          </h1>
           <p className="text-muted-foreground text-lg max-w-3xl mx-auto">
-            Your trusted IT Consulting partner in Rwanda. <strong className="text-foreground">Egreed Technology LTD</strong> is a Private Company Limited by Shares, officially registered with the Rwanda Development Board (RDB) and headquartered in Kigali. Led by CEO <strong className="text-foreground">Brayan Bayishime Shema</strong>, we help businesses leverage technology to achieve strategic goals and drive digital transformation.
+            <strong className="text-foreground">Egreed Technology LTD</strong> is a registered technology company based in <strong className="text-foreground">Kigali, Rwanda</strong>, specializing in <strong className="text-foreground">school management systems</strong>, custom software development, and digital transformation solutions. We serve schools, institutions, and organizations across <strong className="text-foreground">Rwanda and East Africa</strong> with modern, scalable, and secure digital platforms — led by CEO <strong className="text-foreground">Brayan Bayishime Shema</strong>.
           </p>
         </motion.div>
 
@@ -53,15 +53,15 @@ const AboutSection = () => {
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <h3 className="text-2xl font-bold mb-4 text-accent">Our Story</h3>
+            <h2 className="text-2xl font-bold mb-4 text-accent">Our Story — A Trusted EdTech Company in Rwanda</h2>
             <p className="text-muted-foreground mb-4 leading-relaxed">
-              Founded and officially registered in Rwanda on <strong className="text-foreground">May 4, 2026</strong>, Egreed Technology LTD is a leading IT Consulting company dedicated to helping organizations navigate the complex technology landscape with strategic IT guidance and full-stack digital solutions.
+              Founded and officially registered with the <strong className="text-foreground">Rwanda Development Board (RDB)</strong> on <strong className="text-foreground">May 4, 2026</strong>, Egreed Technology LTD provides advanced <strong className="text-foreground">school management systems in Rwanda</strong> designed to simplify student registration, attendance tracking, fee management, and academic reporting. Our digital school solutions help institutions reduce manual work, improve efficiency, and enhance communication between schools, teachers, students, and parents.
             </p>
             <p className="text-muted-foreground mb-4 leading-relaxed">
-              Our licensed business activities include School Management Systems, Web &amp; Software Development, Hosting &amp; Cloud Services, Data Processing, IT Consulting &amp; System Design, and Computer Training.
+              We also offer professional <strong className="text-foreground">software development services in Rwanda</strong> including web applications, mobile apps, enterprise systems, and SaaS platforms — built to help businesses and institutions automate processes, manage data efficiently, and scale digitally across <strong className="text-foreground">Kigali and East Africa</strong>.
             </p>
             <p className="text-muted-foreground leading-relaxed">
-              Our team works closely with clients across various industries—from startups to established enterprises—delivering comprehensive technology solutions that drive efficiency, reduce costs, and accelerate growth.
+              As a leading <strong className="text-foreground">EdTech company in Rwanda</strong>, Egreed Technology LTD is focused on transforming education through school ERP platforms, student information systems, and online learning tools — alongside secure cloud hosting, data processing, IT consulting, system design, and computer training services.
             </p>
           </motion.div>
 
