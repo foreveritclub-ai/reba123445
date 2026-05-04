@@ -30,9 +30,17 @@ const Footer = () => {
             <a href="/" className="inline-block mb-4">
               <img src={egreedLogo} alt="Egreed Technology" className="h-12 w-auto" />
             </a>
-            <p className="text-muted-foreground text-sm mb-6 leading-relaxed">
-              Empowering businesses through innovative software and digital solutions. Based in Rwanda, serving clients worldwide with customized, scalable technology solutions.
+            <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
+              Egreed Technology LTD — a Private Company Limited by Shares, officially registered with the Rwanda Development Board (RDB). Based in Kigali, serving clients across Rwanda and worldwide.
             </p>
+            <a
+              href="/certificate-egreedtechnology-LTD.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 mb-6 px-3 py-1.5 text-xs rounded-full bg-primary/10 border border-primary/30 text-primary hover:bg-primary/20 transition-colors"
+            >
+              ✓ RDB Registered • View Certificate
+            </a>
             <div className="space-y-3 text-sm">
               <a href="mailto:egreedtechnology@gmail.com" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
                 <Mail className="w-4 h-4" />
@@ -104,7 +112,7 @@ const Footer = () => {
         <div className="max-w-7xl mx-auto px-6 py-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-sm text-muted-foreground">
-              © 2024 Egreed Technology. All rights reserved.
+              © 2026 Egreed Technology LTD. All rights reserved. • CEO: Brayan Bayishime Shema
             </p>
             <div className="flex items-center gap-6 text-sm">
               <a href="/privacy-policy" className="text-muted-foreground hover:text-primary transition-colors">

@@ -43,7 +43,7 @@ const AboutSection = () => {
             About <span className="text-primary">Egreed Technology</span>
           </h2>
           <p className="text-muted-foreground text-lg max-w-3xl mx-auto">
-            Your trusted IT Consulting partner in Rwanda. We help businesses leverage technology to achieve strategic goals, optimize operations, and drive digital transformation.
+            Your trusted IT Consulting partner in Rwanda. <strong className="text-foreground">Egreed Technology LTD</strong> is a Private Company Limited by Shares, officially registered with the Rwanda Development Board (RDB) and headquartered in Kigali. Led by CEO <strong className="text-foreground">Brayan Bayishime Shema</strong>, we help businesses leverage technology to achieve strategic goals and drive digital transformation.
           </p>
         </motion.div>
 
