@@ -135,6 +135,15 @@ const ServiceDetail = () => {
             </div>
           </div>
         </div>
+        <section className="max-w-5xl mx-auto px-6 mt-12 p-6 rounded-2xl border border-border/50 bg-card/30">
+          <h2 className="text-lg font-semibold mb-2">Explore Egreed Technology LTD</h2>
+          <p className="text-sm text-muted-foreground mb-3">
+            Visit our <Link to="/" className="text-primary underline">homepage</Link>, browse all{" "}
+            <Link to="/#services" className="text-primary underline">IT services in Rwanda</Link>, read our{" "}
+            <Link to="/blog" className="text-primary underline">blog</Link>, or{" "}
+            <Link to="/#contact" className="text-primary underline">contact our Kigali team</Link>.
+          </p>
+        </section>
       </main>
       <Footer />
     </div>
