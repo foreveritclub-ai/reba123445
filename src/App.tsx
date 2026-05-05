@@ -26,6 +26,7 @@ import KeroIwaweAssist from "./pages/KeroIwaweAssist";
 import EgreedLearning from "./pages/EgreedLearning";
 import RebaliveRW from "./pages/RebaliveRW";
 import Internship from "./pages/Internship";
+import SeoLanding from "./pages/SeoLanding";
 
 const queryClient = new QueryClient();
 
@@ -58,6 +59,10 @@ const App = () => (
             <Route path="/products/egreed-learning" element={<EgreedLearning />} />
             <Route path="/products/rebalive-rw" element={<RebaliveRW />} />
             <Route path="/internship" element={<Internship />} />
+            <Route path="/about-egreed-technology" element={<SeoLanding />} />
+            <Route path="/it-consulting-rwanda" element={<SeoLanding />} />
+            <Route path="/school-management-system-rwanda" element={<SeoLanding />} />
+            <Route path="/software-development-rwanda" element={<SeoLanding />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
