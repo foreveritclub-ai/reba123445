@@ -10,6 +10,10 @@ const quickLinks = [
   { label: "Courses", href: "/#courses" },
   { label: "Case Studies", href: "/case-studies" },
   { label: "Blog", href: "/blog" },
+  { label: "About Egreed Technology", href: "/about-egreed-technology" },
+  { label: "IT Consulting Rwanda", href: "/it-consulting-rwanda" },
+  { label: "School Management System Rwanda", href: "/school-management-system-rwanda" },
+  { label: "Software Development Rwanda", href: "/software-development-rwanda" },
   { label: "Contact", href: "/#contact" },
 ];
 const serviceLinks = [
@@ -31,7 +35,7 @@ const Footer = () => {
               <img src={egreedLogo} alt="Egreed Technology" className="h-12 w-auto" />
             </a>
             <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
-              Egreed Technology LTD — a Private Company Limited by Shares, officially registered with the Rwanda Development Board (RDB). Based in Kigali, serving clients across Rwanda and worldwide.
+              <strong className="text-foreground">Egreed Technology LTD</strong> (also known as Egreed Technology, EgreedTech, or Egreed Tech) is a registered IT consulting and software development company in Kigali, Rwanda specializing in school management systems and digital solutions across East Africa.
             </p>
             <a
               href="/certificate-egreedtechnology-LTD.pdf"

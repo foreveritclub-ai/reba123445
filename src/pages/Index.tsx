@@ -15,6 +15,7 @@ import ComingSoonSection from "@/components/ComingSoonSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import ContactSection from "@/components/ContactSection";
 import RegistrationSection from "@/components/RegistrationSection";
+import BrandSearchSection from "@/components/BrandSearchSection";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 
@@ -26,6 +27,8 @@ const Index = () => {
       <WhatsAppButton />
       <Navbar />
       <HeroSection />
+      <BrandSearchSection />
+      <AboutSection />
       <AboutSection />
       <ServicesSection />
       <BusinessActivitiesSection />

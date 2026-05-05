@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
@@ -104,7 +104,8 @@ const PAGES: Record<string, PageContent> = {
 };
 
 const SeoLanding = () => {
-  const { slug = "" } = useParams();
+  const { pathname } = useLocation();
+  const slug = pathname.replace(/^\//, "").replace(/\/$/, "");
   const page = PAGES[slug];
 
   useEffect(() => {
