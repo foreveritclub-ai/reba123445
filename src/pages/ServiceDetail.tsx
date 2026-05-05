@@ -1,6 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowLeft, CheckCircle, ArrowRight } from "lucide-react";
+import { Helmet } from "react-helmet-async";
 import { getServiceBySlug, allServices } from "@/lib/services-data";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -19,6 +20,37 @@ const ServiceDetail = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <Helmet>
+        <title>{`${service.title} in Rwanda | Egreed Technology LTD`}</title>
+        <meta name="description" content={(service.longDescription || service.description).slice(0, 160)} />
+        <link rel="canonical" href={`https://egreedtech.org/services/${service.slug}`} />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content={`${service.title} | Egreed Technology Rwanda`} />
+        <meta property="og:description" content={service.description} />
+        <meta property="og:url" content={`https://egreedtech.org/services/${service.slug}`} />
+        <meta property="og:image" content="https://egreedtech.org/favicon.png" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={`${service.title} | Egreed Technology Rwanda`} />
+        <meta name="twitter:description" content={service.description} />
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Service",
+          name: service.title,
+          description: service.description,
+          provider: {
+            "@type": "Organization",
+            name: "Egreed Technology LTD",
+            url: "https://egreedtech.org",
+            address: { "@type": "PostalAddress", addressLocality: "Kigali", addressCountry: "RW" },
+            sameAs: [
+              "https://twitter.com/EgreedTech",
+              "https://www.linkedin.com/company/egreedtechnology",
+              "https://www.facebook.com/egreedtechnology",
+            ],
+          },
+          areaServed: { "@type": "Country", name: "Rwanda" },
+        })}</script>
+      </Helmet>
       <Navbar />
       <main className="pt-24 pb-16">
         {/* Hero */}
@@ -103,6 +135,15 @@ const ServiceDetail = () => {
             </div>
           </div>
         </div>
+        <section className="max-w-5xl mx-auto px-6 mt-12 p-6 rounded-2xl border border-border/50 bg-card/30">
+          <h2 className="text-lg font-semibold mb-2">Explore Egreed Technology LTD</h2>
+          <p className="text-sm text-muted-foreground mb-3">
+            Visit our <Link to="/" className="text-primary underline">homepage</Link>, browse all{" "}
+            <Link to="/#services" className="text-primary underline">IT services in Rwanda</Link>, read our{" "}
+            <Link to="/blog" className="text-primary underline">blog</Link>, or{" "}
+            <Link to="/#contact" className="text-primary underline">contact our Kigali team</Link>.
+          </p>
+        </section>
       </main>
       <Footer />
     </div>

@@ -110,18 +110,59 @@ const SeoLanding = () => {
 
   useEffect(() => {
     if (!page) return;
+    const url = `https://egreedtech.org${pathname}`;
     document.title = page.title;
-    const setMeta = (name: string, content: string) => {
-      let el = document.querySelector(`meta[name="${name}"]`) as HTMLMetaElement | null;
+    const setMeta = (key: string, content: string, attr: "name" | "property" = "name") => {
+      let el = document.querySelector(`meta[${attr}="${key}"]`) as HTMLMetaElement | null;
       if (!el) {
         el = document.createElement("meta");
-        el.setAttribute("name", name);
+        el.setAttribute(attr, key);
         document.head.appendChild(el);
       }
       el.setAttribute("content", content);
     };
     setMeta("description", page.metaDescription);
-  }, [page]);
+    setMeta("og:title", page.title, "property");
+    setMeta("og:description", page.metaDescription, "property");
+    setMeta("og:url", url, "property");
+    setMeta("og:type", "website", "property");
+    setMeta("og:image", "https://egreedtech.org/favicon.png", "property");
+    setMeta("twitter:card", "summary_large_image");
+    setMeta("twitter:title", page.title);
+    setMeta("twitter:description", page.metaDescription);
+    setMeta("twitter:url", url);
+
+    let canonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
+    if (!canonical) {
+      canonical = document.createElement("link");
+      canonical.setAttribute("rel", "canonical");
+      document.head.appendChild(canonical);
+    }
+    canonical.setAttribute("href", url);
+
+    const SCRIPT_ID = "seo-landing-jsonld";
+    document.getElementById(SCRIPT_ID)?.remove();
+    const script = document.createElement("script");
+    script.id = SCRIPT_ID;
+    script.type = "application/ld+json";
+    script.text = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      name: "Egreed Technology LTD",
+      alternateName: ["EgreedTech", "Egreed Tech", "Egreed Technology"],
+      url: "https://egreedtech.org",
+      logo: "https://egreedtech.org/favicon.png",
+      address: { "@type": "PostalAddress", addressLocality: "Kigali", addressCountry: "RW" },
+      sameAs: [
+        "https://twitter.com/EgreedTech",
+        "https://www.linkedin.com/company/egreedtechnology",
+        "https://www.facebook.com/egreedtechnology",
+        "https://www.instagram.com/egreedtechnology",
+      ],
+    });
+    document.head.appendChild(script);
+    return () => { document.getElementById(SCRIPT_ID)?.remove(); };
+  }, [page, pathname]);
 
   if (!page) {
     return (
