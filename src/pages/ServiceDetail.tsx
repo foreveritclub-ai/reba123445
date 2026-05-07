@@ -50,6 +50,16 @@ const ServiceDetail = () => {
           },
           areaServed: { "@type": "Country", name: "Rwanda" },
         })}</script>
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Home", item: "https://egreedtech.org/" },
+            { "@type": "ListItem", position: 2, name: "Services", item: "https://egreedtech.org/#services" },
+            { "@type": "ListItem", position: 3, name: service.category, item: "https://egreedtech.org/#services" },
+            { "@type": "ListItem", position: 4, name: service.title, item: `https://egreedtech.org/services/${service.slug}` },
+          ],
+        })}</script>
       </Helmet>
       <Navbar />
       <main className="pt-24 pb-16">
