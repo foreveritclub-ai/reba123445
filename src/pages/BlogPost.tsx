@@ -266,6 +266,35 @@ const BlogPost = () => {
     day: "numeric"
   });
 
+  const canonicalUrl = `https://egreedtech.org/blog/${post.slug}`;
+  const blogPostingLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.excerpt || post.title,
+    image: post.image_url ? [post.image_url] : undefined,
+    author: { "@type": "Organization", name: post.author || "Egreed Technology LTD" },
+    publisher: {
+      "@type": "Organization",
+      name: "Egreed Technology LTD",
+      logo: { "@type": "ImageObject", url: "https://egreedtech.org/favicon.png" },
+    },
+    datePublished: post.created_at,
+    dateModified: (post as any).updated_at || post.created_at,
+    mainEntityOfPage: { "@type": "WebPage", "@id": canonicalUrl },
+    articleSection: post.category,
+    inLanguage: "en",
+  };
+  const breadcrumbLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://egreedtech.org/" },
+      { "@type": "ListItem", position: 2, name: "Blog", item: "https://egreedtech.org/blog" },
+      { "@type": "ListItem", position: 3, name: post.title, item: canonicalUrl },
+    ],
+  };
+
   return (
     <>
       <Helmet>
@@ -275,10 +304,14 @@ const BlogPost = () => {
         <meta property="og:description" content={post.excerpt || post.title} />
         <meta property="og:image" content={post.image_url} />
         <meta property="og:type" content="article" />
+        <meta property="og:url" content={canonicalUrl} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={post.title} />
         <meta name="twitter:description" content={post.excerpt || post.title} />
-        <link rel="canonical" href={`https://egreedtech.org/blog/${post.slug}`} />
+        {post.image_url && <meta name="twitter:image" content={post.image_url} />}
+        <link rel="canonical" href={canonicalUrl} />
+        <script type="application/ld+json">{JSON.stringify(blogPostingLd)}</script>
+        <script type="application/ld+json">{JSON.stringify(breadcrumbLd)}</script>
       </Helmet>
 
       <div className="min-h-screen bg-background">

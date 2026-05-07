@@ -141,7 +141,9 @@ const SeoLanding = () => {
     canonical.setAttribute("href", url);
 
     const SCRIPT_ID = "seo-landing-jsonld";
+    const BC_ID = "seo-landing-breadcrumb";
     document.getElementById(SCRIPT_ID)?.remove();
+    document.getElementById(BC_ID)?.remove();
     const script = document.createElement("script");
     script.id = SCRIPT_ID;
     script.type = "application/ld+json";
@@ -161,7 +163,23 @@ const SeoLanding = () => {
       ],
     });
     document.head.appendChild(script);
-    return () => { document.getElementById(SCRIPT_ID)?.remove(); };
+
+    const bc = document.createElement("script");
+    bc.id = BC_ID;
+    bc.type = "application/ld+json";
+    bc.text = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://egreedtech.org/" },
+        { "@type": "ListItem", position: 2, name: page.h1, item: url },
+      ],
+    });
+    document.head.appendChild(bc);
+    return () => {
+      document.getElementById(SCRIPT_ID)?.remove();
+      document.getElementById(BC_ID)?.remove();
+    };
   }, [page, pathname]);
 
   if (!page) {
