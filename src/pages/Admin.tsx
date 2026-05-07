@@ -26,7 +26,8 @@ import {
   Gift,
   UserPlus,
   Video,
-  GraduationCap
+  GraduationCap,
+  Search
 } from "lucide-react";
 import AdminDashboard from "@/components/admin/AdminDashboard";
 import AdminMessages from "@/components/admin/AdminMessages";
@@ -41,6 +42,7 @@ import AdminDiscountConfig from "@/components/admin/AdminDiscountConfig";
 import AdminWaitlist from "@/components/admin/AdminWaitlist";
 import AdminAdGenerator from "@/components/admin/AdminAdGenerator";
 import AdminInternships from "@/components/admin/AdminInternships";
+import AdminSeoPreview from "@/components/admin/AdminSeoPreview";
 
 const Admin = () => {
   const { user, signOut } = useAuth();
@@ -213,6 +215,10 @@ const Admin = () => {
               <GraduationCap className="w-4 h-4" />
               <span className="hidden sm:inline">Internships</span>
             </TabsTrigger>
+            <TabsTrigger value="seo" className="flex items-center gap-2 py-2 px-3">
+              <Search className="w-4 h-4" />
+              <span className="hidden sm:inline">SEO</span>
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="dashboard">
@@ -265,6 +271,10 @@ const Admin = () => {
 
           <TabsContent value="internships">
             <AdminInternships />
+          </TabsContent>
+
+          <TabsContent value="seo">
+            <AdminSeoPreview />
           </TabsContent>
         </Tabs>
       </main>
