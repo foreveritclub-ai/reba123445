@@ -21,8 +21,9 @@ Allow: /
 User-agent: *
 Allow: /
 
-# Sitemap
+# Sitemaps
 Sitemap: https://egreedtech.org/sitemap.xml
+Sitemap: https://xabxfxljumrbochdshul.supabase.co/functions/v1/sitemap
 
 # Host
 Host: https://egreedtech.org
