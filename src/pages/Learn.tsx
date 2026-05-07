@@ -27,6 +27,7 @@ import VideoPlayer from "@/components/VideoPlayer";
 import CertificateGenerator from "@/components/CertificateGenerator";
 import LearningTour from "@/components/LearningTour";
 import QuizRunner, { QuizQuestion } from "@/components/QuizRunner";
+import { generateLessonContent } from "@/lib/lessonContent";
 
 interface LessonResource {
   label: string;
@@ -681,14 +682,26 @@ const Learn = () => {
                           {currentLesson.content}
                         </article>
                       ) : (
-                        <div className="prose prose-invert max-w-none">
-                          <h3>Lesson Overview</h3>
-                          <p className="text-muted-foreground">
-                            This lesson covers <strong>{currentLesson.title}</strong>. Watch the
-                            video and review the key concepts. Your instructor will add detailed
-                            notes here soon.
-                          </p>
-                        </div>
+                        <article className="prose prose-invert max-w-none leading-relaxed text-foreground/90">
+                          {generateLessonContent({
+                            lessonTitle: currentLesson.title,
+                            moduleTitle: course.curriculum[activeModule]?.module,
+                            courseTitle: course.title,
+                            instructor: course.instructor,
+                          })
+                            .split("\n\n")
+                            .map((block, idx) =>
+                              block.startsWith("## ") ? (
+                                <h3 key={idx} className="mt-6 mb-2 font-semibold text-foreground">
+                                  {block.replace(/^##\s*/, "")}
+                                </h3>
+                              ) : (
+                                <p key={idx} className="text-muted-foreground mb-4">
+                                  {block}
+                                </p>
+                              )
+                            )}
+                        </article>
                       )}
 
                       {/* Resources */}
