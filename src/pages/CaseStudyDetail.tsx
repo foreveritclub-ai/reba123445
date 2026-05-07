@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowLeft, CheckCircle } from "lucide-react";
+import { Helmet } from "react-helmet-async";
 import { supabase } from "@/integrations/supabase/client";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -19,6 +20,9 @@ interface CaseStudy {
   results: string;
   metrics: { label: string; value: string }[];
   tags: string[];
+  image_url?: string | null;
+  updated_at?: string;
+  created_at?: string;
 }
 
 const CaseStudyDetail = () => {
@@ -43,8 +47,55 @@ const CaseStudyDetail = () => {
   if (loading) return <div className="min-h-screen bg-background flex items-center justify-center text-muted-foreground">Loading...</div>;
   if (!study) return <NotFound />;
 
+  const canonicalUrl = `https://egreedtech.org/case-studies/${study.slug}`;
+  const description = study.results?.slice(0, 160) || study.challenge?.slice(0, 160) || study.title;
+  const caseLd = {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    additionalType: "https://schema.org/Article",
+    name: study.title,
+    headline: study.title,
+    about: study.category,
+    image: study.image_url ? [study.image_url] : undefined,
+    description,
+    creator: {
+      "@type": "Organization",
+      name: "Egreed Technology LTD",
+      url: "https://egreedtech.org",
+    },
+    audience: study.client_name ? { "@type": "Audience", name: study.client_name } : undefined,
+    mainEntityOfPage: { "@type": "WebPage", "@id": canonicalUrl },
+    keywords: (study.tags || []).join(", "),
+    text: study.results,
+  };
+  const breadcrumbLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://egreedtech.org/" },
+      { "@type": "ListItem", position: 2, name: "Case Studies", item: "https://egreedtech.org/case-studies" },
+      { "@type": "ListItem", position: 3, name: study.title, item: canonicalUrl },
+    ],
+  };
+
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <Helmet>
+        <title>{`${study.title} | Egreed Technology Case Study`}</title>
+        <meta name="description" content={description} />
+        <link rel="canonical" href={canonicalUrl} />
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content={study.title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:url" content={canonicalUrl} />
+        {study.image_url && <meta property="og:image" content={study.image_url} />}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={study.title} />
+        <meta name="twitter:description" content={description} />
+        {study.image_url && <meta name="twitter:image" content={study.image_url} />}
+        <script type="application/ld+json">{JSON.stringify(caseLd)}</script>
+        <script type="application/ld+json">{JSON.stringify(breadcrumbLd)}</script>
+      </Helmet>
       <Navbar />
       <main className="pt-24 pb-16">
         <section className="px-6 py-16 bg-card/30">
