@@ -1,6 +1,7 @@
 // Generates a long, helpful written explanation for any lesson topic when the
-// admin hasn't authored custom content yet. Produces 100+ sentences so learners
-// always have substantial reading material.
+// admin hasn't authored custom content yet — and as supplementary reading even
+// when they have. Produces 120+ complete sentences so learners always have
+// substantial reading material on every lesson.
 
 export function generateLessonContent(opts: {
   lessonTitle: string;
@@ -8,7 +9,12 @@ export function generateLessonContent(opts: {
   courseTitle?: string;
   instructor?: string;
 }): string {
-  const { lessonTitle, moduleTitle = "this module", courseTitle = "this course", instructor = "your instructor" } = opts;
+  const {
+    lessonTitle,
+    moduleTitle = "this module",
+    courseTitle = "this course",
+    instructor = "your instructor",
+  } = opts;
   const T = lessonTitle;
 
   const sections: { heading: string; sentences: string[] }[] = [
@@ -58,6 +64,21 @@ export function generateLessonContent(opts: {
       ],
     },
     {
+      heading: `Key terminology around ${T}`,
+      sentences: [
+        `Every field has its own vocabulary, and ${T} is no exception.`,
+        `Learning the right words for ${T} helps you read documentation faster.`,
+        `It also helps you ask better questions when you need help.`,
+        `Start by writing down five words that appear often around ${T}.`,
+        `For each word, write a one-sentence definition in your own language.`,
+        `Compare your definition with what you find in a trusted reference.`,
+        `Refine your definition until it captures the essence of the term.`,
+        `Use the new vocabulary in your notes so it becomes natural.`,
+        `Speaking the language of ${T} signals that you take the craft seriously.`,
+        `Over time, this vocabulary will become a shortcut for complex ideas.`,
+      ],
+    },
+    {
       heading: `A practical walkthrough of ${T}`,
       sentences: [
         `Imagine you are working on a real project that needs ${T} today.`,
@@ -73,9 +94,24 @@ export function generateLessonContent(opts: {
       ],
     },
     {
+      heading: `A worked example of ${T}`,
+      sentences: [
+        `Let us walk through a concrete example that uses ${T} from start to finish.`,
+        `Begin by stating the problem in a single, clear sentence.`,
+        `Identify what is given to you and what you need to produce.`,
+        `Break the work into three or four smaller sub-problems.`,
+        `Solve the first sub-problem with the simplest approach you can think of.`,
+        `Verify the solution with a tiny input that you can check by hand.`,
+        `Repeat the same pattern for the next sub-problem.`,
+        `Combine the smaller solutions into a single, complete answer.`,
+        `Review the final answer and look for ways to make it cleaner.`,
+        `Write a sentence that explains why your approach worked.`,
+      ],
+    },
+    {
       heading: `Common mistakes with ${T}`,
       sentences: [
-        `One common mistake is jumping into code or action before understanding the problem.`,
+        `One common mistake is jumping into action before understanding the problem.`,
         `Another mistake is trying to solve everything at once instead of step by step.`,
         `Many learners forget to test small pieces before combining them.`,
         `Some people copy solutions without understanding why they work.`,
@@ -103,6 +139,21 @@ export function generateLessonContent(opts: {
       ],
     },
     {
+      heading: `Tools and resources for ${T}`,
+      sentences: [
+        `Good tools make working with ${T} much easier and more enjoyable.`,
+        `Spend a little time exploring the tools most often used with ${T}.`,
+        `Keep a short list of the resources you found most useful.`,
+        `Bookmark official documentation — it is usually the most reliable source.`,
+        `Trusted tutorials and case studies are a great supplement to documentation.`,
+        `Community forums let you see how others solve real problems with ${T}.`,
+        `Be cautious with old answers, since best practices for ${T} evolve over time.`,
+        `Build a small toolkit you can rely on instead of reinventing the wheel.`,
+        `Sharing your toolkit with classmates strengthens everyone's learning.`,
+        `Updating your toolkit every few months keeps your skills sharp.`,
+      ],
+    },
+    {
       heading: `How to practice ${T}`,
       sentences: [
         `Practice is what turns reading into real skill.`,
@@ -115,6 +166,36 @@ export function generateLessonContent(opts: {
         `Join a community where other learners are working on similar topics.`,
         `Review this lesson again in two days and see how much more makes sense.`,
         `Consistent small effort beats rare bursts of long study sessions.`,
+      ],
+    },
+    {
+      heading: `Real-world applications of ${T} in Rwanda and East Africa`,
+      sentences: [
+        `${T} is already being applied across organisations in Rwanda and the wider region.`,
+        `Schools, banks, hospitals, and startups all benefit from teams that understand ${T}.`,
+        `Egreed Technology LTD frequently uses ideas like ${T} when delivering client projects.`,
+        `Local businesses value people who can apply ${T} to their specific context.`,
+        `Adapting global best practices to the local market is a real, in-demand skill.`,
+        `Think about a problem you have personally seen that ${T} could help solve.`,
+        `Discuss that problem with a friend or mentor and propose a small solution.`,
+        `Even a simple project can become a strong portfolio piece with the right write-up.`,
+        `Employers respond to evidence of impact more than to long lists of topics studied.`,
+        `Your ability to apply ${T} locally is one of your biggest competitive advantages.`,
+      ],
+    },
+    {
+      heading: `Self-check questions on ${T}`,
+      sentences: [
+        `Before moving on, pause and answer a few questions to yourself.`,
+        `Can you describe ${T} in two or three plain sentences?`,
+        `Can you explain why ${T} is useful in at least two different situations?`,
+        `Can you name the most common mistake people make with ${T}?`,
+        `Can you identify the inputs and outputs of a typical ${T} workflow?`,
+        `Can you walk through a small example of ${T} from start to finish?`,
+        `Can you list one tool or resource you would use when working with ${T}?`,
+        `Can you connect ${T} to at least one earlier lesson in ${courseTitle}?`,
+        `Can you describe one local context in which ${T} would matter?`,
+        `If you answered yes to most of these, you are ready for the lesson quiz.`,
       ],
     },
     {

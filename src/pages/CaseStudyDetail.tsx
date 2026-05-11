@@ -49,6 +49,9 @@ const CaseStudyDetail = () => {
 
   const canonicalUrl = `https://egreedtech.org/case-studies/${study.slug}`;
   const description = study.results?.slice(0, 160) || study.challenge?.slice(0, 160) || study.title;
+  const absoluteImage = study.image_url
+    ? (study.image_url.startsWith("http") ? study.image_url : `https://egreedtech.org${study.image_url}`)
+    : "https://egreedtech.org/og-image.jpg";
   const caseLd = {
     "@context": "https://schema.org",
     "@type": "CreativeWork",
@@ -56,12 +59,19 @@ const CaseStudyDetail = () => {
     name: study.title,
     headline: study.title,
     about: study.category,
-    image: study.image_url ? [study.image_url] : undefined,
+    image: {
+      "@type": "ImageObject",
+      url: absoluteImage,
+      caption: `${study.title} — Egreed Technology case study`,
+    },
+    datePublished: study.created_at,
+    dateModified: study.updated_at ?? study.created_at,
     description,
     creator: {
       "@type": "Organization",
       name: "Egreed Technology LTD",
       url: "https://egreedtech.org",
+      logo: "https://egreedtech.org/favicon.ico",
     },
     audience: study.client_name ? { "@type": "Audience", name: study.client_name } : undefined,
     mainEntityOfPage: { "@type": "WebPage", "@id": canonicalUrl },
@@ -88,11 +98,12 @@ const CaseStudyDetail = () => {
         <meta property="og:title" content={study.title} />
         <meta property="og:description" content={description} />
         <meta property="og:url" content={canonicalUrl} />
-        {study.image_url && <meta property="og:image" content={study.image_url} />}
+        <meta property="og:image" content={absoluteImage} />
+        <meta property="og:image:alt" content={`${study.title} — Egreed Technology case study`} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={study.title} />
         <meta name="twitter:description" content={description} />
-        {study.image_url && <meta name="twitter:image" content={study.image_url} />}
+        <meta name="twitter:image" content={absoluteImage} />
         <script type="application/ld+json">{JSON.stringify(caseLd)}</script>
         <script type="application/ld+json">{JSON.stringify(breadcrumbLd)}</script>
       </Helmet>

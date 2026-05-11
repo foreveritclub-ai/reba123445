@@ -676,33 +676,39 @@ const Learn = () => {
                         />
                       )}
 
-                      {/* Written content */}
-                      {currentLesson.content ? (
+                      {/* Written content (admin-authored, when available) */}
+                      {currentLesson.content && (
                         <article className="prose prose-invert max-w-none whitespace-pre-wrap leading-relaxed text-foreground/90">
                           {currentLesson.content}
                         </article>
-                      ) : (
-                        <article className="prose prose-invert max-w-none leading-relaxed text-foreground/90">
-                          {generateLessonContent({
-                            lessonTitle: currentLesson.title,
-                            moduleTitle: course.curriculum[activeModule]?.module,
-                            courseTitle: course.title,
-                            instructor: course.instructor,
-                          })
-                            .split("\n\n")
-                            .map((block, idx) =>
-                              block.startsWith("## ") ? (
-                                <h3 key={idx} className="mt-6 mb-2 font-semibold text-foreground">
-                                  {block.replace(/^##\s*/, "")}
-                                </h3>
-                              ) : (
-                                <p key={idx} className="text-muted-foreground mb-4">
-                                  {block}
-                                </p>
-                              )
-                            )}
-                        </article>
                       )}
+
+                      {/* Long-form learning guide — always shown for every lesson (100+ sentences) */}
+                      <article className="prose prose-invert max-w-none leading-relaxed text-foreground/90">
+                        {currentLesson.content && (
+                          <h3 className="mt-2 mb-4 font-semibold text-foreground">
+                            In-depth learning guide
+                          </h3>
+                        )}
+                        {generateLessonContent({
+                          lessonTitle: currentLesson.title,
+                          moduleTitle: course.curriculum[activeModule]?.module,
+                          courseTitle: course.title,
+                          instructor: course.instructor,
+                        })
+                          .split("\n\n")
+                          .map((block, idx) =>
+                            block.startsWith("## ") ? (
+                              <h3 key={idx} className="mt-6 mb-2 font-semibold text-foreground">
+                                {block.replace(/^##\s*/, "")}
+                              </h3>
+                            ) : (
+                              <p key={idx} className="text-muted-foreground mb-4">
+                                {block}
+                              </p>
+                            )
+                          )}
+                      </article>
 
                       {/* Resources */}
                       {currentLesson.resources && currentLesson.resources.length > 0 && (
