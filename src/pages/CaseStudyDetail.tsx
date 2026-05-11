@@ -49,9 +49,13 @@ const CaseStudyDetail = () => {
 
   const canonicalUrl = `https://egreedtech.org/case-studies/${study.slug}`;
   const description = study.results?.slice(0, 160) || study.challenge?.slice(0, 160) || study.title;
+  const DEFAULT_OG = "https://egreedtech.org/case-study-gasabo.jpg";
   const absoluteImage = study.image_url
-    ? (study.image_url.startsWith("http") ? study.image_url : `https://egreedtech.org${study.image_url}`)
-    : "https://egreedtech.org/og-image.jpg";
+    ? (study.image_url.startsWith("http") ? study.image_url : `https://egreedtech.org${study.image_url.startsWith("/") ? "" : "/"}${study.image_url}`)
+    : DEFAULT_OG;
+  const metrics = Array.isArray(study.metrics) ? study.metrics.filter(m => m && m.label && m.value) : [];
+  const tags = Array.isArray(study.tags) ? study.tags : [];
+  const clientName = study.client_name?.trim() || "Confidential Client";
   const caseLd = {
     "@context": "https://schema.org",
     "@type": "CreativeWork",
