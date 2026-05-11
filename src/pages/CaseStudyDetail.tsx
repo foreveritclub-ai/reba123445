@@ -49,9 +49,13 @@ const CaseStudyDetail = () => {
 
   const canonicalUrl = `https://egreedtech.org/case-studies/${study.slug}`;
   const description = study.results?.slice(0, 160) || study.challenge?.slice(0, 160) || study.title;
+  const DEFAULT_OG = "https://egreedtech.org/case-study-gasabo.jpg";
   const absoluteImage = study.image_url
-    ? (study.image_url.startsWith("http") ? study.image_url : `https://egreedtech.org${study.image_url}`)
-    : "https://egreedtech.org/og-image.jpg";
+    ? (study.image_url.startsWith("http") ? study.image_url : `https://egreedtech.org${study.image_url.startsWith("/") ? "" : "/"}${study.image_url}`)
+    : DEFAULT_OG;
+  const metrics = Array.isArray(study.metrics) ? study.metrics.filter(m => m && m.label && m.value) : [];
+  const tags = Array.isArray(study.tags) ? study.tags : [];
+  const clientName = study.client_name?.trim() || "Confidential Client";
   const caseLd = {
     "@context": "https://schema.org",
     "@type": "CreativeWork",
@@ -73,9 +77,9 @@ const CaseStudyDetail = () => {
       url: "https://egreedtech.org",
       logo: "https://egreedtech.org/favicon.ico",
     },
-    audience: study.client_name ? { "@type": "Audience", name: study.client_name } : undefined,
+    audience: { "@type": "Audience", name: clientName },
     mainEntityOfPage: { "@type": "WebPage", "@id": canonicalUrl },
-    keywords: (study.tags || []).join(", "),
+    keywords: tags.join(", "),
     text: study.results,
   };
   const breadcrumbLd = {
@@ -120,21 +124,35 @@ const CaseStudyDetail = () => {
                 {study.industry && <span className="text-xs text-muted-foreground bg-muted px-3 py-1 rounded-full">{study.industry}</span>}
               </div>
               <h1 className="text-3xl md:text-4xl font-bold mb-2">{study.title}</h1>
-              {study.client_name && <p className="text-muted-foreground">Client: {study.client_name}</p>}
+              <p className="text-muted-foreground"><span className="font-medium text-foreground/80">Client:</span> {clientName}</p>
             </motion.div>
           </div>
         </section>
 
         <div className="max-w-4xl mx-auto px-6 py-12 space-y-12">
+          {/* Hero image fallback */}
+          <img
+            src={absoluteImage}
+            alt={`${study.title} — ${clientName} case study by Egreed Technology`}
+            loading="lazy"
+            className="w-full rounded-2xl border border-border/50 object-cover max-h-96"
+          />
+
           {/* Metrics */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {study.metrics.map(m => (
-              <div key={m.label} className="text-center p-5 bg-card border border-border/50 rounded-xl">
-                <div className="text-2xl font-bold text-primary">{m.value}</div>
-                <div className="text-sm text-muted-foreground mt-1">{m.label}</div>
-              </div>
-            ))}
-          </div>
+          {metrics.length > 0 ? (
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {metrics.map(m => (
+                <div key={m.label} className="text-center p-5 bg-card border border-border/50 rounded-xl">
+                  <div className="text-2xl font-bold text-primary">{m.value}</div>
+                  <div className="text-sm text-muted-foreground mt-1">{m.label}</div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="p-5 bg-card border border-border/50 rounded-xl text-sm text-muted-foreground">
+              Detailed performance metrics for {clientName} are available on request.
+            </div>
+          )}
 
           {/* Challenge */}
           <section>
@@ -155,9 +173,9 @@ const CaseStudyDetail = () => {
           </section>
 
           {/* Tags */}
-          {study.tags.length > 0 && (
+          {tags.length > 0 && (
             <div className="flex flex-wrap gap-2">
-              {study.tags.map(t => (
+              {tags.map(t => (
                 <span key={t} className="px-3 py-1 bg-primary/10 text-primary text-sm rounded-full">{t}</span>
               ))}
             </div>

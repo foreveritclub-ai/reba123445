@@ -48,6 +48,39 @@ const sitelinksLd = {
   ],
 };
 
+const COURSE_CATALOG = [
+  { slug: "cybersecurity-certification", name: "Cybersecurity Professional Certification" },
+  { slug: "fullstack-web-development", name: "Full-Stack Web Development Mastery" },
+  { slug: "cloud-architecture", name: "Cloud Architecture with AWS & Azure" },
+  { slug: "ai-machine-learning", name: "AI & Machine Learning Fundamentals" },
+  { slug: "mobile-app-development", name: "Mobile App Development (iOS & Android)" },
+  { slug: "database-design", name: "Database Design & Management" },
+];
+
+const courseListLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "Egreed Technology Online Courses",
+  itemListElement: COURSE_CATALOG.map((c, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    item: {
+      "@type": "Course",
+      name: c.name,
+      url: `${SITE}/courses/${c.slug}`,
+      description: `Learn ${c.name} online with Egreed Technology, a leading IT training provider in Kigali, Rwanda.`,
+      provider: { "@type": "Organization", name: "Egreed Technology LTD", sameAs: SITE },
+      hasCourseInstance: {
+        "@type": "CourseInstance",
+        courseMode: "online",
+        inLanguage: ["en", "rw"],
+        location: { "@type": "Place", name: "Kigali, Rwanda" },
+      },
+      offers: { "@type": "Offer", category: "Paid", priceCurrency: "RWF", availability: "https://schema.org/InStock", url: `${SITE}/courses/${c.slug}` },
+    },
+  })),
+};
+
 const Index = () => {
   return (
     <div className="relative min-h-screen bg-background scroll-smooth">
@@ -55,6 +88,7 @@ const Index = () => {
         <link rel="canonical" href={SITE + "/"} />
         <script type="application/ld+json">{JSON.stringify(websiteLd)}</script>
         <script type="application/ld+json">{JSON.stringify(sitelinksLd)}</script>
+        <script type="application/ld+json">{JSON.stringify(courseListLd)}</script>
       </Helmet>
       <CustomCursor />
       <DiscountPopups />
