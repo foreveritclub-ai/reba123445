@@ -88,6 +88,7 @@ const Index = () => {
         <link rel="canonical" href={SITE + "/"} />
         <script type="application/ld+json">{JSON.stringify(websiteLd)}</script>
         <script type="application/ld+json">{JSON.stringify(sitelinksLd)}</script>
+        <script type="application/ld+json">{JSON.stringify(courseListLd)}</script>
       </Helmet>
       <CustomCursor />
       <DiscountPopups />
