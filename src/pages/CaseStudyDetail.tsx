@@ -77,9 +77,9 @@ const CaseStudyDetail = () => {
       url: "https://egreedtech.org",
       logo: "https://egreedtech.org/favicon.ico",
     },
-    audience: study.client_name ? { "@type": "Audience", name: study.client_name } : undefined,
+    audience: { "@type": "Audience", name: clientName },
     mainEntityOfPage: { "@type": "WebPage", "@id": canonicalUrl },
-    keywords: (study.tags || []).join(", "),
+    keywords: tags.join(", "),
     text: study.results,
   };
   const breadcrumbLd = {
