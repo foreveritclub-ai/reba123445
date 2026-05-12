@@ -17,6 +17,7 @@ import TestimonialsSection from "@/components/TestimonialsSection";
 import ContactSection from "@/components/ContactSection";
 import RegistrationSection from "@/components/RegistrationSection";
 import BrandSearchSection from "@/components/BrandSearchSection";
+import CourseSearchAnnouncement from "@/components/CourseSearchAnnouncement";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 
@@ -104,6 +105,7 @@ const Index = () => {
       <CompletedProjectsSection />
       <ProductsSection />
       <CoursesSection />
+      <CourseSearchAnnouncement />
       <LLMSection />
       <ComingSoonSection />
       <TestimonialsSection />
