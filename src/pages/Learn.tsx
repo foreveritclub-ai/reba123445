@@ -28,6 +28,7 @@ import CertificateGenerator from "@/components/CertificateGenerator";
 import LearningTour from "@/components/LearningTour";
 import QuizRunner, { QuizQuestion } from "@/components/QuizRunner";
 import { generateLessonContent } from "@/lib/lessonContent";
+import SyllabusResources from "@/components/SyllabusResources";
 
 interface LessonResource {
   label: string;
@@ -846,6 +847,9 @@ const Learn = () => {
                         </div>
                       )}
                     </div>
+
+                    {/* Shared library of supplementary syllabus PDFs + scored quick checks */}
+                    <SyllabusResources />
                   </div>
                 </TabsContent>
 
