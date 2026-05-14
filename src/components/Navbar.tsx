@@ -9,6 +9,7 @@ import egreedLogo from "@/assets/egreed-logo.png";
 const navItems = ["About", "Products", "Services", "Courses", "Contact"];
 const pageLinks = [
   { label: "IGICU", to: "/products/igicu" },
+  { label: "EGREED SOS", to: "/products/egreed-sos" },
   { label: "Egreed Learn", to: "/products/egreed-learning" },
   { label: "Insights", to: "/insights" },
   { label: "Case Studies", to: "/case-studies" },
