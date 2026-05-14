@@ -6,9 +6,11 @@ import { useAuth } from "@/contexts/AuthContext";
 import FloatingElement from "./FloatingElement";
 import egreedLogo from "@/assets/egreed-logo.png";
 
-const navItems = ["About", "Services", "Partners", "Products", "Courses", "Testimonials", "Contact"];
+const navItems = ["About", "Products", "Services", "Courses", "Contact"];
 const pageLinks = [
-  { label: "Blog", to: "/blog" },
+  { label: "IGICU", to: "/products/igicu" },
+  { label: "Egreed Learn", to: "/products/egreed-learning" },
+  { label: "Insights", to: "/insights" },
   { label: "Case Studies", to: "/case-studies" },
   { label: "Internship", to: "/internship" },
 ];
