@@ -27,6 +27,8 @@ import EgreedLearning from "./pages/EgreedLearning";
 import RebaliveRW from "./pages/RebaliveRW";
 import Internship from "./pages/Internship";
 import SeoLanding from "./pages/SeoLanding";
+import ProjectIgicu from "./pages/ProjectIgicu";
+import Insights from "./pages/Insights";
 
 const queryClient = new QueryClient();
 
@@ -58,6 +60,9 @@ const App = () => (
             <Route path="/products/kero-iwawe-assist" element={<KeroIwaweAssist />} />
             <Route path="/products/egreed-learning" element={<EgreedLearning />} />
             <Route path="/products/rebalive-rw" element={<RebaliveRW />} />
+            <Route path="/products/igicu" element={<ProjectIgicu />} />
+            <Route path="/products/project-igicu" element={<ProjectIgicu />} />
+            <Route path="/insights" element={<Insights />} />
             <Route path="/internship" element={<Internship />} />
             <Route path="/about-egreed-technology" element={<SeoLanding />} />
             <Route path="/it-consulting-rwanda" element={<SeoLanding />} />
