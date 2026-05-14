@@ -1,10 +1,29 @@
 import { motion } from "framer-motion";
-import { ExternalLink, GraduationCap, Activity, ArrowRight, Bot } from "lucide-react";
+import { ExternalLink, GraduationCap, Activity, ArrowRight, Bot, Satellite } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 
 const products = [
+  {
+    name: "Project IGICU",
+    description: "The Soil Intelligence Grid — bridging satellite data with IoT ground sensors and AI yield forecasting for Rwanda's agricultural transformation. Built for SpaceYield Rwanda & GLOC 2026.",
+    url: "/products/igicu",
+    icon: Satellite,
+    features: ["Satellite Telemetry", "ESP32 IoT Sensors", "AI Yield-Forecasts", "GLOC 2026 Ready"],
+    gradient: "from-indigo-600 via-blue-600 to-cyan-500",
+    isInternal: true,
+    badge: "Flagship",
+  },
+  {
+    name: "Egreed Learn",
+    description: "The Digital Excellence Academy — industry-aligned training in Full-Stack Development, IoT Engineering, and Strategic Design. Project-first learning powered by the E-Ai Framework.",
+    url: "/products/egreed-learning",
+    icon: GraduationCap,
+    features: ["Full-Stack Architecture", "Hardware-Software Convergence", "High-End Identity Design", "E-Ai Framework"],
+    gradient: "from-blue-600 to-purple-600",
+    isInternal: true,
+  },
   {
     name: "KERO IWAWE ASSIST",
     description: "An intelligent AI assistant designed to support agriculture, security, and everyday tasks using AI-powered technology built for Rwanda.",
@@ -13,16 +32,7 @@ const products = [
     features: ["Smart AI Assistant", "Agriculture Support", "Security Monitoring", "Local Language Support"],
     gradient: "from-green-600 to-emerald-600",
     isInternal: true,
-    badge: "Coming Soon"
-  },
-  {
-    name: "Egreed Learning",
-    description: "Our comprehensive e-learning platform offering professional IT courses, certifications, and skill development programs for individuals and organizations.",
-    url: "/products/egreed-learning",
-    icon: GraduationCap,
-    features: ["Professional IT Courses", "Certification Programs", "Progress Tracking", "Expert Instructors"],
-    gradient: "from-blue-600 to-purple-600",
-    isInternal: true
+    badge: "Coming Soon",
   },
   {
     name: "Rebalive RW",
@@ -32,8 +42,8 @@ const products = [
     features: ["Health Services", "Wellness Resources", "Health Tracking", "Expert Consultations"],
     gradient: "from-green-600 to-teal-600",
     isInternal: true,
-    badge: "Coming Soon"
-  }
+    badge: "Coming Soon",
+  },
 ];
 
 const ProductsSection = () => {
@@ -51,15 +61,14 @@ const ProductsSection = () => {
             Our Products
           </span>
           <h2 className="text-3xl md:text-4xl font-bold mt-2 mb-4">
-            Digital Solutions by Egreed Technology
+            Product-Led Engineering by Egreed Technology
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Explore our suite of innovative digital products designed to transform 
-            education and healthcare in Rwanda.
+            From orbital data and IoT to learning ecosystems and health platforms — explore the products engineering Africa's industrial future.
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
           {products.map((product, index) => (
             <motion.div
               key={product.name}

@@ -6,14 +6,13 @@ import egreedLogo from "@/assets/egreed-logo.png";
 const quickLinks = [
   { label: "Home", href: "/" },
   { label: "About Us", href: "/#about" },
+  { label: "Products", href: "/#products" },
+  { label: "Project IGICU", href: "/products/igicu" },
+  { label: "Egreed Learn", href: "/products/egreed-learning" },
   { label: "Services", href: "/#services" },
-  { label: "Courses", href: "/#courses" },
+  { label: "Insights", href: "/insights" },
   { label: "Case Studies", href: "/case-studies" },
   { label: "Blog", href: "/blog" },
-  { label: "About Egreed Technology", href: "/about-egreed-technology" },
-  { label: "IT Consulting Rwanda", href: "/it-consulting-rwanda" },
-  { label: "School Management System Rwanda", href: "/school-management-system-rwanda" },
-  { label: "Software Development Rwanda", href: "/software-development-rwanda" },
   { label: "Contact", href: "/#contact" },
 ];
 const serviceLinks = [
@@ -34,9 +33,10 @@ const Footer = () => {
             <a href="/" className="inline-block mb-4">
               <img src={egreedLogo} alt="Egreed Technology" className="h-12 w-auto" />
             </a>
-            <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
-              <strong className="text-foreground">Egreed Technology LTD</strong> (also known as Egreed Technology, EgreedTech, or Egreed Tech) is a registered IT consulting and software development company in Kigali, Rwanda specializing in school management systems and digital solutions across East Africa.
+            <p className="text-muted-foreground text-sm mb-3 leading-relaxed">
+              <strong className="text-foreground">Egreed Technology LTD</strong> — engineering the future of African industry from Kigali, Rwanda. IT consulting, IoT, and full-stack platforms.
             </p>
+            <a href="https://egreedtech.org" className="inline-block mb-4 text-sm font-semibold text-primary hover:underline">egreedtech.org</a>
             <a
               href="/certificate-egreedtechnology-LTD.pdf"
               target="_blank"
