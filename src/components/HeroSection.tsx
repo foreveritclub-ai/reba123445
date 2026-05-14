@@ -38,7 +38,7 @@ const HeroSection = () => {
           className="mb-6"
         >
           <span className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-primary border border-primary/30 rounded-full bg-primary/5">
-            <span>🇷🇼</span> Made in Rwanda
+            <span>🇷🇼</span> egreedtech.org · Made in Rwanda
           </span>
         </motion.div>
 
@@ -48,7 +48,7 @@ const HeroSection = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
         >
-          Empowering Businesses Through
+          Egreed Technology
         </motion.p>
 
         <FloatingElement magnetStrength={0.08}>
@@ -58,7 +58,7 @@ const HeroSection = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
           >
-            <span className="text-gradient">Digital Innovation</span>
+            <span className="text-gradient">Engineering the Future of African Industry</span>
           </motion.h1>
         </FloatingElement>
 
@@ -68,7 +68,7 @@ const HeroSection = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
         >
-          Egreed Technology is Rwanda's premier IT Consulting company. We deliver strategic technology solutions, system integration, and digital transformation services that help businesses optimize operations and achieve their goals.
+          From Project IGICU's Soil Intelligence Grid to Egreed Learn's Digital Excellence Academy, we build space-tech, IoT, and full-stack platforms that power Rwanda's next industrial leap. Strategic IT consulting, system integration, and digital transformation — engineered for African scale.
         </motion.p>
 
         <motion.div
