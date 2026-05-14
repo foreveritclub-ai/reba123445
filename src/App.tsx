@@ -29,6 +29,7 @@ import Internship from "./pages/Internship";
 import SeoLanding from "./pages/SeoLanding";
 import ProjectIgicu from "./pages/ProjectIgicu";
 import Insights from "./pages/Insights";
+import EgreedSOS from "./pages/EgreedSOS";
 
 const queryClient = new QueryClient();
 
@@ -62,6 +63,7 @@ const App = () => (
             <Route path="/products/rebalive-rw" element={<RebaliveRW />} />
             <Route path="/products/igicu" element={<ProjectIgicu />} />
             <Route path="/products/project-igicu" element={<ProjectIgicu />} />
+            <Route path="/products/egreed-sos" element={<EgreedSOS />} />
             <Route path="/insights" element={<Insights />} />
             <Route path="/internship" element={<Internship />} />
             <Route path="/about-egreed-technology" element={<SeoLanding />} />
